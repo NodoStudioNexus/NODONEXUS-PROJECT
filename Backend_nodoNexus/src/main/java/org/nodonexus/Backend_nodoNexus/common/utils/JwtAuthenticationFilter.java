@@ -27,19 +27,43 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws ServletException, IOException {
+    System.out.println("Filtering request: " + request.getRequestURI());
+
     String header = request.getHeader("Authorization");
-    if (header != null && header.startsWith("Bearer ")) {
-      String token = header.substring(7);
-      if (jwtUtils.validateToken(token)) {
-        String email = jwtUtils.getEmailFromToken(token);
-        String role = jwtUtils.getRoleFromToken(token);
-        User user = new User(email, "", Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role)));
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-            user, null, user.getAuthorities());
-        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(auth);
-      }
+
+    // Si no hay token en la cabecera, deja pasar la solicitud sin autenticar
+    if (header == null || !header.startsWith("Bearer ")) {
+      chain.doFilter(request, response);
+      return;
     }
+
+    String token = header.substring(7);
+    if (!jwtUtils.validateToken(token)) {
+      System.out.println("Se ha detectado un token invalido");
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "el token es invalido o expiró");
+      return;
+    }
+
+    String email = jwtUtils.getEmailFromToken(token);
+    String role = jwtUtils.getRoleFromToken(token);
+
+    // 🔹 Verifica si el token ya contiene "ROLE_" antes de agregarlo
+    String rolePrefix = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+
+    User user = new User(email, "", Collections.singleton(new SimpleGrantedAuthority(rolePrefix)));
+
+    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+        user, null, user.getAuthorities());
+    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+    SecurityContextHolder.getContext().setAuthentication(auth);
+
     chain.doFilter(request, response);
+  }
+
+  @Override
+  protected boolean shouldNotFilter(HttpServletRequest request) {
+    String path = request.getRequestURI();
+    return path.startsWith("/api/auth/") || path.startsWith("/swagger-ui/") || path.startsWith("/v3/api-docs/");
   }
 }
