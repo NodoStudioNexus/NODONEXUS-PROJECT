@@ -1,0 +1,30 @@
+// Importando Abstract
+@use "./abstracts/index" as *;
+
+// Importando base
+@use "./base/index" as *;
+
+body {
+  height: 100vh;
+  width: 100vw;
+  font-family: $fontFamily;
+  background-color: var(--color-bg-primary);
+  color: var(--color-font);
+  transition: background-color 0.3s, color 0.3s;
+
+  @include gradientBg(to right bottom,
+    var(--color-secondary),
+    var(--color-third),
+    var(--color-fourth),
+    var(--color-fifth),
+    var(--color-primary));
+}
+
+// Aplicar el tema al body
+body.light {
+  @extend :root;
+}
+
+body.dark {
+  @extend [data-theme="dark"];
+}

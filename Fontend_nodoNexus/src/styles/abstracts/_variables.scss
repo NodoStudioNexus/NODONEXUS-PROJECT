@@ -1,0 +1,60 @@
+$fontFamily: "Raleway", sans-serif;
+
+//colores constantes
+$color-font-alert: #f3f9ff;
+
+:root {
+  --color-primary: #E9F0F6;
+  --color-secondary: #F3F9FF;
+  --color-bg-primary: #082436;
+  --color-bg-secondary: #002b4c;
+  --color-font: var(--color-bg-primary);
+  --color-line: rgba(var(--color-bg-primary), 0.15);
+
+  // Colores extras gradient
+  --color-third: #f0f7fd;
+  --color-fourth: #eef4fb;
+  --color-fifth: #ebf2f8;
+
+  // Alertas 
+  --color-alert-red: #982626;
+  --color-alert-yellow: #ffd166;
+  --color-alert-green: #06d6a0;
+
+  //Variables para formularios
+  --form-width: 100%;
+  --form-gap: 25px;
+  --input-padding: 12px;
+  --input-border-radius: 6px;
+  --button-padding: 12px;
+  --button-border-radius: 6px;
+
+}
+
+[data-theme="dark"] {
+  --color-primary: #082436;
+  --color-secondary: #002b4c;
+  --color-bg-primary: #e9f0f6;
+  --color-bg-secondary: #F3F9FF;
+  --color-font: var(--color-bg-primary);
+  --color-line: rgba(var(--color-bg-primary), 0.15);
+
+  // Colores extras gradient
+  --color-third: #012946;
+  --color-fourth: #022841;
+  --color-fifth: #05263b;
+
+  // Alertas
+  --color-alert-red: #982626;
+  --color-alert-yellow: #fdc22b;
+  --color-alert-green: #299c3e;
+
+  //Variables para formularios
+  --form-width: 100%;
+  --form-gap: 25px;
+  --input-padding: 12px;
+  --input-border-radius: 6px;
+  --button-padding: 12px;
+  --button-border-radius: 6px;
+
+}
