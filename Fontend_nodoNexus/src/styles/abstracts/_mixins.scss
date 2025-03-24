@@ -1,0 +1,139 @@
+@use "variables" as *;
+
+// Gradient Background
+@mixin gradientBg($direction, $colors...) {
+  background-image: linear-gradient($direction, $colors...);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+// Flexbox Center
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Glassmorphism Blur Effect
+@mixin glassBlur($color: var(--color-bg-primary), $opacity: 0.07, $blur: 4.4px) {
+  background: rgba($color, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+// Card Shadow
+@mixin cardShadow($radius: 10px, $padding: 20px) {
+  border-radius: $radius;
+  padding: $padding;
+  box-shadow: 0 4px 10px var(--color-line);
+}
+
+// Fade-in/out animation
+@mixin fadeInOutMixin($time: 0.5s) {
+  animation: fadeIn $time ease-in-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+// Fade-in animation
+@mixin fadeInMixin($time: 0.5s) {
+  animation: fadeIn $time ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+// Slide-up with fade-in animation
+@mixin slideAnimationMixin($duration: 0.8s, $distance: 30px) {
+  animation: slideUpFadeIn $duration ease-out;
+  overflow: hidden;
+
+  @keyframes slideUpFadeIn {
+    from {
+      transform: translateY($distance);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+// Transition Mixin
+@mixin transitionMixin($property: all, $duration: 0.3s) {
+  transition: $property $duration ease-in-out;
+}
+
+// Primary Button Styles
+@mixin buttonPrimary {
+  padding: 12px;
+  background: var(--color-bg-primary);
+  color: var(--color-primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+// Form Styles
+@mixin formStyles {
+  fieldset {
+    border: none;
+  }
+
+  input {
+    border: 1px solid var(--color-bg-secondary);
+    padding: var(--input-padding);
+    border-radius: var(--input-border-radius);
+    width: 100%;
+    background: none;
+    color: var(--color-font);
+  }
+
+  select {
+    width: 100%;
+    padding: var(--input-padding);
+    border: none;
+    background: var(--color-bg-secondary);
+    border-radius: var(--input-border-radius);
+    border: 1px solid var(--color-line);
+    color: var(--color-font);
+  }
+
+  .errorServer,
+  .errorForm {
+    background: var(--color-alert-red);
+    margin-top: 5px;
+    text-align: start;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    font-weight: 200;
+    color: $color-font-alert;
+  }
+
+  .errorServer {
+    text-align: center;
+  }
+
+  button {
+    @include buttonPrimary();
+  }
+}
