@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-
-import "./globalModal.scss";
-import { RootState } from "../../../../app/store";
-import { closeModal } from "../infraestructure/redux/modalGlobalSlice";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../../../app/store';
+import { closeModal } from '../infraestructure/redux/modalGlobalSlice';
+import { ModalContentRenderer } from './ModalContentRenderer';
 
 const GlobalModal = () => {
   const dispatch = useDispatch();
@@ -19,37 +17,27 @@ const GlobalModal = () => {
     }
   }, [modal.autoClose, dispatch]);
 
-  if (!modal.isOpen) return null;
+  if (!modal.isOpen || !modal.modalType) return null;
 
   return (
-    <div className={`${modal.extraClasses || "modal-overlay"}`}>
+    <div className={`${modal.extraClasses || 'modal-overlay'}`}>
       <div className={`modal-content ${modal.variant}`}>
-        <div className={`${modal.variant}_modal-header `}>
+        <div className={`${modal.variant}_modal-header`}>
           <h3>{modal.title}</h3>
         </div>
         <div className="modal-body">
-          <p>{modal.message}</p>
-          {modal.content && <div>{modal.content}</div>}
+          <ModalContentRenderer />
         </div>
-        <div className="modal-footer">
-          {modal.onConfirm && (
+        {['success', 'error', 'info'].includes(modal.variant) && (
+          <div className="modal-footer">
             <button
-              className="confirm-button"
-              onClick={() => {
-                modal.onConfirm?.();
-                dispatch(closeModal());
-              }}
+              className="cancel-button"
+              onClick={() => dispatch(closeModal())}
             >
-              {modal.confirmText || "Confirmar"}
+              {modal.cancelText || 'Cerrar'}
             </button>
-          )}
-          <button
-            className="cancel-button"
-            onClick={() => dispatch(closeModal())}
-          >
-            {modal.cancelText || "Cerrar"}
-          </button>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

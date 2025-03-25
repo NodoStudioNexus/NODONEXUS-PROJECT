@@ -1,19 +1,24 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../../../features/auth/infraestructure/redux/authSlice';
+import { openModal } from '../modals/infraestructure/redux/modalGlobalSlice';
 
 const Logout: React.FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/login');
+  const handleLogoutClick = () => {
+    dispatch(
+      openModal({
+        modalType: 'confirmLogout',
+        title: 'Cerrar Sesión',
+        message: '¿Estás seguro de que deseas cerrar sesión?',
+        variant: 'confirm',
+        autoClose: false,
+      })
+    );
   };
 
   return (
-    <button onClick={handleLogout} style={{ cursor: 'pointer' }}>
+    <button onClick={handleLogoutClick} style={{ cursor: 'pointer' }}>
       Cerrar sesión
     </button>
   );

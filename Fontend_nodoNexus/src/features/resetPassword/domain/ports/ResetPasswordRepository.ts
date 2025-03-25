@@ -1,4 +1,3 @@
-
 export interface ResetPasswordRepository {
-  requestRequest(email: string): Promise<void>;
+  requestReset(email: string): Promise<void>;
 }
