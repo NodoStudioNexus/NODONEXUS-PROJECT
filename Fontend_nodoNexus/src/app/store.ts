@@ -5,6 +5,7 @@ import storage from "redux-persist/es/storage";
 import { persistStore } from 'redux-persist';
 import modalGlobalReducer from '../shared/components/modals/infraestructure/redux/modalGlobalSlice';
 import themeSliceReducer from '../shared/components/themeToggle/infraestructure/redux/themeSlice';
+import resetSliceReducer from '../features/resetPassword/infraestructure/redux/resetSlice';
 
 
 const authPersistConfig = {
@@ -26,6 +27,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     modalGlobal: modalGlobalReducer,
     theme: persistedThemeReducer,
+    reset: resetSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

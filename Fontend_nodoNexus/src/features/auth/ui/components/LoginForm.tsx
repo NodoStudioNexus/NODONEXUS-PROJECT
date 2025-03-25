@@ -10,6 +10,7 @@ import { loginSchema } from '../../domain/schemas/LoginFormShema';
 
 // Estilos 
 import './loginForm.scss';
+import { ForgotPasswordLink } from '../../../resetPassword/ui/components/ForgotPasswordLink';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -61,7 +62,10 @@ const LoginForm = () => {
             <label htmlFor="password"></label>
             <Field type="password" name="password" placeholder="Contraseña" disabled={loading} />
             <ErrorMessage name="password" component="p" className="errorForm" />
+
+            <ForgotPasswordLink />
           </fieldset>
+
 
           <button type="submit" disabled={loading || isSubmitting}>
             {loading ? 'Cargando...' : 'Iniciar sesión'}
