@@ -1,6 +1,7 @@
 @use "variables" as *;
 
 // Gradient Background
+// Ejemplo de uso: @include gradientBg(to right, hsl(200, 80%, 50%), hsl(300, 70%, 40%));
 @mixin gradientBg($direction, $colors...) {
   background-image: linear-gradient($direction, $colors...);
   background-repeat: no-repeat;
@@ -16,17 +17,19 @@
 }
 
 // Glassmorphism Blur Effect
+// Ejemplo de uso: @include glassBlur(hsl(220, 40%, 20%), 0.1, 10px);
 @mixin glassBlur($color: var(--color-bg-primary), $opacity: 0.07, $blur: 4.4px) {
-  background: rgba($color, $opacity);
+  background: ($color, $opacity);
   backdrop-filter: blur($blur);
   -webkit-backdrop-filter: blur($blur);
 }
 
-// Card Shadow
+// Card Shadow 
+// Ejemplo de uso: @include cardShadow(12px, 25px);
 @mixin cardShadow($radius: 10px, $padding: 20px) {
   border-radius: $radius;
   padding: $padding;
-  box-shadow: 0 4px 10px var(--color-line);
+  box-shadow: 0 4px 10px hsla(var(--color-primary), 0.15);
 }
 
 // Fade-in/out animation
@@ -60,7 +63,7 @@
 }
 
 // Slide-up with fade-in animation
-@mixin slideAnimationMixin($duration: 0.8s, $distance: 30px) {
+@mixin slideAnimation($duration: 0.8s, $distance: 30px) {
   animation: slideUpFadeIn $duration ease-out;
   overflow: hidden;
 
@@ -84,11 +87,11 @@
 
 // Primary Button Styles
 @mixin buttonPrimary {
-  padding: 12px;
+  padding: $padding-input;
   background: var(--color-bg-primary);
   color: var(--color-primary);
   border: none;
-  border-radius: 6px;
+  border-radius: $radius-input;
   cursor: pointer;
 }
 
@@ -99,12 +102,12 @@
   }
 
   input {
-    border: 1px solid var(--color-bg-secondary);
-    padding: var(--input-padding);
-    border-radius: var(--input-border-radius);
+    border: 1px solid var(--color-line);
+    padding: $padding-input;
+    border-radius: $radius-input;
     width: 100%;
     background: none;
-    color: var(--color-font);
+    color: var(--color-bg-primary);
   }
 
   select {
@@ -112,9 +115,9 @@
     padding: var(--input-padding);
     border: none;
     background: var(--color-bg-secondary);
-    border-radius: var(--input-border-radius);
+    border-radius: $radius-input;
     border: 1px solid var(--color-line);
-    color: var(--color-font);
+    color: var(--color-primary);
   }
 
   .errorServer,
@@ -125,7 +128,7 @@
     padding: 5px;
     border-radius: 3px;
     font-size: 0.9rem;
-    font-weight: 200;
+    font-weight: 300;
     color: $color-font-alert;
   }
 

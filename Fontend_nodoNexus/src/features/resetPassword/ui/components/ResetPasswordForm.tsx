@@ -39,7 +39,9 @@ export const ResetPasswordModal = () => {
   return (
     <form onSubmit={handleSubmit} className="reset-password-form">
       <div className="form-group">
-        <label htmlFor="email">Correo Electrónico</label>
+        <label htmlFor="email">
+          Ingrese el correo electronico registrado para obtener el link de restablecimiento de contraseña
+        </label>
         <input
           type="email"
           id="email"
