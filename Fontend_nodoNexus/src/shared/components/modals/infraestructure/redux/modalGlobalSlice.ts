@@ -1,13 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { modalType } from './modalType';
+import { modalVariant } from './modalVariant';
 
 type ModalState = {
   isOpen: boolean;
+  modalType: modalType | null;
   title: string;
   message: string;
-  variant: "success" | "error" | "info" | "confirm" | "modalForms" | "warning" | "infoLarge";
+  variant: modalVariant;
   autoClose: boolean;
-  content?: React.ReactNode;
-  onConfirm?: () => void;
+  payload?: Record<string, any>; // Solo datos serializables
   confirmText?: string;
   cancelText?: string;
   extraClasses?: string;
@@ -20,23 +22,23 @@ interface UIState {
 const initialState: UIState = {
   modal: {
     isOpen: false,
-    title: "",
-    message: "",
-    variant: "info",
+    modalType: null,
+    title: '',
+    message: '',
+    variant: 'info',
     autoClose: false,
-    content: null,
-    onConfirm: undefined,
-    confirmText: "Aceptar",
-    cancelText: "Cancelar",
-    extraClasses: "",
+    payload: {},
+    confirmText: 'Aceptar',
+    cancelText: 'Cancelar',
+    extraClasses: '',
   },
 };
 
 const modalGlobalSlice = createSlice({
-  name: "modalGlobal",
+  name: 'modalGlobal',
   initialState,
   reducers: {
-    openModal: (state, action: PayloadAction<Omit<ModalState, "isOpen">>) => {
+    openModal: (state, action: PayloadAction<Omit<ModalState, 'isOpen'>>) => {
       state.modal = {
         ...action.payload,
         isOpen: true,
@@ -49,5 +51,4 @@ const modalGlobalSlice = createSlice({
 });
 
 export const { openModal, closeModal } = modalGlobalSlice.actions;
-const modalGlobalReducer = modalGlobalSlice.reducer;
-export default modalGlobalReducer;
+export default modalGlobalSlice.reducer;

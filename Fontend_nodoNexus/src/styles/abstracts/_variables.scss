@@ -3,58 +3,48 @@ $fontFamily: "Raleway", sans-serif;
 //colores constantes
 $color-font-alert: #f3f9ff;
 
+//Padings 
+$padding-input: 0.9rem;
+
+//Border Radius 
+$radius-input: 6px;
+
 :root {
-  --color-primary: #E9F0F6;
-  --color-secondary: #F3F9FF;
-  --color-bg-primary: #082436;
-  --color-bg-secondary: #002b4c;
+  --color-primary: hsl(207, 50%, 92%);
+  --color-secondary: hsl(210, 60%, 96%);
+  --color-bg-primary: hsl(207, 75%, 12%);
+  --color-bg-secondary: hsl(207, 100%, 15%);
   --color-font: var(--color-bg-primary);
-  --color-line: rgba(var(--color-bg-primary), 0.15);
+  --color-line: hsla(207, 75%, 12%, 0.15);
 
   // Colores extras gradient
-  --color-third: #f0f7fd;
-  --color-fourth: #eef4fb;
-  --color-fifth: #ebf2f8;
+  --color-third: hsl(207, 80%, 95%);
+  --color-fourth: hsl(207, 75%, 94%);
+  --color-fifth: hsl(207, 70%, 93%);
 
-  // Alertas 
-  --color-alert-red: #982626;
-  --color-alert-yellow: #ffd166;
-  --color-alert-green: #06d6a0;
+  // Alertas
 
-  //Variables para formularios
-  --form-width: 100%;
-  --form-gap: 25px;
-  --input-padding: 12px;
-  --input-border-radius: 6px;
-  --button-padding: 12px;
-  --button-border-radius: 6px;
+  --color-alert-red: hsl(8, 64%, 45%);
 
+  --color-alert-yellow: hsl(45, 100%, 65%);
+  --color-alert-green: hsl(160, 80%, 40%);
 }
 
 [data-theme="dark"] {
-  --color-primary: #082436;
-  --color-secondary: #002b4c;
-  --color-bg-primary: #e9f0f6;
-  --color-bg-secondary: #F3F9FF;
+  --color-primary: hsl(207, 75%, 12%);
+  --color-secondary: hsl(207, 100%, 15%);
+  --color-bg-primary: hsl(207, 50%, 92%);
+  --color-bg-secondary: hsl(210, 60%, 96%);
   --color-font: var(--color-bg-primary);
-  --color-line: rgba(var(--color-bg-primary), 0.15);
+  --color-line: hsla(207, 50%, 92%, 0.15);
 
   // Colores extras gradient
-  --color-third: #012946;
-  --color-fourth: #022841;
-  --color-fifth: #05263b;
+  --color-third: hsl(207, 90%, 15%);
+  --color-fourth: hsl(207, 85%, 14%);
+  --color-fifth: hsl(207, 80%, 13%);
 
   // Alertas
-  --color-alert-red: #982626;
-  --color-alert-yellow: #fdc22b;
-  --color-alert-green: #299c3e;
-
-  //Variables para formularios
-  --form-width: 100%;
-  --form-gap: 25px;
-  --input-padding: 12px;
-  --input-border-radius: 6px;
-  --button-padding: 12px;
-  --button-border-radius: 6px;
-
+  --color-alert-red: hsl(8, 64%, 45%);
+  --color-alert-yellow: hsl(45, 100%, 55%);
+  --color-alert-green: hsl(145, 80%, 40%);
 }
