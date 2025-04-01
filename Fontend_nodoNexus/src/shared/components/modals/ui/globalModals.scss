@@ -1,0 +1,72 @@
+@use "../../../../styles/abstracts/index" as *;
+
+.modal-overlay {
+  background: lightsalmon;
+
+  .modal-content {
+    background: var(--color-bg-primary);
+    width: 600px;
+    border-radius: 12px;
+  }
+}
+
+.modalConfirm {
+  position: absolute;
+  background: hsla(var(--color-primary) 0.5);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding-top: 80px;
+
+  @include glassBlur(var(--color-primary), 0.1, 1.5px);
+  @include slideAnimation(0.4s, -40px);
+
+  .confirm {
+    color: var(--color-primary);
+    background: var(--color-bg-primary);
+    width: 700px;
+    height: 280px;
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 15px;
+
+
+    &_modal-header,
+    .modal-body,
+    .modal-footer {
+      height: 100%;
+    }
+
+    &_modal-header {
+      font-size: 1.3rem;
+      height: auto;
+    }
+
+    .modal-body {
+      line-height: 150%;
+    }
+
+    .modal-footer {
+      display: flex;
+      height: 50%;
+      gap: 15px;
+
+      button {
+        width: 100%;
+        @include buttonPrimary();
+
+        &:hover {
+          background: var(--color-primary);
+          color: var(--color-bg-primary);
+          @include fadeIn();
+        }
+      }
+
+    }
+
+  }
+}

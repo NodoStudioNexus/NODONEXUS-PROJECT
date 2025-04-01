@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../app/store';
 import { closeModal } from '../infraestructure/redux/modalGlobalSlice';
 import { ModalContentRenderer } from './ModalContentRenderer';
+import './globalModals.scss';
 
 const GlobalModal = () => {
   const dispatch = useDispatch();

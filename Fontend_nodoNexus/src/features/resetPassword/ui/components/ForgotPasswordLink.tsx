@@ -1,6 +1,8 @@
 import { useDispatch } from "react-redux";
 import { openModal } from "../../../../shared/components/modals/infraestructure/redux/modalGlobalSlice";
 
+import './forgotPassword.scss'
+
 export const ForgotPasswordLink = () => {
   const dispatch = useDispatch();
 
@@ -9,21 +11,21 @@ export const ForgotPasswordLink = () => {
       openModal({
         modalType: "resetPassword",
         title: "Restablecer Contraseña",
-        message: "", // No necesitamos mensaje aquí, el formulario lo maneja
+        message: "", // No envio mensaje pirque el formulario lo maneja 
         variant: "confirm",
         autoClose: false,
+        extraClasses: "modalConfirm ",
       })
     );
   };
 
   return (
-    <button
-      type="button"
+    <p
       onClick={handleForgotPasswordClick}
       className="forgot-password-link"
     >
       ¿Olvidaste tu contraseña?
-    </button>
+    </p>
   );
 };
 
