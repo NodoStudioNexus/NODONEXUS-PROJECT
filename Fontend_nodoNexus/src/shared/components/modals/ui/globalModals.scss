@@ -6,7 +6,6 @@
   .modal-content {
     background: var(--color-bg-primary);
     width: 600px;
-    height: 200px;
     border-radius: 12px;
   }
 }
@@ -33,7 +32,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    justify-content: space-between;
+    gap: 15px;
 
 
     &_modal-header,
@@ -44,6 +43,7 @@
 
     &_modal-header {
       font-size: 1.3rem;
+      height: auto;
     }
 
     .modal-body {
@@ -52,11 +52,20 @@
 
     .modal-footer {
       display: flex;
-
+      height: 50%;
+      gap: 15px;
 
       button {
         width: 100%;
+        @include buttonPrimary();
+
+        &:hover {
+          background: var(--color-primary);
+          color: var(--color-bg-primary);
+          @include fadeIn();
+        }
       }
+
     }
 
   }

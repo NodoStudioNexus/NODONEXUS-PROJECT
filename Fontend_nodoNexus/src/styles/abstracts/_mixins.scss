@@ -48,7 +48,7 @@
 }
 
 // Fade-in animation
-@mixin fadeInMixin($time: 0.5s) {
+@mixin fadeIn($time: 0.5s) {
   animation: fadeIn $time ease;
 
   @keyframes fadeIn {
