@@ -1,0 +1,14 @@
+@use '../../../../styles/abstracts/index' as *;
+
+
+.toggleTheme {
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 2px;
+  font-size: 1.5rem;
+  color: var(--color-bg-primary);
+  padding: 20px;
+  border: none;
+  z-index: 5000;
+}
