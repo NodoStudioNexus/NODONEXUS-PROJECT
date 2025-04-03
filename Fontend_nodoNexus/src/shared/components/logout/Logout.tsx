@@ -13,14 +13,15 @@ const Logout: React.FC = () => {
         message: '¿Estás seguro de que deseas cerrar sesión?',
         variant: 'confirm',
         autoClose: false,
+        extraClasses: 'modalConfirm',
       })
     );
   };
 
   return (
-    <button onClick={handleLogoutClick} style={{ cursor: 'pointer' }}>
+    <p onClick={handleLogoutClick} style={{ cursor: 'pointer' }}>
       Cerrar sesión
-    </button>
+    </p>
   );
 };
 

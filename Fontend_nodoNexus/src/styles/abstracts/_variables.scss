@@ -16,6 +16,7 @@ $radius-input: 6px;
   --color-bg-secondary: hsl(207, 100%, 15%);
   --color-font: var(--color-bg-primary);
   --color-line: hsla(207, 75%, 12%, 0.15);
+  --color-bg-transparent: hsla(207, 75%, 12%, 0.8);
 
   // Colores extras gradient
   --color-third: hsl(207, 80%, 95%);
@@ -37,6 +38,8 @@ $radius-input: 6px;
   --color-bg-secondary: hsl(210, 60%, 96%);
   --color-font: var(--color-bg-primary);
   --color-line: hsla(207, 50%, 92%, 0.15);
+  --color-bg-transparent: hsla(207, 50%, 92%, 0.18);
+
 
   // Colores extras gradient
   --color-third: hsl(207, 90%, 15%);

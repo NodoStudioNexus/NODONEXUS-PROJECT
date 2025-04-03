@@ -1,0 +1,75 @@
+@use '../../../../styles/abstracts/_index' as *;
+
+.sidebar {
+  width: 60px;
+  color: var(--color-bg-primary);
+  padding: 20px 10px;
+  position: relative;
+  transition: width 0.3s ease;
+  overflow-y: none;
+  display: flex;
+  flex-direction: column;
+
+  &.expanded {
+    width: 250px;
+  }
+
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: var(--color-bg-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 3px;
+
+      &:hover {
+        background-color: var(--color-bg-transparent);
+
+        color: var(--color-bg-primary);
+      }
+
+      &.active {
+        background-color: var(--color-bg-transparent);
+        color: var(--color-bg-primary);
+
+        &:hover {
+          background-color: var(--color-bg-transparent);
+        }
+      }
+
+      .menu-icon {
+        font-size: 1rem;
+        min-width: 20px;
+        margin-right: 10px;
+
+        &-text {
+          font-size: 1rem;
+          font-weight: 200;
+        }
+      }
+
+      span {
+        white-space: nowrap;
+      }
+    }
+  }
+}
