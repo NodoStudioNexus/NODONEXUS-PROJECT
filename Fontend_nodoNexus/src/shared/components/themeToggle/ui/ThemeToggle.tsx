@@ -3,6 +3,9 @@ import { RootState } from '../../../../app/store';
 import { toggleTheme } from '../infraestructure/redux/themeSlice';
 import { FaSun, FaMoon } from 'react-icons/fa'; // Iconos de React Icons
 
+import './themetoggle.scss';
+
+
 const ThemeToggle: React.FC = () => {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.theme);
@@ -12,19 +15,12 @@ const ThemeToggle: React.FC = () => {
   };
 
   return (
-    <button
+    <p
       onClick={handleToggleTheme}
-      style={{
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        fontSize: '1.5rem',
-        position: 'absolute',
-        color: theme === 'light' ? '#000' : '#fff',
-      }}
+      className='toggleTheme'
     >
       {theme === 'light' ? <FaMoon /> : <FaSun />}
-    </button>
+    </p>
   );
 };
 

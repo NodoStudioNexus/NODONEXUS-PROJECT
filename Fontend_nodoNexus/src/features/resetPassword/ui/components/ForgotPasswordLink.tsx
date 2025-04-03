@@ -11,7 +11,7 @@ export const ForgotPasswordLink = () => {
       openModal({
         modalType: "resetPassword",
         title: "Restablecer Contraseña",
-        message: "", // No necesitamos mensaje aquí, el formulario lo maneja
+        message: "", // No envio mensaje pirque el formulario lo maneja 
         variant: "confirm",
         autoClose: false,
         extraClasses: "modalConfirm ",
