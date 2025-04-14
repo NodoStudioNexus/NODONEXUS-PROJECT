@@ -1,0 +1,85 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=nodo_nexus_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=20251*
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5432:5432"
+  backend:
+    build:
+      context: ./Backend_nodoNexus
+    ports:
+      - "9091:9091"
+    dns: 
+      - 8.8.8.8
+      - 8.8.4.4
+      
+    environment:
+      # Spring Application
+      - SERVER_PORT=9091
+      
+      # PostgreSQL (conecta al servicio db)
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/nodo_nexus_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=20251*
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      
+      # JWT
+      - JWT_SECRET=A3F4B2E5D6C7A8B9C0D1E2F3A4B5C6D7E8F9G0H1I2J3K4L5M6N7O8P9Q0R1S2T3U4V5W6X7Y8Z9
+      - JWT_EXPIRATION=86400000
+      
+      # RabbitMQ (conecta al servicio rabbitmq)
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      
+      # Mail Configuration
+      - SPRING_MAIL_HOST=smtp.gmail.com
+      - SPRING_MAIL_PORT=587
+      - SPRING_MAIL_USERNAME=tu_correo@gmail.com
+      - SPRING_MAIL_PASSWORD=tu_contraseña
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH=true
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE=true
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  frontend:
+    build: ./Frontend_nodoNexus
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  rabbitmq: 
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5673:5672"  # AMQP
+      - "15673:15672"  # Management UI
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  postgres_data:
+  rabbitmq_data:

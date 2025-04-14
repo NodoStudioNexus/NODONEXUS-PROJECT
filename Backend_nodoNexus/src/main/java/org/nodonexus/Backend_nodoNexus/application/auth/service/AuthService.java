@@ -1,5 +1,7 @@
 package org.nodonexus.Backend_nodoNexus.application.auth.service;
 
+import java.time.Instant;
+
 import org.nodonexus.Backend_nodoNexus.application.auth.dto.LoginRequest;
 import org.nodonexus.Backend_nodoNexus.application.auth.dto.LoginResponse;
 import org.nodonexus.Backend_nodoNexus.common.constants.RoleEnum;
@@ -12,6 +14,7 @@ import org.nodonexus.Backend_nodoNexus.common.exception.UserNotFoundException;
 import org.nodonexus.Backend_nodoNexus.common.utils.JwtUtils;
 import org.nodonexus.Backend_nodoNexus.domain.model.User;
 import org.nodonexus.Backend_nodoNexus.domain.service.UserService;
+import org.nodonexus.Backend_nodoNexus.infrastructure.external.ImageService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,12 +47,25 @@ public class AuthService {
       throw new InvalidPasswordException("La contraseña es incorrecta");
     }
 
+    user.setUltimoAcceso(Instant.now());
+    userService.save(user);
+
     String token = jwtUtils.generateToken(user.getEmail(), user.getRole().name());
     eventPublisher.publishEvent(new LoginEvent(user.getEmail(), user.getRole().name()));
 
     LoginResponse response = new LoginResponse();
     response.setToken(token);
     response.setRole(user.getRole());
+    response.setNombre(user.getNombre());
+    response.setApellido(user.getApellido());
+    response.setTelefono(user.getTelefono());
+    response.setFechaRegistro(user.getFechaRegistro());
+    response.setUltimoAcceso(user.getUltimoAcceso());
+    response.setActivo(user.isActivo());
+    response.setProfileImage(user.getProfileImage());
+    response.setInitial(user.getProfileImage() == null || user.getProfileImage().isEmpty()
+        ? user.getNombre().substring(0, 1).toUpperCase()
+        : null);
     return response;
   }
 
