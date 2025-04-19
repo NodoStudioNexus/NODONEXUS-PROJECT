@@ -25,25 +25,52 @@ public class UserProfileService {
 		User user = userService.findByEmail(email);
 		ProfileResponse response = new ProfileResponse();
 		response.setEmail(user.getEmail());
-		response.setNombre(user.getNombre());
-		response.setApellido(user.getApellido());
+		response.setPrimerNombre(user.getPrimerNombre());
+		response.setSegundoNombre(user.getSegundoNombre());
+		response.setPrimerApellido(user.getPrimerApellido());
+		response.setSegundoApellido(user.getSegundoApellido());
+		response.setTipoIdentidad(user.getTipoIdentidad());
+		response.setNumeroIdentidad(user.getNumeroIdentidad());
 		response.setTelefono(user.getTelefono());
 		response.setFechaRegistro(user.getFechaRegistro());
 		response.setUltimoAcceso(user.getUltimoAcceso());
 		response.setActivo(user.isActivo());
 		response.setProfileImage(user.getProfileImage());
+		response.setBannerProfileImage(user.getBannerProfileImage());
 		response.setInitial(user.getProfileImage() == null || user.getProfileImage().isEmpty()
-				? user.getNombre().substring(0, 1).toUpperCase()
+				? user.getPrimerNombre().substring(0, 1).toUpperCase()
 				: null);
+		response.setRole(user.getRole());
 		return response;
 	}
 
 	// Actualizar datos del perfil
 	public User updateProfile(String email, ProfileUpdateRequest request) {
 		User user = userService.findByEmail(email);
-		user.setNombre(request.getNombre());
-		user.setApellido(request.getApellido());
+
+		// Validar campos obligatorios
+		if (request.getPrimerNombre() == null || request.getPrimerNombre().isEmpty()) {
+			throw new IllegalArgumentException("El primer nombre es obligatorio");
+		}
+		if (request.getPrimerApellido() == null || request.getPrimerApellido().isEmpty()) {
+			throw new IllegalArgumentException("El primer apellido es obligatorio");
+		}
+		if (request.getTipoIdentidad() == null) {
+			throw new IllegalArgumentException("El tipo de identidad es obligatorio");
+		}
+		if (request.getNumeroIdentidad() == null || request.getNumeroIdentidad().isEmpty()) {
+			throw new IllegalArgumentException("El número de identidad es obligatorio");
+		}
+
+		// Actualizar campos
+		user.setPrimerNombre(request.getPrimerNombre());
+		user.setSegundoNombre(request.getSegundoNombre());
+		user.setPrimerApellido(request.getPrimerApellido());
+		user.setSegundoApellido(request.getSegundoApellido());
+		user.setTipoIdentidad(request.getTipoIdentidad());
+		user.setNumeroIdentidad(request.getNumeroIdentidad());
 		user.setTelefono(request.getTelefono());
+
 		return userService.save(user);
 	}
 
@@ -52,6 +79,14 @@ public class UserProfileService {
 		User user = userService.findByEmail(email);
 		String imagePath = imageService.saveAndCompressImage(image);
 		user.setProfileImage(imagePath);
+		return userService.save(user);
+	}
+
+	// Actualizar la imagen de banner
+	public User updateBannerProfileImage(String email, MultipartFile image) throws IOException {
+		User user = userService.findByEmail(email);
+		String imagePath = imageService.saveAndCompressImage(image);
+		user.setBannerProfileImage(imagePath);
 		return userService.save(user);
 	}
 }
