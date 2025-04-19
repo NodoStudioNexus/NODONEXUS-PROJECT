@@ -10,6 +10,8 @@ const HeaderLayout = ({ moduleName }: { moduleName: string }) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
+  console.log(user)
+
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
 
   return (

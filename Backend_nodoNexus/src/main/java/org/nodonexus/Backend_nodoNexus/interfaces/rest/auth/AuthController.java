@@ -52,7 +52,14 @@ public class AuthController {
 	@ApiResponse(responseCode = "201", description = "Usuario registrado exitosamente")
 	@ApiResponse(responseCode = "400", description = "Datos inválidos o error en el registro")
 	public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
-		authService.register(request.getEmail(), request.getPassword(), request.getRole());
+		authService.register(
+				request.getEmail(),
+				request.getPassword(),
+				request.getRole(),
+				request.getPrimerNombre(),
+				request.getPrimerApellido(),
+				request.getTipoIdentidad(),
+				request.getNumeroIdentidad());
 		return ResponseEntity.status(201).body("Usuario registrado exitosamente");
 	}
 
