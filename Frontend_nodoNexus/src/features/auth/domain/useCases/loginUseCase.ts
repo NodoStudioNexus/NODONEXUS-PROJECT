@@ -1,4 +1,5 @@
-import { UserAuth } from "../entities/UserAuth";
+
+import UserAuth from "../entities/UserAuth";
 import { AuthRepository } from "../ports/AuthRepository";
 
 export const loginUseCase = async (
