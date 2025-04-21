@@ -14,6 +14,7 @@ RUN mvn package -DskipTests
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 
+COPY .env .
 # Copiamos el JAR construido
 COPY --from=build /app/target/Backend_nodoNexus-*.jar app.jar
 
