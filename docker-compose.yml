@@ -1,10 +1,11 @@
 services:
   db:
     image: postgres:15
+    container_name: nodonexus_db
     environment:
-      - POSTGRES_DB=nodo_nexus_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=20251*
+      POSTGRES_DB: nodo_nexus_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 20251*
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -15,60 +16,66 @@ services:
       retries: 10
     ports:
       - "5432:5432"
+    networks:
+      - nodonexus_network
+
   backend:
     build:
       context: ./Backend_nodoNexus
+    container_name: nodonexus_backend
     ports:
       - "9091:9091"
     dns: 
       - 8.8.8.8
       - 8.8.4.4
-      
     environment:
-      # Spring Application
-      - SERVER_PORT=9091
-      
-      # PostgreSQL (conecta al servicio db)
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/nodo_nexus_db
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=20251*
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      
-      # JWT
-      - JWT_SECRET=A3F4B2E5D6C7A8B9C0D1E2F3A4B5C6D7E8F9G0H1I2J3K4L5M6N7O8P9Q0R1S2T3U4V5W6X7Y8Z9
-      - JWT_EXPIRATION=86400000
-      
-      # RabbitMQ (conecta al servicio rabbitmq)
-      - SPRING_RABBITMQ_HOST=rabbitmq
-      - SPRING_RABBITMQ_PORT=5672
-      - SPRING_RABBITMQ_USERNAME=guest
-      - SPRING_RABBITMQ_PASSWORD=guest
-      
-      # Mail Configuration
-      - SPRING_MAIL_HOST=smtp.gmail.com
-      - SPRING_MAIL_PORT=587
-      - SPRING_MAIL_USERNAME=tu_correo@gmail.com
-      - SPRING_MAIL_PASSWORD=tu_contraseña
-      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH=true
-      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE=true
+      SERVER_PORT: 9091
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/nodo_nexus_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 20251*
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      JWT_SECRET: A3F4B2E5D6C7A8B9C0D1E2F3A4B5C6D7E8F9G0H1I2J3K4L5M6N7O8P9Q0R1S2T3U4V5W6X7Y8Z9
+      JWT_EXPIRATION: 86400000
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5673
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: ${EMAIL_USERNAME:-tu_correo@gmail.com}
+      SPRING_MAIL_PASSWORD: ${EMAIL_PASSWORD:-tu_contraseña}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
+      SPRING_PROFILES_ACTIVE: dev
     depends_on:
       db:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+    networks:
+      - nodonexus_network
 
   frontend:
-    build: ./Frontend_nodoNexus
+    build: 
+      context: ./Frontend_nodoNexus
+    container_name: nodonexus_frontend
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - backend
+    networks:
+      - nodonexus_network
 
-  rabbitmq: 
+  rabbitmq:
     image: rabbitmq:3-management
+    container_name: nodonexus_rabbitmq
+    hostname: rabbitmq
     environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_VHOST: /
     ports:
       - "5673:5672"  # AMQP
       - "15673:15672"  # Management UI
@@ -79,7 +86,27 @@ services:
       retries: 10
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - nodonexus_network
+
+  startup-notifier:
+    image: alpine
+    container_name: nodonexus_startup_notifier
+    depends_on:
+      - backend
+      - frontend
+      - rabbitmq
+      - db
+    command: sh -c "apk add --no-cache bash && sleep 15 && /app/startup_message.sh"
+    volumes:
+      - ./startup_message.sh:/app/startup_message.sh
+    networks:
+      - nodonexus_network
 
 volumes:
   postgres_data:
   rabbitmq_data:
+
+networks:
+  nodonexus_network:
+    driver: bridge
