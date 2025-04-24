@@ -3,6 +3,8 @@ package org.nodonexus.Backend_nodoNexus.domain.model;
 import java.time.Instant;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.nodonexus.Backend_nodoNexus.common.constants.IdentityType;
 import org.nodonexus.Backend_nodoNexus.common.constants.RoleEnum;
 
@@ -45,7 +47,8 @@ public class User {
   @Column(length = 20)
   private String telefono;
 
-  @Column(name = "fecha_registro", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+  @Column(name = "fecha_registro", nullable = false, updatable = false)
+  @CreationTimestamp
   private Instant fechaRegistro;
 
   @Column(name = "ultimo_acceso")
