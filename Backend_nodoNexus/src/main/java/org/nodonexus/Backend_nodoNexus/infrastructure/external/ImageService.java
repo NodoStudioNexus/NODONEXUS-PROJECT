@@ -18,7 +18,7 @@ import java.util.UUID;
 @Service
 public class ImageService {
 
-	private static final String UPLOAD_DIR = "uploads/";
+	private static final String UPLOAD_DIR = "Uploads/";
 	private static final int TARGET_WIDTH = 200;
 	private static final float QUALITY = 0.7f;
 	private static final long MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB

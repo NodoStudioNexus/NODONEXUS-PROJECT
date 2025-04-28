@@ -44,7 +44,7 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable()) // Desactiva CSRF
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin estado
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/auth/**").permitAll() // Tus endpoints públicos
+            .requestMatchers("/api/auth/**", "/Uploads/**").permitAll() // Tus endpoints públicos
             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Swagger público
             .anyRequest().authenticated()) // Todo lo demás requiere autenticación
         .exceptionHandling(exc -> exc.authenticationEntryPoint(jwtEntryPoint))
