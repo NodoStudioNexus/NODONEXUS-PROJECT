@@ -6,6 +6,8 @@ import AuthGuard from "../../shared/guards/AuthGuard.tsx";
 import { DashboardLayout } from "../../features/dashboard/ui/components/DashboardLayout.tsx";
 import RoleGuard from "../../shared/guards/RoleGuard.tsx";
 import GlobalModal from "../../shared/components/modals/ui/GlobalModals.tsx";
+import ProfileView from "../../shared/components/profile/ui/ProfileView.tsx";
+import ProfileEdit from "../../shared/components/profile/ui/ProfileEdit.tsx";
 
 // Componentes lazy-loaded
 const Login = lazy(() => import('../../features/auth/ui/pages/LoginPage'));
@@ -26,6 +28,8 @@ export const AppRouter = () => {
           <Route path={PublicRoutes.LOGIN} element={<Login />} />
           <Route element={<AuthGuard privateValidation={true} />}>
             <Route path={PrivateRoutes.DASHBOARD} element={<DashboardLayout />}>
+              <Route path={PrivateRoutes.PROFILE} element={<ProfileView />} />
+              <Route path={PrivateRoutes.PROFILE_EDIT} element={<ProfileEdit />} />
               {/* Rutas Admin */}
               <Route
                 path={PrivateRoutes.ADMINDASHBOARD}

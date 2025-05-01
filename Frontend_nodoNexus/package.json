@@ -21,6 +21,8 @@
     "react-router": "^7.4.0",
     "react-router-dom": "^7.4.0",
     "redux-persist": "^6.0.0",
+    "sockjs-client": "^1.6.1",
+    "webstomp-client": "^1.2.6",
     "yup": "^1.6.1"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/redux-persist": "^4.0.0",
+    "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",

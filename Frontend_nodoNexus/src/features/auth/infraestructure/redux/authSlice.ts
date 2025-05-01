@@ -25,6 +25,18 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const fetchProfile = createAsyncThunk(
+  'auth/fetchProfile',
+  async (email: string, { rejectWithValue }) => {
+    try {
+      return await authApi.getProfile(email);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Error al obtener el perfil');
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -44,6 +56,18 @@ const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(fetchProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

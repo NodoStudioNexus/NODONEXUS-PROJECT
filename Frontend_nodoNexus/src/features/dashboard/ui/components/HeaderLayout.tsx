@@ -5,12 +5,15 @@ import { FaSearch, FaBell } from 'react-icons/fa';
 import Logout from '../../../../shared/components/logout';
 
 import './headerLayout.scss';
+import { useNavigate } from 'react-router';
+import { PrivateRoutes } from '../../../../config/routes';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9091'; // Respaldo
 
 const HeaderLayout = ({ moduleName }: { moduleName: string }) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Función auxiliar para obtener la inicial
   const getUserInitial = () => {
@@ -62,7 +65,7 @@ const HeaderLayout = ({ moduleName }: { moduleName: string }) => {
                 ¡Hola, {user?.primerNombre || 'Usuario'}!
               </p>
               <ul>
-                <li>Ver mi perfil</li>
+                <li onClick={() => navigate(PrivateRoutes.PROFILE)}>Ver mi perfil</li>
                 <li>Configuración</li>
                 <li>Modo</li>
                 <li>

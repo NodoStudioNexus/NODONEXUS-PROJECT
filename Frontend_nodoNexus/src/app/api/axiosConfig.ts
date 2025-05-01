@@ -7,12 +7,24 @@ const api = axios.create({
 	},
 });
 
-// Interceptor para añadir el token JWT
 api.interceptors.request.use((config) => {
-	const token = localStorage.getItem('token');
+	const persistData = localStorage.getItem('persist:auth');
+	let token: string | null = null;
+
+	if (persistData) {
+		try {
+			const parsedData = JSON.parse(persistData);
+			const user = parsedData.user ? JSON.parse(parsedData.user) : null;
+			token = user?.token || null;
+		} catch (error) {
+			console.error('Error parsing persist:auth:', error);
+		}
+	}
+
 	if (token) {
 		config.headers.Authorization = `Bearer ${token}`;
 	}
+
 	return config;
 });
 
