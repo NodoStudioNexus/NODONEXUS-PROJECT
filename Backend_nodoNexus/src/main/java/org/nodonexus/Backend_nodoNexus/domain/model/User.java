@@ -3,16 +3,22 @@ package org.nodonexus.Backend_nodoNexus.domain.model;
 import java.time.Instant;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.nodonexus.Backend_nodoNexus.common.constants.IdentityType;
 import org.nodonexus.Backend_nodoNexus.common.constants.RoleEnum;
 
 @Entity
+@Getter
 @Data
 @Table(name = "users")
 public class User {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @Column(unique = true, nullable = false)
   private String email;
 
   private String password;
@@ -62,4 +68,5 @@ public class User {
 
   @Column(name = "banner_profile_image")
   private String bannerProfileImage;
+
 }

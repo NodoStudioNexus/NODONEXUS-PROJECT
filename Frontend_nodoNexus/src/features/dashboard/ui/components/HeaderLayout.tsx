@@ -3,24 +3,27 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../app/store';
 import { FaSearch, FaBell } from 'react-icons/fa';
 import Logout from '../../../../shared/components/logout';
+
 import './headerLayout.scss';
 
-const API_URL = 'http://localhost:9091';
-
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9091'; // Respaldo
 
 const HeaderLayout = ({ moduleName }: { moduleName: string }) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
+  // Función auxiliar para obtener la inicial
   const getUserInitial = () => {
     return user?.initial || 'U';
-  }
+  };
 
-  const verifyProfileImage = user?.profileImage && user.profileImage !== '';
+  // Verificar si hay una imagen de perfil válida
+  const hasProfileImage = user?.profileImage && user.profileImage !== '';
 
-  const profileImageUrl = verifyProfileImage ? `${API_URL}/${user.profileImage}` : '';
-
-  console.log(profileImageUrl)
+  // Construir la URL completa para la imagen
+  const profileImageUrl = hasProfileImage && user?.profileImage
+    ? `${API_URL}/Uploads/${user.profileImage.split('/').pop()}`
+    : '';
 
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
 
@@ -37,23 +40,27 @@ const HeaderLayout = ({ moduleName }: { moduleName: string }) => {
       <div className="header-right">
         <FaBell className="notifications-icon" />
         <div className="profile-container">
-          {verifyProfileImage ? (
+          {hasProfileImage ? (
             <img
               src={profileImageUrl}
               alt="User Avatar"
               className="user-avatar"
               onClick={toggleProfileMenu}
-              onError={(e) => (e.currentTarget.src = 'https://via.placeholder.com/40')}
+              onError={(e) => {
+                console.log('Image load error:', e);
+                e.currentTarget.src = 'https://via.placeholder.com/40';
+              }}
             />
           ) : (
-            <div className='user-initial' onClick={toggleProfileMenu}>
+            <div className="user-initial" onClick={toggleProfileMenu}>
               {getUserInitial()}
             </div>
-          )
-          }
+          )}
           {isProfileMenuOpen && (
             <div className="profile-menu">
-              <p className='profile-menu-welcome'>¡Hola, {user?.primerNombre}!</p>
+              <p className="profile-menu-welcome">
+                ¡Hola, {user?.primerNombre || 'Usuario'}!
+              </p>
               <ul>
                 <li>Ver mi perfil</li>
                 <li>Configuración</li>
@@ -69,4 +76,5 @@ const HeaderLayout = ({ moduleName }: { moduleName: string }) => {
     </header>
   );
 };
+
 export default HeaderLayout;

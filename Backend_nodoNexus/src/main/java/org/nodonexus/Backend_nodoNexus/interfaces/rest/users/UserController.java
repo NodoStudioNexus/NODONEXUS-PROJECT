@@ -15,6 +15,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
 	private final UserProfileService userProfileService;
 
 	public UserController(UserProfileService userProfileService) {
@@ -23,7 +24,7 @@ public class UserController {
 
 	// Ver el perfil del usuario autenticado
 	@GetMapping("/profile")
-	public ResponseEntity<ProfileResponse> getProfile(Authentication authentication) {
+	public ResponseEntity<?> getProfile(Authentication authentication) {
 		String email = authentication.getName();
 		ProfileResponse profile = userProfileService.getProfile(email);
 		return ResponseEntity.ok(profile);
@@ -35,10 +36,11 @@ public class UserController {
 			@RequestBody ProfileUpdateRequest request) {
 		try {
 			String email = authentication.getName();
-			User updatedUser = userProfileService.updateProfile(email, request);
-			return ResponseEntity.ok(updatedUser);
+			userProfileService.updateProfile(email, request);
+			ProfileResponse response = userProfileService.getProfile(email);
+			return ResponseEntity.ok(response);
 		} catch (IllegalArgumentException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
+			return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
 		}
 	}
 
@@ -48,14 +50,15 @@ public class UserController {
 			@RequestParam("image") MultipartFile image) {
 		try {
 			if (image == null || image.isEmpty()) {
-				return ResponseEntity.badRequest().body("No se proporcionó ninguna imagen");
+				return ResponseEntity.badRequest().body(new ErrorResponse("No se proporcionó ninguna imagen"));
 			}
 			String email = authentication.getName();
-			User updatedUser = userProfileService.updateProfileImage(email, image);
-			return ResponseEntity.ok(updatedUser);
+			userProfileService.updateProfileImage(email, image);
+			ProfileResponse response = userProfileService.getProfile(email);
+			return ResponseEntity.ok(response);
 		} catch (IOException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error al procesar la imagen: " + e.getMessage());
+					.body(new ErrorResponse("Error al procesar la imagen: " + e.getMessage()));
 		}
 	}
 
@@ -65,14 +68,28 @@ public class UserController {
 			@RequestParam("image") MultipartFile image) {
 		try {
 			if (image == null || image.isEmpty()) {
-				return ResponseEntity.badRequest().body("No se proporcionó ninguna imagen");
+				return ResponseEntity.badRequest().body(new ErrorResponse("No se proporcionó ninguna imagen"));
 			}
 			String email = authentication.getName();
-			User updatedUser = userProfileService.updateBannerProfileImage(email, image);
-			return ResponseEntity.ok(updatedUser);
+			userProfileService.updateBannerProfileImage(email, image);
+			ProfileResponse response = userProfileService.getProfile(email);
+			return ResponseEntity.ok(response);
 		} catch (IOException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error al procesar la imagen: " + e.getMessage());
+					.body(new ErrorResponse("Error al procesar la imagen: " + e.getMessage()));
+		}
+	}
+
+	// Clase interna para respuestas de error
+	private static class ErrorResponse {
+		private final String message;
+
+		public ErrorResponse(String message) {
+			this.message = message;
+		}
+
+		public String getMessage() {
+			return message;
 		}
 	}
 }
