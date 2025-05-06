@@ -86,7 +86,7 @@ export const AppRouter = () => {
                 element={<RoleGuard rol="ANALYST"><Placeholder name="Riesgos y reportes" /></RoleGuard>}
               />
 
-              {/* Ruta Client (placeholder por ahora porque estamos utilizando el de admins) */}
+              {/* Ruta Client ( por ahora porque estamos utilizando el de admins) */}
               <Route
                 path={PrivateRoutes.CLIENTDASHBOARD}
                 element={<RoleGuard rol="CLIENT"><ClientHome /></RoleGuard>}

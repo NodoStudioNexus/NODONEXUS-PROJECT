@@ -7,26 +7,16 @@ import Logout from '../../../../shared/components/logout';
 import './headerLayout.scss';
 import { useNavigate } from 'react-router';
 import { PrivateRoutes } from '../../../../config/routes';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9091'; // Respaldo
+import { getProfileImageUrl } from '../../../../shared/utils/getProfileImageUrl';
 
 const HeaderLayout = ({ moduleName }: { moduleName: string }) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Función auxiliar para obtener la inicial
-  const getUserInitial = () => {
-    return user?.initial || 'U';
-  };
-
-  // Verificar si hay una imagen de perfil válida
+  const getUserInitial = () => user?.initial || 'U';
   const hasProfileImage = user?.profileImage && user.profileImage !== '';
-
-  // Construir la URL completa para la imagen
-  const profileImageUrl = hasProfileImage && user?.profileImage
-    ? `${API_URL}/Uploads/${user.profileImage.split('/').pop()}`
-    : '';
+  const profileImageUrl = getProfileImageUrl(user?.profileImage);
 
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
 

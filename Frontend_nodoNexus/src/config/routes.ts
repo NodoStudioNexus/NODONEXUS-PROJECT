@@ -24,7 +24,7 @@ export const PrivateRoutes = {
   ANALYST_RISKS_REPORTS: "analyst/risks-reports",
 
   // Rutas de perfil (comunes a todos los roles)
-  PROFILE: "dashboard/profile",
+  PROFILE: "profile",
   PROFILE_EDIT: "dashboard/profile/edit",
 };
 
