@@ -1,4 +1,4 @@
-@use "variables" as *;
+@use 'variables' as *;
 
 // Gradient Background
 // Ejemplo de uso: @include gradientBg(to right, hsl(200, 80%, 50%), hsl(300, 70%, 40%));
@@ -24,7 +24,7 @@
   -webkit-backdrop-filter: blur($blur);
 }
 
-// Card Shadow 
+// Card Shadow
 // Ejemplo de uso: @include cardShadow(12px, 25px);
 @mixin cardShadow($radius: 10px, $padding: 20px) {
   border-radius: $radius;
@@ -116,7 +116,7 @@
     border: none;
     background: var(--color-bg-secondary);
     border-radius: $radius-input;
-    border: 1px solid var(--color-line);
+    //border: 1px solid var(--color-line);
     color: var(--color-primary);
   }
 

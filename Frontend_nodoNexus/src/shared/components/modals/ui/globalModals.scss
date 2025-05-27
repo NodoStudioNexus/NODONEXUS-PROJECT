@@ -1,4 +1,4 @@
-@use "../../../../styles/abstracts/index" as *;
+@use '../../../../styles/abstracts/index' as *;
 
 .modal-overlay {
   background: lightsalmon;
@@ -28,14 +28,14 @@
     color: var(--color-primary);
     background: var(--color-bg-primary);
     width: auto;
-    height: fit-content;
+    height: 100vh;
+    //height: fit-content;
     border-radius: 12px;
     padding: 25px;
     display: flex;
     flex-direction: column;
     position: relative;
     gap: 25px;
-
 
     &_modal-header,
     .modal-body,
@@ -60,16 +60,16 @@
 
       button {
         width: 100%;
+
         @include buttonPrimary();
 
         &:hover {
           background: var(--color-primary);
           color: var(--color-bg-primary);
+
           @include fadeIn();
         }
       }
-
     }
-
   }
 }

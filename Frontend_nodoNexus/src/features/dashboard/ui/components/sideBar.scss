@@ -6,7 +6,7 @@
   padding: 20px 10px;
   position: relative;
   transition: width 0.3s ease;
-  overflow-y: none;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
 
@@ -42,9 +42,10 @@
       border-radius: 3px;
 
       &:hover {
-        background-color: var(--color-bg-transparent);
-
+        background: var(--color-bg-transparent);
         color: var(--color-bg-primary);
+
+        @include fadeIn();
       }
 
       &.active {
