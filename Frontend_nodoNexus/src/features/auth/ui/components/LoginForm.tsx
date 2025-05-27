@@ -65,8 +65,6 @@ const LoginForm = () => {
 
             <ForgotPasswordLink />
           </fieldset>
-
-
           <button type="submit" disabled={loading || isSubmitting}>
             {loading ? 'Cargando...' : 'Iniciar sesión'}
           </button>

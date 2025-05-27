@@ -1,6 +1,8 @@
 package org.nodonexus.Backend_nodoNexus.infrastructure.external;
 
 import org.imgscalr.Scalr;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +20,7 @@ import java.util.UUID;
 @Service
 public class ImageService {
 
+	private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
 	private static final String UPLOAD_DIR = "Uploads/";
 	private static final int TARGET_WIDTH = 200;
 	private static final float QUALITY = 0.7f;
@@ -59,6 +62,29 @@ public class ImageService {
 		ImageIO.write(compressedImage, extension, outputFile);
 
 		return UPLOAD_DIR + fileName;
+	}
+
+	public void deleteImage(String imagePath) {
+		if (imagePath != null && !imagePath.isEmpty()) {
+			try {
+				// Extraer el nombre del archivo (sin el prefijo Uploads/)
+				String fileName = imagePath.startsWith(UPLOAD_DIR)
+						? imagePath.substring(UPLOAD_DIR.length())
+						: imagePath;
+				Path filePath = Paths.get(UPLOAD_DIR, fileName);
+
+				if (Files.exists(filePath)) {
+					Files.delete(filePath);
+					logger.info("Imagen eliminada: {}", filePath);
+				} else {
+					logger.warn("La imagen no existe: {}", filePath);
+				}
+			} catch (IOException e) {
+				logger.error("Error al eliminar la imagen: {}", imagePath, e);
+			}
+		} else {
+			logger.debug("No se proporcionó una ruta de imagen para eliminar");
+		}
 	}
 
 	private void validateFile(MultipartFile file) throws IOException {

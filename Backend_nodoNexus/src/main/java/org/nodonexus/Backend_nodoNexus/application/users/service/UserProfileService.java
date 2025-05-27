@@ -5,6 +5,9 @@ import org.nodonexus.Backend_nodoNexus.application.users.dto.ProfileUpdateReques
 import org.nodonexus.Backend_nodoNexus.domain.model.User;
 import org.nodonexus.Backend_nodoNexus.domain.service.UserService;
 import org.nodonexus.Backend_nodoNexus.infrastructure.external.ImageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,12 +15,18 @@ import java.io.IOException;
 
 @Service
 public class UserProfileService {
+
+	private static final Logger logger = LoggerFactory.getLogger(UserProfileService.class);
+
 	private final UserService userService;
 	private final ImageService imageService;
+	private final SimpMessagingTemplate messagingTemplate;
 
-	public UserProfileService(UserService userService, ImageService imageService) {
+	public UserProfileService(UserService userService, ImageService imageService,
+			SimpMessagingTemplate messagingTemplate) {
 		this.userService = userService;
 		this.imageService = imageService;
+		this.messagingTemplate = messagingTemplate;
 	}
 
 	// Obtener el perfil del usuario
@@ -71,22 +80,56 @@ public class UserProfileService {
 		user.setNumeroIdentidad(request.getNumeroIdentidad());
 		user.setTelefono(request.getTelefono());
 
-		return userService.save(user);
+		User updatedUser = userService.save(user);
+
+		// Notificar a los clientes
+		logger.info("Notificando actualización de perfil para el usuario: {}", email);
+		messagingTemplate.convertAndSend("/topic/profile_updated", email);
+
+		return updatedUser;
 	}
 
 	// Actualizar la imagen de perfil
 	public User updateProfileImage(String email, MultipartFile image) throws IOException {
 		User user = userService.findByEmail(email);
+
+		// Eliminar la imagen antigua si existe
+		if (user.getProfileImage() != null && !user.getProfileImage().isEmpty()) {
+			imageService.deleteImage(user.getProfileImage());
+		}
+
+		// Guardar la nueva imagen
 		String imagePath = imageService.saveAndCompressImage(image);
 		user.setProfileImage(imagePath);
-		return userService.save(user);
+
+		User updatedUser = userService.save(user);
+
+		// Notificar a los clientes
+		logger.info("Notificando actualización de imagen de perfil para el usuario: {}", email);
+		messagingTemplate.convertAndSend("/topic/profile_updated", email);
+
+		return updatedUser;
 	}
 
 	// Actualizar la imagen de banner
 	public User updateBannerProfileImage(String email, MultipartFile image) throws IOException {
 		User user = userService.findByEmail(email);
+
+		// Eliminar la imagen antigua si existe
+		if (user.getBannerProfileImage() != null && !user.getBannerProfileImage().isEmpty()) {
+			imageService.deleteImage(user.getBannerProfileImage());
+		}
+
+		// Guardar la nueva imagen
 		String imagePath = imageService.saveAndCompressImage(image);
 		user.setBannerProfileImage(imagePath);
-		return userService.save(user);
+
+		User updatedUser = userService.save(user);
+
+		// Notificar a los clientes
+		logger.info("Notificando actualización de imagen de banner para el usuario: {}", email);
+		messagingTemplate.convertAndSend("/topic/profile_updated", email);
+
+		return updatedUser;
 	}
 }
