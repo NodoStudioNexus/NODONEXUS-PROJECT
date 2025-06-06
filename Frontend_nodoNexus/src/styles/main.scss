@@ -14,14 +14,12 @@ body {
     background-color 0.3s,
     color 0.3s;
 
-  @include gradientBg(
-    to right bottom,
+  @include gradientBg(to right bottom,
     var(--color-secondary),
     var(--color-third),
     var(--color-fourth),
     var(--color-fifth),
-    var(--color-primary)
-  );
+    var(--color-primary));
 }
 
 // Aplicar el tema al body

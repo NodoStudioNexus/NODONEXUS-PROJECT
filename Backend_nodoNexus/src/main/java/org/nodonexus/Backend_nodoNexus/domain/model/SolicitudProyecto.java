@@ -4,9 +4,7 @@ import java.time.Instant;
 
 import org.nodonexus.Backend_nodoNexus.common.constants.EstadoSolicitud;
 
-import ch.qos.logback.classic.spi.STEUtil;
 import jakarta.persistence.Column;
-import jakarta.persistence.ColumnResult;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
