@@ -8,6 +8,7 @@ import RoleGuard from "../../shared/guards/RoleGuard.tsx";
 import GlobalModal from "../../shared/components/modals/ui/GlobalModals.tsx";
 import ProfileView from "../../shared/components/profile/ui/ProfileView.tsx";
 import ProfileEdit from "../../shared/components/profile/ui/ProfileEdit.tsx";
+import SolicitudProyectoPage from "../../features/solicitarProyecto/ui/pages/SolicitudProyectoPage.tsx";
 
 // Componentes lazy-loaded
 const Login = lazy(() => import('../../features/auth/ui/pages/LoginPage'));
@@ -25,6 +26,7 @@ export const AppRouter = () => {
         <GlobalModal />
         <RoutesWithNotFound>
           <Route path="/" element={<Navigate to={`/${PublicRoutes.LOGIN}`} replace />} />
+          <Route path={PublicRoutes.SOLICITUD} element={<SolicitudProyectoPage />} />
           <Route path={PublicRoutes.LOGIN} element={<Login />} />
           <Route element={<AuthGuard privateValidation={true} />}>
             <Route path={PrivateRoutes.DASHBOARD} element={<DashboardLayout />}>

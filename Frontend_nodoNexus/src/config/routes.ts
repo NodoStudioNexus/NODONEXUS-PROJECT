@@ -1,5 +1,6 @@
 export const PublicRoutes = {
   LOGIN: "login",
+  SOLICITUD: "nuevaSolicitud"
 };
 
 export const PrivateRoutes = {

@@ -3,4 +3,5 @@ export type modalType =
   | 'confirmLogout'
   | 'success'
   | 'error'
+  | 'sending'
   | 'info';

@@ -3,7 +3,9 @@ package org.nodonexus.Backend_nodoNexus.application.solicitudProyecto.service;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.nodonexus.Backend_nodoNexus.application.notificaciones.NotificationService;
 import org.nodonexus.Backend_nodoNexus.application.solicitudProyecto.dto.CrearSolicitudRequest;
 import org.nodonexus.Backend_nodoNexus.common.constants.EstadoSolicitud;
 import org.nodonexus.Backend_nodoNexus.common.constants.IdentityType;
@@ -26,22 +28,24 @@ public class SolicitudProyectoService {
 	private final EmailNotificationService emailService;
 	private final WhatsAppNotificationService whatsAppService;
 	private final WebSocketController webSocketController;
+	private final NotificationService notificationService;
 
 	@Autowired
 	public SolicitudProyectoService(SolicitudProyectoRepository solicitudRepository,
 			UserRepository userRepository,
 			EmailNotificationService emailService,
 			WhatsAppNotificationService whatsAppService,
-			WebSocketController webSocketController) {
+			WebSocketController webSocketController,
+			NotificationService notificationService) {
 		this.solicitudRepository = solicitudRepository;
 		this.userRepository = userRepository;
 		this.emailService = emailService;
 		this.whatsAppService = whatsAppService;
 		this.webSocketController = webSocketController;
+		this.notificationService = notificationService;
 	}
 
 	public SolicitudProyecto crearSolicitud(CrearSolicitudRequest request) {
-
 		if (request.getEmail() == null || request.getEmail().isEmpty()) {
 			throw new IllegalArgumentException("El email es obligatorio");
 		}
@@ -79,27 +83,39 @@ public class SolicitudProyectoService {
 		SolicitudProyecto savedSolicitud = solicitudRepository.save(solicitud);
 
 		// Notificar al cliente
-		emailService.sendEmail(request.getEmail(),
-				"Solicitud Recibida - Nodo Studio",
-				"Hola " + request.getNombre() + ", tu solicitud '" + request.getNombreProyecto() + "' ha sido recibida.");
+		String mensajeCliente = "Hola " + request.getNombre() + ", tu solicitud '" + request.getNombreProyecto()
+				+ "' ha sido recibida.";
+		emailService.sendEmail(request.getEmail(), "Solicitud Recibida - Nodo Studio", mensajeCliente);
+		notificationService.sendAndSaveNotification(usuario.getId().toString(), mensajeCliente,
+				"/solicitudes/" + savedSolicitud.getId());
 
+		// TODO: Configurar el servicio de WhatsApp para enviar notificaciones al
+		// cliente
 		// whatsAppService.sendWhatsAppMessage(request.getNumeroTelefonico(),
 		// "Hola " + request.getNombre() + ", tu solicitud '" +
 		// request.getNombreProyecto() + "' ha sido recibida.");
 
 		// Notificar a administradores y analistas
 		List<User> adminsAndAnalysts = userRepository.findByRoleIn(List.of(RoleEnum.ADMIN, RoleEnum.ANALYST));
+		String mensajeAdmin = "Nueva solicitud: '" + request.getNombreProyecto() + "' de " + request.getNombre() + ".";
 		for (User adminOrAnalyst : adminsAndAnalysts) {
-			emailService.sendEmail(adminOrAnalyst.getEmail(),
-					"Nueva Solicitud",
-					"Nueva solicitud: '" + request.getNombreProyecto() + "' de " + request.getNombre() + ".");
+			emailService.sendEmail(adminOrAnalyst.getEmail(), "Nueva Solicitud", mensajeAdmin);
+			notificationService.sendAndSaveNotification(adminOrAnalyst.getId().toString(), mensajeAdmin,
+					"/solicitudes/" + savedSolicitud.getId());
+			// TODO: Configurar el servicio de WhatsApp para enviar notificaciones a
+			// administradores y analistas
 			// whatsAppService.sendWhatsAppMessage(adminOrAnalyst.getTelefono(),
 			// "Nueva solicitud: '" + request.getNombreProyecto() + "'.");
 		}
 
-		// Notificación WebSocket
-		String mensajeWebSocket = "Nueva solicitud: '" + request.getNombreProyecto() + "' de " + request.getNombre() + ".";
-		webSocketController.notifyNewSolicitud(mensajeWebSocket);
+		// Notificación WebSocket general (opcional)
+		// El frontend debe suscribirse a /topic/notifications para recibir
+		// actualizaciones en tiempo real
+		List<String> adminAndAnalystIds = adminsAndAnalysts.stream()
+				.map(user -> user.getId().toString())
+				.collect(Collectors.toList());
+		webSocketController.notifyNewSolicitud(savedSolicitud.getId().toString(), adminAndAnalystIds, mensajeAdmin,
+				"/solicitudes/" + savedSolicitud.getId());
 
 		return savedSolicitud;
 	}

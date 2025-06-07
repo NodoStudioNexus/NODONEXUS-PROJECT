@@ -4,7 +4,7 @@ $fontFamily: 'Raleway', sans-serif;
 $color-font-alert: #f3f9ff;
 
 //Padings
-$padding-input: 0.9rem;
+$padding-input: 1rem;
 
 //Border Radius
 $radius-input: 6px;
@@ -26,7 +26,7 @@ $radius-container: 12px;
 
   // Alertas
 
-  --color-alert-red: hsl(8, 64%, 45%);
+  --color-alert-red: hsla(4, 86%, 46%, 0.855);
   --color-alert-yellow: hsl(45, 100%, 65%);
   --color-alert-green: hsl(160, 80%, 40%);
 }
@@ -46,7 +46,7 @@ $radius-container: 12px;
   --color-fifth: hsl(207, 80%, 13%);
 
   // Alertas
-  --color-alert-red: hsl(8, 64%, 45%);
+  --color-alert-red: hsla(4, 86%, 46%, 0.557);
   --color-alert-yellow: hsl(45, 100%, 55%);
   --color-alert-green: hsl(145, 80%, 40%);
 }
