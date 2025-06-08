@@ -6,6 +6,7 @@ import { persistStore } from 'redux-persist';
 import modalGlobalReducer from '../shared/components/modals/infraestructure/redux/modalGlobalSlice';
 import themeSliceReducer from '../shared/components/themeToggle/infraestructure/redux/themeSlice';
 import resetSliceReducer from '../features/resetPassword/infraestructure/redux/resetSlice';
+import notificacionSlice from '../features/notificaciones/infraestructure/redux/notificacionSlice';
 
 
 const authPersistConfig = {
@@ -28,6 +29,7 @@ export const store = configureStore({
     modalGlobal: modalGlobalReducer,
     theme: persistedThemeReducer,
     reset: resetSliceReducer,
+    notificacion: notificacionSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

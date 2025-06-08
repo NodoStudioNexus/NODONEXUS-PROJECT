@@ -35,9 +35,10 @@ public class JwtUtils {
     return new String(Base64.getEncoder().encode(key.getEncoded()));
   }
 
-  public String generateToken(String email, String role) {
+  public String generateToken(Long userId, String email, String role) {
     return Jwts.builder()
         .setSubject(email)
+        .claim("id", userId)
         .claim("role", "ROLE_" + role)
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + expiration))

@@ -1,0 +1,19 @@
+@use '../../../../styles/abstracts/index' as *;
+
+.notificacion-dropdown {
+	position: absolute;
+	right: 0;
+	top: 20px;
+	width: 500px;
+	z-index: 1000;
+	border: 0.5px solid var(--color-line);
+	padding: 25px;
+
+	@include glassBlur();
+	@include cardShadow(10px, 5px);
+	@include slideAnimation(0.3s, 10px);
+
+	h3 {}
+
+
+}
