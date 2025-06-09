@@ -1,0 +1,54 @@
+@use '../../../../styles/abstracts/index' as *;
+
+.notificacion-dropdown {
+	position: absolute;
+	right: -10px;
+	top: 30px;
+	width: 500px;
+	z-index: 1000;
+	border: 0.5px solid var(--color-line);
+
+	@include glassBlur();
+	@include cardShadow(10px, 5px);
+	@include slideAnimation(0.3s, 10px);
+
+	h3 {
+		padding: 10px;
+		border-bottom: 1px solid var(--color-line);
+	}
+
+	ul {
+		padding: 10px;
+		list-style-type: none;
+		display: flex;
+		flex-direction: column;
+
+		li {
+			border-bottom: 1px solid var(--color-line);
+			padding: 20px 0;
+
+			&.unread {
+				background: rgba(255, 0, 0, 0.1);
+				font-weight: bold;
+			}
+
+			&.read {
+				opacity: 0.7;
+			}
+		}
+	}
+
+	.container-buttonNotificaciones {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+
+		.button-notificaciones {
+			padding: 10px;
+			background: none;
+			border: none;
+			cursor: pointer;
+			color: var(--color-bg-primary);
+		}
+	}
+}

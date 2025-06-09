@@ -1,13 +1,14 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useStore } from "react-redux";
-import { RootState } from "../../app/store";
-import { webSocketService } from "../services/websocketService";
-import { addNotification } from "../../features/notificaciones/infraestructure/redux/notificacionSlice";
-import { jwtDecode } from "jwt-decode";
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useStore } from 'react-redux';
+import { RootState } from '../../app/store';
+import { webSocketService } from '../services/websocketService';
+import { addNotification } from '../../features/comunicacion/infraestructure/redux/notificacionSlice';
+import { jwtDecode } from 'jwt-decode';
 
 interface DecodedToken {
 	id: string;
+	sub: string;
 }
 
 export const useWebSocket = () => {
@@ -20,11 +21,12 @@ export const useWebSocket = () => {
 			try {
 				const decodedToken: DecodedToken = jwtDecode(token);
 				const userId = decodedToken.id;
+				console.log("WebSocket: Suscribiendo al userId:", userId); // Log para depuración
 
 				webSocketService.initialize(dispatch, token, () => {
-					// Suscripción a notificaciones después de conectar
 					if (userId) {
 						webSocketService.subscribe(`/topic/notifications/${userId}`, (notification) => {
+							console.log("Notificación recibida vía WebSocket:", notification);
 							dispatch(addNotification(notification));
 						});
 					}

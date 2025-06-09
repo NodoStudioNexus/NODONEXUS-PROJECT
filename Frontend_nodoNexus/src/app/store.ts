@@ -6,7 +6,7 @@ import { persistStore } from 'redux-persist';
 import modalGlobalReducer from '../shared/components/modals/infraestructure/redux/modalGlobalSlice';
 import themeSliceReducer from '../shared/components/themeToggle/infraestructure/redux/themeSlice';
 import resetSliceReducer from '../features/resetPassword/infraestructure/redux/resetSlice';
-import notificacionSlice from '../features/notificaciones/infraestructure/redux/notificacionSlice';
+import notificacionSlice from '../features/comunicacion/infraestructure/redux/notificacionSlice';
 
 
 const authPersistConfig = {
@@ -20,8 +20,15 @@ const themePersistConfig = {
   storage,
 };
 
+const notificacionPersistConfig = {
+  key: 'notificaciones',
+  storage,
+  whitelist: ['notifications'],
+};
+
 const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
 const persistedThemeReducer = persistReducer(themePersistConfig, themeSliceReducer);
+const persistedNotificacionReducer = persistReducer(notificacionPersistConfig, notificacionSlice);
 
 export const store = configureStore({
   reducer: {
@@ -29,7 +36,7 @@ export const store = configureStore({
     modalGlobal: modalGlobalReducer,
     theme: persistedThemeReducer,
     reset: resetSliceReducer,
-    notificacion: notificacionSlice
+    notificacion: persistedNotificacionReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

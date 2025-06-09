@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NotificacionRepository extends JpaRepository<Notificacion, Long> {
 	List<Notificacion> findByIdUsuario(String idUsuario);
+
+	List<Notificacion> findByIdUsuarioAndLeidoFalse(String idUsuario);
 }

@@ -25,7 +25,6 @@ public class JwtUtils {
   @Value("${jwt.expiration}")
   private Long expiration;
 
-  // Convertir la clave secreta en un objeto SecretKey
   private SecretKey getSigningKey() {
     return Keys.hmacShaKeyFor(secret.getBytes());
   }
@@ -63,7 +62,17 @@ public class JwtUtils {
         .parseClaimsJws(token)
         .getBody()
         .get("role", String.class);
-    return roleWithPrefix.replace("ROLE_", ""); // Esto quita el prefijo
+    return roleWithPrefix.replace("ROLE_", "");
+  }
+
+  public String getIdFromToken(String token) {
+    Integer id = Jwts.parserBuilder()
+        .setSigningKey(getSigningKey())
+        .build()
+        .parseClaimsJws(token)
+        .getBody()
+        .get("id", Integer.class);
+    return id.toString();
   }
 
   public boolean validateToken(String token) {
@@ -80,7 +89,7 @@ public class JwtUtils {
         .setSubject(email)
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-        .signWith(getSigningKey(), SignatureAlgorithm.ES512)
+        .signWith(getSigningKey(), SignatureAlgorithm.HS512) // Corregido a HS512 para consistencia
         .compact();
   }
 
@@ -93,8 +102,7 @@ public class JwtUtils {
           .getBody()
           .getSubject();
     } catch (Exception e) {
-      throw new InvalidTokenException("Token invalido o expirado.");
+      throw new InvalidTokenException("Token inválido o expirado.");
     }
   }
-
 }
