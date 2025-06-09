@@ -18,6 +18,7 @@ import org.nodonexus.Backend_nodoNexus.infrastructure.notification.EmailNotifica
 import org.nodonexus.Backend_nodoNexus.infrastructure.notification.WhatsAppNotificationService;
 import org.nodonexus.Backend_nodoNexus.interfaces.websocket.WebSocketController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,6 +30,7 @@ public class SolicitudProyectoService {
 	private final WhatsAppNotificationService whatsAppService;
 	private final WebSocketController webSocketController;
 	private final NotificationService notificationService;
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
 	public SolicitudProyectoService(SolicitudProyectoRepository solicitudRepository,
@@ -36,13 +38,15 @@ public class SolicitudProyectoService {
 			EmailNotificationService emailService,
 			WhatsAppNotificationService whatsAppService,
 			WebSocketController webSocketController,
-			NotificationService notificationService) {
+			NotificationService notificationService,
+			PasswordEncoder passwordEncoder) {
 		this.solicitudRepository = solicitudRepository;
 		this.userRepository = userRepository;
 		this.emailService = emailService;
 		this.whatsAppService = whatsAppService;
 		this.webSocketController = webSocketController;
 		this.notificationService = notificationService;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public SolicitudProyecto crearSolicitud(CrearSolicitudRequest request) {
@@ -63,6 +67,8 @@ public class SolicitudProyectoService {
 			newUser.setRole(RoleEnum.CLIENT);
 			newUser.setActivo(true);
 			newUser.setFechaRegistro(Instant.now());
+			// Establecer la contraseña encriptada con el número de identidad
+			newUser.setPassword(passwordEncoder.encode(request.getNumeroIdentidad()));
 			return userRepository.save(newUser);
 		});
 

@@ -44,6 +44,8 @@ public class AuthController {
 	@ApiResponse(responseCode = "401", description = "Credenciales inválidas")
 	public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
 		LoginResponse response = authService.login(request);
+		User user = userService.findByEmail(request.getEmail());
+		response.setMustChangePassword(user.isMustChangePassword());
 		return ResponseEntity.ok(response);
 	}
 
@@ -69,16 +71,11 @@ public class AuthController {
 	@ApiResponse(responseCode = "400", description = "Error en la solicitud.")
 	public ResponseEntity<String> forgotPassword(@RequestParam String email) {
 		try {
-			// Verifica si existe el correo
 			User user = userService.findByEmail(email);
-			// genera un tokemn de restablecimiento con duracion d euna hora
 			String resertToken = jwtUtils.generateResetToken(user.getEmail());
-			// Guarda el token
 			user.setResetToken(resertToken);
 			userService.save(user);
-			// Envia el email:
 			emailService.sendResetPasswordEmail(user.getEmail(), resertToken);
-
 			return ResponseEntity.ok("Si el correo está registrado se enviara un enlace de restalecimiento..");
 		} catch (UserNotFoundException e) {
 			return ResponseEntity.ok("Si el correo está registrado se enviar un enlace de restablecimiento oo..");
@@ -91,15 +88,11 @@ public class AuthController {
 	@ApiResponse(responseCode = "400", description = "Token invalido, expirado o ya utilizado")
 	public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
 		try {
-			// Valida el token
 			String email = jwtUtils.getEmailFromResetToken(token);
-			// Busca al usuarui con el correo
 			User user = userService.findByEmail(email);
-			// Verifica si el token coincide
 			if (!token.equals(user.getResetToken())) {
 				throw new InvalidTokenException("Token invalido o ya utilizado ... ");
 			}
-			// Actualiza contraseña y elimina el token
 			user.setPassword(passwordEncoder.encode(newPassword));
 			user.setResetToken(null);
 			userService.save(user);
@@ -108,5 +101,4 @@ public class AuthController {
 			throw new InvalidTokenException("tokem invalido, expirado o ya utilizado.");
 		}
 	}
-
 }

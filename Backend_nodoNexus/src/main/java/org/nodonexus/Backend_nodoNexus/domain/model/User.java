@@ -69,4 +69,6 @@ public class User {
   @Column(name = "banner_profile_image")
   private String bannerProfileImage;
 
+  @Column(name = "must_change_password", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+  private boolean mustChangePassword = true; // Por defecto true para nuevos usuarios
 }

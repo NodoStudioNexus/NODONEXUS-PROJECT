@@ -56,13 +56,12 @@ public class JwtUtils {
   }
 
   public String getRoleFromToken(String token) {
-    String roleWithPrefix = Jwts.parserBuilder()
+    return Jwts.parserBuilder()
         .setSigningKey(getSigningKey())
         .build()
         .parseClaimsJws(token)
         .getBody()
         .get("role", String.class);
-    return roleWithPrefix.replace("ROLE_", "");
   }
 
   public String getIdFromToken(String token) {

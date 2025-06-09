@@ -132,4 +132,14 @@ public class UserProfileService {
 
 		return updatedUser;
 	}
+
+	// Método para buscar un usuario por email
+	public User findByEmail(String email) {
+		return userService.findByEmail(email); // Delega al UserService
+	}
+
+	// Método para guardar un usuario
+	public User save(User user) {
+		return userService.save(user); // Delega al UserService
+	}
 }
