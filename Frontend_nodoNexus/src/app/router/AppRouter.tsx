@@ -9,6 +9,9 @@ import GlobalModal from "../../shared/components/modals/ui/GlobalModals.tsx";
 import ProfileView from "../../shared/components/profile/ui/ProfileView.tsx";
 import ProfileEdit from "../../shared/components/profile/ui/ProfileEdit.tsx";
 import SolicitudProyectoPage from "../../features/solicitarProyecto/ui/pages/SolicitudProyectoPage.tsx";
+import UserControl from "../../features/userControl/ui/pages/UserControlPage.tsx";
+import AdminDashboard from "../../features/dashboard/ui/pages/AdminDashboard";
+
 
 // Componentes lazy-loaded
 const Login = lazy(() => import('../../features/auth/ui/pages/LoginPage'));
@@ -35,15 +38,15 @@ export const AppRouter = () => {
               {/* Rutas Admin */}
               <Route
                 path={PrivateRoutes.ADMINDASHBOARD}
-                element={<RoleGuard rol="ADMIN"><AdminHome /></RoleGuard>}
+                element={<RoleGuard rol="ADMIN"><AdminDashboard /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ADMIN_HOME}
-                element={<RoleGuard rol="ADMIN"><Placeholder name="Inicio aaa" /></RoleGuard>}
+                element={<RoleGuard rol="ADMIN"><AdminDashboard /></RoleGuard>}
               />
               <Route
-                path={PrivateRoutes.ADMIN_USERS_PERMISSIONS}
-                element={<RoleGuard rol="ADMIN"><Placeholder name="Gestión de usuarios y permisos" /></RoleGuard>}
+                path={PrivateRoutes.ADMIN_USERS_CONTROL}
+                element={<RoleGuard rol="ADMIN"><UserControl /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ADMIN_AUDIT}

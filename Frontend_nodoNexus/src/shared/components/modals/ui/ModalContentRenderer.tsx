@@ -4,6 +4,7 @@ import ConfirmLogoutModal from '../../../../features/auth/ui/modals/ConfirmLogou
 import ResetPasswordModal from '../../../../features/resetPassword/ui/components/ResetPasswordForm';
 import GenericSuccessModal from './components/GenericSuccessModal';
 import GenericErrorModal from './components/GenericErrorModalProps';
+import ModalNewUser from '../../../../features/userControl/ui/components/modales/ModalNewUser';
 
 export const ModalContentRenderer = () => {
   const modal = useSelector((state: RootState) => state.modalGlobal.modal);
@@ -13,6 +14,8 @@ export const ModalContentRenderer = () => {
   switch (modal.modalType) {
     case 'resetPassword':
       return <ResetPasswordModal />;
+    case 'FormNewUser':
+      return <ModalNewUser />;
     case 'confirmLogout':
       return <ConfirmLogoutModal />;
     case 'success':

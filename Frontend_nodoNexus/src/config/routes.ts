@@ -12,7 +12,7 @@ export const PrivateRoutes = {
 
   //Rutas administrador
   ADMIN_HOME: "admin/home",
-  ADMIN_USERS_PERMISSIONS: "admin/users-permissions",
+  ADMIN_USERS_CONTROL: "admin/usersControl",
   ADMIN_AUDIT: "admin/audit",
   ADMIN_PROJECTS: "admin/projects",
   ADMIN_MONITORING: "admin/monitoring",

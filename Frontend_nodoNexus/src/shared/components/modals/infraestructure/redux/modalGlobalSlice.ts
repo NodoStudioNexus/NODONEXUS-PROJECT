@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { modalType } from './modalType';
-import { modalVariant } from './modalVariant';
+
 
 type ModalState = {
   isOpen: boolean;
   modalType: modalType | null;
   title: string;
   message: string;
-  variant: modalVariant;
+  variant: string;
   autoClose: boolean;
   payload?: Record<string, any>; // Solo datos serializables
   confirmText?: string;
@@ -25,7 +25,7 @@ const initialState: UIState = {
     modalType: null,
     title: '',
     message: '',
-    variant: 'info',
+    variant: '',
     autoClose: false,
     payload: {},
     confirmText: 'Aceptar',

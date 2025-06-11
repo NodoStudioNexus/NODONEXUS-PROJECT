@@ -95,6 +95,14 @@
   cursor: pointer;
 }
 
+@mixin buttonSecondary() {
+  background: var(--color-bg-primary);
+  color: var(--color-primary);
+  border: none;
+  border-radius: $radius-input;
+  cursor: pointer;
+}
+
 // Form Styles
 @mixin formStyles {
 
@@ -128,7 +136,26 @@
     border-radius: $radius-input;
     width: 100%;
     background: none;
-    color: var(--color-bg-primary);
+    color: var(--color-text);
+
+    &:focus {
+      border-color: var(--color-primary);
+      outline: none;
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+    min-width: 500px;
+  }
+
+  select {
+    option {
+      color: var(--color-bg-primary);
+      border: none;
+      background: var(--color-primary);
+    }
   }
 
   .errorServer,
@@ -150,4 +177,21 @@
   button {
     @include buttonPrimary();
   }
+}
+
+@mixin menuControl {
+
+  button {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    border-radius: 12px 12px 0px 0px;
+
+    &.active {
+      font-weight: 500;
+      background: var(--color-hover);
+    }
+  }
+
 }

@@ -13,11 +13,10 @@
 
     .main-content {
       flex: 1;
-      border: 1px solid var(--color-line);
+      //border: 1px solid var(--color-line);
       border-radius: 12px;
-      padding: 20px;
       overflow-y: auto;
-      margin-right: 40px;
+      margin-right: 50px;
       margin-bottom: 25px;
       transition: margin-right 0.3s ease-out;
 
