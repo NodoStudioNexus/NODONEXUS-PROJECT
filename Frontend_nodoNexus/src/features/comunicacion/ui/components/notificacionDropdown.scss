@@ -22,10 +22,11 @@
 		list-style-type: none;
 		display: flex;
 		flex-direction: column;
+		gap: 15px;
 
 		li {
-			border-bottom: 1px solid var(--color-line);
-			padding: 20px 0;
+			padding: 15px;
+			border-radius: 6px;
 			cursor: pointer;
 
 			.notification-content {
@@ -74,12 +75,13 @@
 			}
 
 			&.unread {
-				background: rgba(255, 0, 0, 0.1);
+				background: var(--color-hover);
 				font-weight: bold;
 			}
 
 			&.read {
 				opacity: 0.7;
+				border-bottom: 1px solid var(--color-line);
 			}
 		}
 	}

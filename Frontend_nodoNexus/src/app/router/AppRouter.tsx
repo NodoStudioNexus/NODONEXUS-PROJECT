@@ -11,6 +11,7 @@ import ProfileEdit from "../../shared/components/profile/ui/ProfileEdit.tsx";
 import SolicitudProyectoPage from "../../features/solicitarProyecto/ui/pages/SolicitudProyectoPage.tsx";
 import UserControl from "../../features/userControl/ui/pages/UserControlPage.tsx";
 import AdminDashboard from "../../features/dashboard/ui/pages/AdminDashboard";
+import GestionProyectos from "../../features/proyectos/ui/pages/GestionProyectos.tsx";
 
 
 // Componentes lazy-loaded
@@ -54,7 +55,7 @@ export const AppRouter = () => {
               />
               <Route
                 path={PrivateRoutes.ADMIN_PROJECTS}
-                element={<RoleGuard rol="ADMIN"><Placeholder name="Gestión de proyectos" /></RoleGuard>}
+                element={<RoleGuard rol="ADMIN"><GestionProyectos /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ADMIN_MONITORING}

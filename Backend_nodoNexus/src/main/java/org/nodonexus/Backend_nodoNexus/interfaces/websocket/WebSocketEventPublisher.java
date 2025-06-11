@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 public class WebSocketEventPublisher {
 
 	private final SimpMessagingTemplate messagingTemplate;
-	private final NotificationService notificationService; // Añadido
+	private final NotificationService notificationService;
 
 	@Autowired
 	public WebSocketEventPublisher(SimpMessagingTemplate messagingTemplate, NotificationService notificationService) {
 		this.messagingTemplate = messagingTemplate;
-		this.notificationService = notificationService; // Añadido
+		this.notificationService = notificationService;
 	}
 
 	public void publishProfileUpdatedEvent(String userId) {
