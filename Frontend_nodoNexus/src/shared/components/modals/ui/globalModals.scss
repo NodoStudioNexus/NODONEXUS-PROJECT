@@ -1,4 +1,4 @@
-@use "../../../../styles/abstracts/index" as *;
+@use '../../../../styles/abstracts/index' as *;
 
 .modal-overlay {
   background: lightsalmon;
@@ -10,32 +10,33 @@
   }
 }
 
-//Extras clases
+// Estilos del modal
 .modalConfirm {
-  position: absolute;
-  background: hsla(var(--color-primary) 0.5);
-  width: 100%;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100vw;
   height: 100vh;
+  background: hsla(var(--color-primary) 0.5);
   display: flex;
   justify-content: center;
-  padding-top: 80px;
   z-index: 5000;
 
-  @include glassBlur(var(--color-primary), 0.1, 1.5px);
+  @include glassBlur(var(--color-primary), 0.1, 2px);
   @include slideAnimation(0.4s, -40px);
 
   .confirm {
     color: var(--color-primary);
     background: var(--color-bg-primary);
     width: auto;
-    height: fit-content;
+    height: auto;
     border-radius: 12px;
     padding: 25px;
     display: flex;
     flex-direction: column;
     position: relative;
     gap: 25px;
-
+    align-self: start;
 
     &_modal-header,
     .modal-body,
@@ -45,12 +46,10 @@
 
     &_modal-header {
       font-size: 1.3rem;
-      height: auto;
     }
 
     .modal-body {
       line-height: 150%;
-      height: auto;
     }
 
     .modal-footer {
@@ -60,16 +59,16 @@
 
       button {
         width: 100%;
+
         @include buttonPrimary();
 
         &:hover {
           background: var(--color-primary);
           color: var(--color-bg-primary);
+
           @include fadeIn();
         }
       }
-
     }
-
   }
 }

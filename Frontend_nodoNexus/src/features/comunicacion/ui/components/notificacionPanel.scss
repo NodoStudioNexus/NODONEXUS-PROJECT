@@ -1,0 +1,79 @@
+@use '../../../../styles/abstracts/index' as *;
+
+.notification-panel {
+	width: 0;
+	height: 97%;
+	color: var(--color-text);
+	padding: 0;
+	transition: width 0.3s ease, transform 0.3s ease;
+	overflow: hidden;
+	transform: translateX(100%);
+
+
+	&.open {
+		width: 35%;
+		padding: 20px;
+		transform: translateX(0);
+		margin: 0px 25px;
+
+		@include cardShadow(10px, 5px);
+	}
+
+	.close-btn {
+		background: none;
+		border: none;
+		color: var(--color-text);
+		font-size: 1.2rem;
+		cursor: pointer;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+	.menu {
+		display: flex;
+		justify-content: space-around;
+		padding: 10px 0;
+		border-bottom: 1px solid var(--color-line);
+
+		button {
+			background: none;
+			border: none;
+			cursor: pointer;
+			color: var(--color-text);
+			padding: 5px 10px;
+
+			&.active {
+				border-bottom: 2px solid var(--color-primary);
+				font-weight: bold;
+			}
+		}
+	}
+
+	.filter {
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+
+		label {
+			font-weight: bold;
+		}
+
+		select {
+			padding: 0.5rem;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 1rem;
+		}
+	}
+
+	.error {
+		color: red;
+		margin-bottom: 1rem;
+	}
+
+	.content {
+		padding: 20px 0;
+	}
+}

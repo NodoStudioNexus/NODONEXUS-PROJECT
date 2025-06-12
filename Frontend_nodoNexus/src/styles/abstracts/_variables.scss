@@ -1,13 +1,14 @@
-$fontFamily: "Raleway", sans-serif;
+$fontFamily: 'Raleway', sans-serif;
 
 //colores constantes
 $color-font-alert: #f3f9ff;
 
-//Padings 
-$padding-input: 0.9rem;
+//Padings
+$padding-input: 1rem;
 
-//Border Radius 
+//Border Radius
 $radius-input: 6px;
+$radius-container: 12px;
 
 :root {
   --color-primary: hsl(207, 50%, 92%);
@@ -25,13 +26,12 @@ $radius-input: 6px;
 
   // Alertas
 
-  --color-alert-red: hsl(8, 64%, 45%);
-
+  --color-alert-red: hsla(4, 86%, 46%, 0.855);
   --color-alert-yellow: hsl(45, 100%, 65%);
   --color-alert-green: hsl(160, 80%, 40%);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color-primary: hsl(207, 75%, 12%);
   --color-secondary: hsl(207, 100%, 15%);
   --color-bg-primary: hsl(207, 50%, 92%);
@@ -40,14 +40,13 @@ $radius-input: 6px;
   --color-line: hsla(207, 50%, 92%, 0.15);
   --color-bg-transparent: hsla(207, 50%, 92%, 0.18);
 
-
   // Colores extras gradient
   --color-third: hsl(207, 90%, 15%);
   --color-fourth: hsl(207, 85%, 14%);
   --color-fifth: hsl(207, 80%, 13%);
 
   // Alertas
-  --color-alert-red: hsl(8, 64%, 45%);
+  --color-alert-red: hsla(4, 86%, 46%, 0.557);
   --color-alert-yellow: hsl(45, 100%, 55%);
   --color-alert-green: hsl(145, 80%, 40%);
 }

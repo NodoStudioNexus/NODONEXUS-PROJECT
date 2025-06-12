@@ -49,7 +49,7 @@ public class AuthService {
     user.setUltimoAcceso(Instant.now());
     userService.save(user);
 
-    String token = jwtUtils.generateToken(user.getEmail(), user.getRole().name());
+    String token = jwtUtils.generateToken(user.getId(), user.getEmail(), user.getRole().name());
     eventPublisher.publishEvent(new LoginEvent(user.getEmail(), user.getRole().name()));
 
     LoginResponse response = new LoginResponse();

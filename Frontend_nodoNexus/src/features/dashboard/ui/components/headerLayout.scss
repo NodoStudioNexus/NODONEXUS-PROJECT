@@ -37,17 +37,37 @@
       cursor: pointer;
     }
 
+    .notificacion-container {
+      position: relative;
+
+      .unread-dot {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 10px;
+        height: 10px;
+        background: red;
+        border-radius: 50%;
+      }
+    }
+
     .profile-container {
       position: relative;
       display: flex;
       align-items: center;
 
-      .user-avatar {
+      .user-avatar,
+      .user-initial {
         width: 30px;
         height: 30px;
         border-radius: 50px;
         cursor: pointer;
-        background: var(--color-bg-primary);
+        color: var(--color-bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        border: 1px solid var(--color-bg-primary);
       }
 
       .profile-menu {
@@ -61,6 +81,12 @@
         @include glassBlur();
         @include cardShadow(10px, 5px);
         @include slideAnimation(0.3s, 10px);
+
+        &-welcome {
+          text-align: center;
+          border-bottom: 1px solid var(--color-line);
+          padding: 10px 0;
+        }
 
         ul {
           list-style: none;

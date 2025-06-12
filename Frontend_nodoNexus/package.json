@@ -6,13 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{js,jsx,json,scss,css}\""
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.6.1",
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.8.4",
     "formik": "^2.4.6",
+    "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
     "react-devtools": "^6.1.1",
     "react-dom": "^19.0.0",
@@ -20,22 +21,25 @@
     "react-redux": "^9.2.0",
     "react-router": "^7.4.0",
     "react-router-dom": "^7.4.0",
+    "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
+    "webstomp-client": "^1.2.6",
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@babel/core": "^7.27.1",
+    "@babel/plugin-syntax-jsx": "^7.27.1",
+    "@babel/preset-react": "^7.27.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/redux-persist": "^4.0.0",
+    "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
-    "eslint": "^9.21.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
+    "prettier": "^3.5.3",
     "sass": "^1.86.0",
     "typescript": "~5.7.2",
-    "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
   }
 }

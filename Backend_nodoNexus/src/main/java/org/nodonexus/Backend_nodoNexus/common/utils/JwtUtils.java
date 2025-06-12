@@ -25,7 +25,6 @@ public class JwtUtils {
   @Value("${jwt.expiration}")
   private Long expiration;
 
-  // Convertir la clave secreta en un objeto SecretKey
   private SecretKey getSigningKey() {
     return Keys.hmacShaKeyFor(secret.getBytes());
   }
@@ -35,9 +34,10 @@ public class JwtUtils {
     return new String(Base64.getEncoder().encode(key.getEncoded()));
   }
 
-  public String generateToken(String email, String role) {
+  public String generateToken(Long userId, String email, String role) {
     return Jwts.builder()
         .setSubject(email)
+        .claim("id", userId)
         .claim("role", "ROLE_" + role)
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + expiration))
@@ -56,13 +56,22 @@ public class JwtUtils {
   }
 
   public String getRoleFromToken(String token) {
-    String roleWithPrefix = Jwts.parserBuilder()
+    return Jwts.parserBuilder()
         .setSigningKey(getSigningKey())
         .build()
         .parseClaimsJws(token)
         .getBody()
         .get("role", String.class);
-    return roleWithPrefix.replace("ROLE_", ""); // Esto quita el prefijo
+  }
+
+  public String getIdFromToken(String token) {
+    Integer id = Jwts.parserBuilder()
+        .setSigningKey(getSigningKey())
+        .build()
+        .parseClaimsJws(token)
+        .getBody()
+        .get("id", Integer.class);
+    return id.toString();
   }
 
   public boolean validateToken(String token) {
@@ -79,7 +88,7 @@ public class JwtUtils {
         .setSubject(email)
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-        .signWith(getSigningKey(), SignatureAlgorithm.ES512)
+        .signWith(getSigningKey(), SignatureAlgorithm.HS512) // Corregido a HS512 para consistencia
         .compact();
   }
 
@@ -92,8 +101,7 @@ public class JwtUtils {
           .getBody()
           .getSubject();
     } catch (Exception e) {
-      throw new InvalidTokenException("Token invalido o expirado.");
+      throw new InvalidTokenException("Token inválido o expirado.");
     }
   }
-
 }

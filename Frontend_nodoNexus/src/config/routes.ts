@@ -1,5 +1,6 @@
 export const PublicRoutes = {
   LOGIN: "login",
+  SOLICITUD: "nuevaSolicitud"
 };
 
 export const PrivateRoutes = {
@@ -22,6 +23,10 @@ export const PrivateRoutes = {
   ANALYST_BUSINESS_MODELING: "analyst/business-modeling",
   ANALYST_REQUIREMENTS: "analyst/requirements",
   ANALYST_RISKS_REPORTS: "analyst/risks-reports",
+
+  // Rutas de perfil (comunes a todos los roles)
+  PROFILE: "profile",
+  PROFILE_EDIT: "dashboard/profile/edit",
 };
 
 // Mapa de rutas a nombres de módulos
@@ -29,4 +34,6 @@ export const moduleNames: Record<string, string> = {
   [PrivateRoutes.ADMINDASHBOARD]: "Dashboard Administrador",
   [PrivateRoutes.CLIENTDASHBOARD]: "Dashboard Cliente",
   [PrivateRoutes.ANALISTDASHBOARD]: "Dashboard Analista",
+  [PrivateRoutes.PROFILE]: "Mi Perfil",
+  [PrivateRoutes.PROFILE_EDIT]: "Editar Perfil",
 };

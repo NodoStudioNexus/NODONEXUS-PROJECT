@@ -6,6 +6,8 @@ import { RootState } from '../../../../app/store';
 import './dashboardLayout.scss';
 import HeaderLayout from './HeaderLayout';
 import SideBarLayout from './SideBarLayout';
+import NotificacionPanel from '../../../comunicacion/ui/components/NotificacionPanel';
+import { useState } from 'react';
 
 export const DashboardLayout = () => {
   const location = useLocation();
@@ -19,20 +21,21 @@ export const DashboardLayout = () => {
     moduleNames[currentPath.split('/').pop() || ''] ||
     'Dashboard';
 
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  const togglePanel = () => setIsPanelOpen(!isPanelOpen);
+
   return (
     <div className="dashboard-layout">
-      <HeaderLayout moduleName={moduleName} />
+      <HeaderLayout moduleName={moduleName} onOpenPanel={togglePanel} />
       <div className="dashboard-content">
         <SideBarLayout />
-        <main className="main-content">
+        <main className={`main-content ${isPanelOpen ? 'panel-open' : ''}`}>
           <Outlet />
         </main>
-        <div className="chat-panel"></div> {/* Espacio para el chat */}
+        <NotificacionPanel isOpen={isPanelOpen} onClose={togglePanel} />
+        {/*<div className="chat-panel"></div>  Espacio para el chat */}
       </div>
-      {/*
-
-      <footer className="dashboard-footer">Dashboard Footer</footer>
-      */}
     </div>
   );
 };

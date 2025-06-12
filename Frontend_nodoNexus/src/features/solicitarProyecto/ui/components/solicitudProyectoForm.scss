@@ -1,0 +1,11 @@
+@use '../../../../styles/abstracts/_index.scss' as *;
+
+.formContainer {
+	width: var(--form-width);
+	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+
+	@include formStyles();
+}

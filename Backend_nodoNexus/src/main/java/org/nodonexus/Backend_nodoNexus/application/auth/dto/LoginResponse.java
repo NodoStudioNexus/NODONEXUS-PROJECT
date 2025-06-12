@@ -23,4 +23,5 @@ public class LoginResponse {
   private String profileImage;
   private String bannerProfileImage;
   private String initial;
+  private boolean mustChangePassword;
 }

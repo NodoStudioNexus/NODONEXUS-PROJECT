@@ -31,13 +31,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     String header = request.getHeader("Authorization");
 
-    // Si no hay token en la cabecera, deja pasar la solicitud sin autenticar
     if (header == null || !header.startsWith("Bearer ")) {
       chain.doFilter(request, response);
       return;
     }
 
     String token = header.substring(7);
+
     if (!jwtUtils.validateToken(token)) {
       System.out.println("Se ha detectado un token invalido");
       response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "el token es invalido o expiró");
@@ -47,10 +47,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String email = jwtUtils.getEmailFromToken(token);
     String role = jwtUtils.getRoleFromToken(token);
 
-    // 🔹 Verifica si el token ya contiene "ROLE_" antes de agregarlo
-    String rolePrefix = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+    if (role == null || !role.startsWith("ROLE_")) {
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+          "Rol inválido o no encontrado en el token");
+      return;
+    }
 
-    User user = new User(email, "", Collections.singleton(new SimpleGrantedAuthority(rolePrefix)));
+    User user = new User(email, "",
+        Collections.singleton(new SimpleGrantedAuthority(role)));
 
     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
         user, null, user.getAuthorities());
@@ -64,6 +68,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
     String path = request.getRequestURI();
-    return path.startsWith("/api/auth/") || path.startsWith("/swagger-ui/") || path.startsWith("/v3/api-docs/");
+    return path.startsWith("/api/auth/") ||
+        path.startsWith("/swagger-ui/") ||
+        path.startsWith("/v3/api-docs/") ||
+        path.startsWith("/api/solicitudes/nuevoProyecto");
   }
 }

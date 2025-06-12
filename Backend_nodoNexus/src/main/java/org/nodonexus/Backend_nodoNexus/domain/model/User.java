@@ -3,14 +3,22 @@ package org.nodonexus.Backend_nodoNexus.domain.model;
 import java.time.Instant;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.nodonexus.Backend_nodoNexus.common.constants.IdentityType;
 import org.nodonexus.Backend_nodoNexus.common.constants.RoleEnum;
 
 @Entity
+@Getter
 @Data
 @Table(name = "users")
 public class User {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @Column(unique = true, nullable = false)
   private String email;
 
   private String password;
@@ -45,7 +53,8 @@ public class User {
   @Column(length = 20)
   private String telefono;
 
-  @Column(name = "fecha_registro", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+  @Column(name = "fecha_registro", nullable = false, updatable = false)
+  @CreationTimestamp
   private Instant fechaRegistro;
 
   @Column(name = "ultimo_acceso")
@@ -59,4 +68,7 @@ public class User {
 
   @Column(name = "banner_profile_image")
   private String bannerProfileImage;
+
+  @Column(name = "must_change_password", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+  private boolean mustChangePassword = true; // Por defecto true para nuevos usuarios
 }
