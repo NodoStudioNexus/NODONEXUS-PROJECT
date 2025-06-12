@@ -4,6 +4,7 @@ import { RootState } from '../../../../app/store';
 import { closeModal } from '../infraestructure/redux/modalGlobalSlice';
 import { ModalContentRenderer } from './ModalContentRenderer';
 import './globalModals.scss';
+import './estilosModals/detallesModals.scss';
 
 const GlobalModal = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const GlobalModal = () => {
         <div className="modal-body">
           <ModalContentRenderer />
         </div>
-        {['success', 'error', 'info'].includes(modal.variant) && (
+        {['success', 'error', 'info', 'detallesModal'].includes(modal.variant) && (
           <div className="modal-footer">
             <button
               className="cancel-button"

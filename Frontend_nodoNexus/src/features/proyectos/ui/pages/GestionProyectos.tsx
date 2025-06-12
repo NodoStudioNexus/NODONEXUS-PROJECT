@@ -1,4 +1,4 @@
-import SolicitudesPendientes from "../components/SolicitudesPendientes";
+import SolicitudesPendientes from "../components/cotizaciones/SolicitudesPendientes";
 
 const GestionProyectos = () => {
 	return (

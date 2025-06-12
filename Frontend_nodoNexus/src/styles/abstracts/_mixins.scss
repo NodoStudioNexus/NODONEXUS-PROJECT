@@ -195,3 +195,58 @@
   }
 
 }
+
+
+/*=========================================
+=  Mixins de entrada / salida horizontales
+=========================================*/
+
+/**
+ * Desplaza el elemento DESDE fuera de la pantalla
+ * hacia su posición original.
+ *
+ * @param $side      left | right  – lado desde el que entra
+ * @param $distance  cantidad que viaja (px, %, rem)   — 100% cubre toda la pantalla
+ * @param $duration  duración de la animación          — 0.5s por defecto
+ */
+@mixin slideInHorizontal($side: left, $distance: 100%, $duration: 0.5s) {
+  animation: #{'slideIn-#{$side}'} $duration ease-out forwards;
+
+
+  @keyframes #{'slideIn-#{$side}'} {
+ from {
+    transform: translateX(if($side ==left, -$distance, $distance));
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+}
+
+/**
+ * Desplaza el elemento HACIA fuera de la pantalla
+ * en el lado indicado.
+ *
+ * @param $side      left | right
+ * @param $distance  cantidad que viaja
+ * @param $duration  duración
+ */
+@mixin slideOutHorizontal($side: left, $distance: 100%, $duration: 0.5s) {
+  animation: #{'slideOut-#{$side}'} $duration ease-in forwards;
+
+
+  @keyframes #{'slideOut-#{$side}'} {
+ from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(if($side ==left, -$distance, $distance));
+    opacity: 0;
+  }
+}
+}

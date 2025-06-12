@@ -1,0 +1,46 @@
+@use '../../../../../styles/abstracts/index' as *;
+/*========= eStilos detallesModal*/
+
+.modalDetalles {
+	position: absolute;
+	padding: 25px;
+	width: 100vw;
+	height: 100vh;
+	background: hsla(var(--color-primary) 0.5);
+	z-index: 5000;
+
+	@include glassBlur(var(--color-primary), 0.1, 2px);
+	@include slideAnimation(0.4s, -40px);
+
+	.detallesModal {
+		position: relative;
+		width: 40%;
+		height: 100%;
+		color: var(--color-primary);
+		background: var(--color-bg-primary);
+		border-radius: 12px;
+		padding: 25px;
+
+	}
+
+	.formularioCotizar {
+		position: absolute;
+		width: 80%;
+		top: 0;
+		right: -85%;
+		height: auto;
+		color: var(--color-primary);
+		background: var(--color-bg-primary);
+		border-radius: 12px;
+		padding: 25px;
+
+	}
+
+	.modal-footer {
+		position: absolute;
+		bottom: 0;
+		border: 1px solid red;
+
+		@include buttonPrimary();
+	}
+}

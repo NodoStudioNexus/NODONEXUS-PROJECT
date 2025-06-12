@@ -1,0 +1,11 @@
+@use '../../../../../styles/abstracts/index' as *;
+
+.containerSolicitudesPendientes {
+
+
+	.buttonCotizacion {
+		cursor: pointer;
+		@include buttonPrimary();
+
+	}
+}

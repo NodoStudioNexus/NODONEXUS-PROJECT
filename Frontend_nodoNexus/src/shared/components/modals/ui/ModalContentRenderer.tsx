@@ -5,9 +5,11 @@ import ResetPasswordModal from '../../../../features/resetPassword/ui/components
 import GenericSuccessModal from './components/GenericSuccessModal';
 import GenericErrorModal from './components/GenericErrorModalProps';
 import ModalNewUser from '../../../../features/userControl/ui/components/modales/ModalNewUser';
+import DetalleSolicitud from '../../../../features/proyectos/ui/components/cotizaciones/DetalleSolicitud';
 
 export const ModalContentRenderer = () => {
   const modal = useSelector((state: RootState) => state.modalGlobal.modal);
+
 
   if (!modal.modalType) return null;
 
@@ -24,6 +26,8 @@ export const ModalContentRenderer = () => {
       return <GenericErrorModal message={modal.message} />;
     case 'info':
       return <p>{modal.message}</p>;
+    case 'detallesProyecto':
+      return <DetalleSolicitud solicitudId={modal.payload?.solicitudId} />
     default:
       return null;
   }

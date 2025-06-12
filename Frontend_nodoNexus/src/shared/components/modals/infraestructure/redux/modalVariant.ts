@@ -5,4 +5,5 @@ export type modalVariant =
   | 'confirm'
   | 'warning'
   | 'infoLarge'
-  | 'formsModal';
+  | 'formsModal'
+  | 'detallesModal';
