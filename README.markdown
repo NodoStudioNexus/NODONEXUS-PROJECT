@@ -36,15 +36,6 @@ Explora todos los detalles del proyecto en la carpeta [`Documentacion`](Document
 
 
 
-Para desplegar el proyecto localmente:
-
-1. Asegúrate de tener [Docker](https://www.docker.com/get-started) y [Docker Compose](https://docs.docker.com/compose/install/) instalados.
-2. En la raíz del proyecto, ejecuta:
-   ```bash
-   docker-compose up --build
-   ```
-3. Accede a la aplicación en `http://localhost:3000`.
-
 ## 📧 Contacto
 
 ¿Preguntas o sugerencias? Escribe a [soporte@nodostudio.com](mailto:soporte@nodostudio.com).
