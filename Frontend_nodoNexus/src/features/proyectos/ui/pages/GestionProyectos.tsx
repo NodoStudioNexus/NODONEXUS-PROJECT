@@ -1,4 +1,4 @@
-import SolicitudesPendientes from "../components/cotizaciones/SolicitudesPendientes";
+import EstadoSolicitudes from "../components/cotizaciones/EstadoSolicitudes";
 
 const GestionProyectos = () => {
 	return (
@@ -6,7 +6,7 @@ const GestionProyectos = () => {
 			<section className="containerGestionProyectos">
 
 				<div>
-					<SolicitudesPendientes />
+					<EstadoSolicitudes />
 				</div>
 
 			</section>

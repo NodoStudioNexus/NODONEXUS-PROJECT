@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.nodonexus.Backend_nodoNexus.application.proyectos.service.ProyectoService;
 import org.nodonexus.Backend_nodoNexus.domain.model.SolicitudProyecto;
+import org.nodonexus.Backend_nodoNexus.domain.model.VistaSolicitudesEnProgreso;
 import org.nodonexus.Backend_nodoNexus.domain.model.VistaSolicitudesPendientes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,12 @@ public class ProyectoController {
 	@GetMapping("/pendientes")
 	public ResponseEntity<List<VistaSolicitudesPendientes>> getSolicitudesPendientes() {
 		List<VistaSolicitudesPendientes> solicitudes = proyectoService.getSolicitudesPendientes();
+		return ResponseEntity.ok(solicitudes);
+	}
+
+	@GetMapping("/enProgreso")
+	public ResponseEntity<List<VistaSolicitudesEnProgreso>> getSolicitudesEnProgreso() {
+		List<VistaSolicitudesEnProgreso> solicitudes = proyectoService.getSolicitudesEnProgresos();
 		return ResponseEntity.ok(solicitudes);
 	}
 

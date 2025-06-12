@@ -12,12 +12,10 @@ interface DetalleSolicitudProps {
 
 const DetalleSolicitud: React.FC<DetalleSolicitudProps> = ({ solicitudId }) => {
 	const [mostrarForm, setMostrarForm] = useState(false);
-
 	const [detalles, setDetalles] = useState<nuevoProyectoDetallada | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const token = useSelector((state: RootState) => state.auth.user?.token);
-
 
 	useEffect(() => {
 		if (!solicitudId || !token) {
@@ -51,16 +49,23 @@ const DetalleSolicitud: React.FC<DetalleSolicitudProps> = ({ solicitudId }) => {
 		<>
 			{mostrarForm && (
 				<div className="formularioCotizar">
-					<aside >
+					<aside>
 						<FormularioCotizacion solicitudId={solicitudId} />
 						<button onClick={() => setMostrarForm(false)}>Cerrar</button>
 					</aside>
 				</div>
 			)}
-			<section className='containerDetalles' >
+			<section className="containerDetalles">
 				<div className="containerDetallesInfo">
-					<div className='containerDetallesInfo-containerButtonCotizacion'>
-						<button className='buttonHacerCotizacion' onClick={() => setMostrarForm(true)}>Hacer cotización</button>
+					<div className="containerDetallesInfo-containerButtonCotizacion">
+						{detalles && detalles.estado !== 'EN_PROCESO' && (
+							<button
+								className="buttonHacerCotizacion"
+								onClick={() => setMostrarForm(true)}
+							>
+								Hacer cotización
+							</button>
+						)}
 					</div>
 					<section className="containerDetallesInfo-detallesModal">
 						<h2>Detalles de la solicitud</h2>
@@ -70,13 +75,28 @@ const DetalleSolicitud: React.FC<DetalleSolicitudProps> = ({ solicitudId }) => {
 								<p><strong>Proyecto:</strong> {detalles.nombreProyecto}</p>
 								<p><strong>Descripción:</strong> {detalles.descripcion}</p>
 								<p><strong>Tipo de Proyecto:</strong> {detalles.tipoProyecto}</p>
-								<p><strong>Presupuesto:</strong> {detalles.presupuestoMin || 'N/A'} - {detalles.presupuestoMax || 'N/A'}</p>
-								<p><strong>Plazo Estimado:</strong> {detalles.plazoEstimado || 'N/A'} días</p>
-								<p><strong>Archivos Adjuntos:</strong> {detalles.archivosAdjuntos || 'Ninguno'}</p>
-								<p><strong>Fecha de Solicitud:</strong> {new Date(detalles.fechaSolicitud).toLocaleString()}</p>
+								<p>
+									<strong>Presupuesto:</strong> {detalles.presupuestoMin || 'N/A'} -{' '}
+									{detalles.presupuestoMax || 'N/A'}
+								</p>
+								<p>
+									<strong>Plazo Estimado:</strong> {detalles.plazoEstimado || 'N/A'} días
+								</p>
+								<p>
+									<strong>Archivos Adjuntos:</strong> {detalles.archivosAdjuntos || 'Ninguno'}
+								</p>
+								<p>
+									<strong>Fecha de Solicitud:</strong>{' '}
+									{new Date(detalles.fechaSolicitud).toLocaleString()}
+								</p>
 								<p><strong>Estado:</strong> {detalles.estado}</p>
-								<p><strong>Número Telefónico:</strong> {detalles.numeroTelefonico || 'N/A'}</p>
-								<p><strong>Cliente:</strong> {detalles.usuario.primerNombre} {detalles.usuario.primerApellido}</p>
+								<p>
+									<strong>Número Telefónico:</strong> {detalles.numeroTelefonico || 'N/A'}
+								</p>
+								<p>
+									<strong>Cliente:</strong> {detalles.usuario.primerNombre}{' '}
+									{detalles.usuario.primerApellido}
+								</p>
 								<p><strong>Email del Cliente:</strong> {detalles.usuario.email}</p>
 								<p><strong>Rol del Cliente:</strong> {detalles.usuario.role}</p>
 							</div>

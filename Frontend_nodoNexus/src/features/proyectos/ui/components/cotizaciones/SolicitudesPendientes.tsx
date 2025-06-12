@@ -5,9 +5,7 @@ import { webSocketService } from '../../../../../shared/services/websocketServic
 import { addSolicitud, fetchSolicitudesPendientes } from '../../../infraestructure/redux/nuevoProyectoSlice';
 import { NuevoProyectoResumida } from '../../../domain/entities/NuevoProyecto';
 import { openModal } from '../../../../../shared/components/modals/infraestructure/redux/modalGlobalSlice';
-
 import './solicitudesPendientes.scss';
-
 
 const SolicitudesPendientes = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -62,7 +60,7 @@ const SolicitudesPendientes = () => {
 	const uniqueSolicitudes = Array.from(new Map(solicitudesPendientes.map(s => [s.id, s])).values());
 
 	return (
-		<div className='containerSolicitudesPendientes' >
+		<div className='containerSolicitudesPendientes'>
 			<h3>Solicitudes Pendientes</h3>
 			{loading && <p>Cargando...</p>}
 			{error && <p>{error}</p>}
@@ -76,7 +74,11 @@ const SolicitudesPendientes = () => {
 							<p>Descripción: {solicitud.descripcion}</p>
 							<p>Cliente: {solicitud.clienteNombre} {solicitud.clienteApellido}</p>
 							<p>Fecha: {new Date(solicitud.fechaSolicitud).toLocaleString()}</p>
-							<a className="buttonCotizacion" onClick={() => handleCotizarClick(solicitud.id)}>COTIZAR</a>
+							{solicitud.estado !== 'EN_PROCESO' && (
+								<a className="buttonCotizacion" onClick={() => handleCotizarClick(solicitud.id)}>
+									COTIZAR
+								</a>
+							)}
 						</li>
 					))
 				)}

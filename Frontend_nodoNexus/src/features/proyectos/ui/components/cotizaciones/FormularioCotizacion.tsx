@@ -28,6 +28,7 @@ const FormularioCotizacion: React.FC<FormularioCotizacionProps> = ({ solicitudId
 		archivoUrl: '',
 	};
 	const handleSubmit = async (values: typeof initialValues) => {
+		console.log('Token antes de enviar:', token); // Depuración
 		setError(null); // Limpiar errores previos
 		const cotizacionData = {
 			solicitudId: solicitudId,
@@ -46,7 +47,6 @@ const FormularioCotizacion: React.FC<FormularioCotizacionProps> = ({ solicitudId
 		};
 
 		try {
-			// Pasa el token como segundo argumento
 			await createCotizacion(cotizacionData, token!);
 			dispatch(closeModal());
 		} catch (err: any) {

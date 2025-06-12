@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState } from '../../../../app/store';
 import { NuevoProyectoResumida, nuevoProyectoDetallada } from '../../domain/entities/NuevoProyecto';
-import { getSolicitudDetalles, getSolicitudesPendientes } from '../api/nuevoProyectoApi';
+import { getSolicitudDetalles, getSolicitudesEnProgreso, getSolicitudesPendientes } from '../api/nuevoProyectoApi';
 
 interface ProyectoState {
 	solicitudesPendientes: NuevoProyectoResumida[];
+	solicitudesEnProgreso: NuevoProyectoResumida[]; // Nuevo estado
 	solicitudSeleccionada: nuevoProyectoDetallada | null;
 	loading: boolean;
 	error: string | null;
@@ -13,6 +13,7 @@ interface ProyectoState {
 
 const initialState: ProyectoState = {
 	solicitudesPendientes: [],
+	solicitudesEnProgreso: [],
 	solicitudSeleccionada: null,
 	loading: false,
 	error: null,
@@ -20,17 +21,22 @@ const initialState: ProyectoState = {
 
 export const fetchSolicitudesPendientes = createAsyncThunk(
 	'proyectos/fetchSolicitudesPendientes',
-	async (_, { getState }) => {
-		const state = getState() as RootState;
-		return await getSolicitudesPendientes(state);
+	async () => {
+		return await getSolicitudesPendientes();
+	}
+);
+
+export const fetchSolicitudesEnProgreso = createAsyncThunk(
+	'proyectos/fetchSolicitudesEnProgreso',
+	async () => {
+		return await getSolicitudesEnProgreso();
 	}
 );
 
 export const fetchSolicitudDetalles = createAsyncThunk(
 	'proyectos/fetchSolicitudDetalles',
-	async (id: number, { getState }) => {
-		const state = getState() as RootState;
-		return await getSolicitudDetalles(id, state);
+	async (id: number) => {
+		return await getSolicitudDetalles(id);
 	}
 );
 
@@ -44,6 +50,7 @@ const proyectoSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
+
 			.addCase(fetchSolicitudesPendientes.pending, (state) => {
 				state.loading = true;
 				state.error = null;
@@ -54,8 +61,22 @@ const proyectoSlice = createSlice({
 			})
 			.addCase(fetchSolicitudesPendientes.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.error.message || 'Error al cargar solicitudes';
+				state.error = action.error.message || 'Error al cargar solicitudes pendientes';
 			})
+
+			.addCase(fetchSolicitudesEnProgreso.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(fetchSolicitudesEnProgreso.fulfilled, (state, action) => {
+				state.loading = false;
+				state.solicitudesEnProgreso = action.payload;
+			})
+			.addCase(fetchSolicitudesEnProgreso.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.error.message || 'Error al cargar solicitudes en progreso';
+			})
+
 			.addCase(fetchSolicitudDetalles.pending, (state) => {
 				state.loading = true;
 				state.error = null;

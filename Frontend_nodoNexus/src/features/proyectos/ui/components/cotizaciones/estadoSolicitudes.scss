@@ -1,0 +1,7 @@
+@use '../../../../../styles/abstracts/index' as *;
+
+.ContainerSolicitudes {
+	width: 30%;
+	border: 1px solid var(--color-line);
+	position: relative;
+}

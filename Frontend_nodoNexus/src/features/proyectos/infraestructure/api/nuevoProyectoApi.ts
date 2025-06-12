@@ -12,6 +12,16 @@ export const getSolicitudesPendientes = async (): Promise<NuevoProyectoResumida[
 	}
 };
 
+export const getSolicitudesEnProgreso = async (): Promise<NuevoProyectoResumida[]> => {
+	try {
+		const response = await api.get('/solicitudes/enProgreso');
+		return response.data;
+	} catch (error) {
+		console.error('Error al obtener solicitudes en pendientes', error);
+		throw new Error('Error al obtener solicitudes en pendientes');
+	}
+};
+
 export const getSolicitudDetalles = async (id: number): Promise<nuevoProyectoDetallada> => {
 	try {
 		const response = await api.get(`/solicitudes/${id}`);
@@ -24,6 +34,7 @@ export const getSolicitudDetalles = async (id: number): Promise<nuevoProyectoDet
 
 export const createCotizacion = async (cotizacion: Cotizacion, token: string): Promise<void> => {
 	try {
+		console.log('Enviando cotización con token:', token);
 		await api.post('/cotizaciones', cotizacion, {
 			headers: { Authorization: `Bearer ${token}` },
 		});
