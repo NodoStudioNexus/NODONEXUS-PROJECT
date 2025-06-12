@@ -1,0 +1,21 @@
+@use '../../../../styles/abstracts/index' as *;
+
+.containerListsControlUsers {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 100%;
+
+	&-menu {
+		display: flex;
+		justify-content: space-between;
+
+		@include menuControl();
+
+		button {
+			padding: 15px 30px;
+		}
+	}
+
+}

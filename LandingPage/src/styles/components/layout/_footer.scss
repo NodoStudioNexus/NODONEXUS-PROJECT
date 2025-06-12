@@ -1,0 +1,29 @@
+@use "../../variables" as v;
+
+.footerContainer {
+  height: 500px;
+  background: v.$color-primary;
+  border-radius: 12px;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px;
+    h4 {
+      font-size: 1.5rem;
+      color: v.$color-bg;
+    }
+    button {
+      font-weight: 500;
+      background: v.$color-secondary;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 55px;
+      cursor: pointer;
+    }
+  }
+}

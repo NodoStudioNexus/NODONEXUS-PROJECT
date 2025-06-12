@@ -18,11 +18,16 @@ $radius-container: 12px;
   --color-font: var(--color-bg-primary);
   --color-line: hsla(207, 75%, 12%, 0.15);
   --color-bg-transparent: hsla(207, 75%, 12%, 0.8);
+  --color-text: hsl(207, 75%, 12%);
 
   // Colores extras gradient
   --color-third: hsl(207, 80%, 95%);
   --color-fourth: hsl(207, 75%, 94%);
   --color-fifth: hsl(207, 70%, 93%);
+
+  //ColorHover 
+
+  --color-hover: hsla(207, 74%, 12%, 0.172);
 
   // Alertas
 
@@ -38,7 +43,11 @@ $radius-container: 12px;
   --color-bg-secondary: hsl(210, 60%, 96%);
   --color-font: var(--color-bg-primary);
   --color-line: hsla(207, 50%, 92%, 0.15);
+
   --color-bg-transparent: hsla(207, 50%, 92%, 0.18);
+  --color-text: hsl(207, 50%, 92%);
+
+  --color-hover: hsla(206, 51%, 92%, 0.085);
 
   // Colores extras gradient
   --color-third: hsl(207, 90%, 15%);

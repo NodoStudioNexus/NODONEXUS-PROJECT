@@ -4,4 +4,6 @@ export type modalType =
   | 'success'
   | 'error'
   | 'sending'
-  | 'info';
+  | 'info'
+  | 'FormNewUser'
+  | 'detallesProyecto';

@@ -1,0 +1,14 @@
+@use '../../../../styles/abstracts/index' as *;
+
+.buttonNewUser {
+
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	justify-content: center;
+	border: 1px solid red;
+	padding: 10px 35px;
+
+	@include buttonSecondary();
+
+}

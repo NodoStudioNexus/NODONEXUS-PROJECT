@@ -1,4 +1,3 @@
-// features/comunicacion/infraestructure/redux/notificacionSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Notification {
@@ -34,6 +33,12 @@ const notificationSlice = createSlice({
 				notification.leido = true;
 			}
 		},
+		markAsUnread: (state, action: PayloadAction<number>) => {
+			const notification = state.notifications.find(n => n.id === action.payload);
+			if (notification) {
+				notification.leido = false;
+			}
+		},
 		deleteNotification: (state, action: PayloadAction<number>) => {
 			state.notifications = state.notifications.filter(n => n.id !== action.payload);
 		},
@@ -43,5 +48,5 @@ const notificationSlice = createSlice({
 	},
 });
 
-export const { addNotification, markAsRead, deleteNotification, setNotifications } = notificationSlice.actions;
+export const { addNotification, markAsRead, markAsUnread, deleteNotification, setNotifications } = notificationSlice.actions;
 export default notificationSlice.reducer;

@@ -95,6 +95,14 @@
   cursor: pointer;
 }
 
+@mixin buttonSecondary() {
+  background: var(--color-bg-primary);
+  color: var(--color-primary);
+  border: none;
+  border-radius: $radius-input;
+  cursor: pointer;
+}
+
 // Form Styles
 @mixin formStyles {
 
@@ -128,7 +136,26 @@
     border-radius: $radius-input;
     width: 100%;
     background: none;
-    color: var(--color-bg-primary);
+    color: var(--color-text);
+
+    &:focus {
+      border-color: var(--color-primary);
+      outline: none;
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+    min-width: 500px;
+  }
+
+  select {
+    option {
+      color: var(--color-bg-primary);
+      border: none;
+      background: var(--color-primary);
+    }
   }
 
   .errorServer,
@@ -150,4 +177,76 @@
   button {
     @include buttonPrimary();
   }
+}
+
+@mixin menuControl {
+
+  button {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    border-radius: 12px 12px 0px 0px;
+
+    &.active {
+      font-weight: 500;
+      background: var(--color-hover);
+    }
+  }
+
+}
+
+
+/*=========================================
+=  Mixins de entrada / salida horizontales
+=========================================*/
+
+/**
+ * Desplaza el elemento DESDE fuera de la pantalla
+ * hacia su posición original.
+ *
+ * @param $side      left | right  – lado desde el que entra
+ * @param $distance  cantidad que viaja (px, %, rem)   — 100% cubre toda la pantalla
+ * @param $duration  duración de la animación          — 0.5s por defecto
+ */
+@mixin slideInHorizontal($side: left, $distance: 100%, $duration: 0.5s) {
+  animation: #{'slideIn-#{$side}'} $duration ease-out forwards;
+
+
+  @keyframes #{'slideIn-#{$side}'} {
+ from {
+    transform: translateX(if($side ==left, -$distance, $distance));
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+}
+
+/**
+ * Desplaza el elemento HACIA fuera de la pantalla
+ * en el lado indicado.
+ *
+ * @param $side      left | right
+ * @param $distance  cantidad que viaja
+ * @param $duration  duración
+ */
+@mixin slideOutHorizontal($side: left, $distance: 100%, $duration: 0.5s) {
+  animation: #{'slideOut-#{$side}'} $duration ease-in forwards;
+
+
+  @keyframes #{'slideOut-#{$side}'} {
+ from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(if($side ==left, -$distance, $distance));
+    opacity: 0;
+  }
+}
 }

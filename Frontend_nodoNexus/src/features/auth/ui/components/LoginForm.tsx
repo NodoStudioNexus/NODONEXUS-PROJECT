@@ -7,7 +7,6 @@ import { PrivateRoutes } from '../../../../config/routes';
 import { RootState } from '../../../../app/store';
 import { loginSchema } from '../../domain/schemas/LoginFormShema';
 
-
 // Estilos 
 import './loginForm.scss';
 import { ForgotPasswordLink } from '../../../resetPassword/ui/components/ForgotPasswordLink';
@@ -25,10 +24,14 @@ const LoginForm = () => {
         CLIENT: `/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.CLIENTDASHBOARD}`,
         ADMIN: `/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.ADMINDASHBOARD}`,
         ANALYST: `/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.ANALISTDASHBOARD}`,
+        PLANNER: `/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.PLANNERDASHBOARD}`,
+        MODELING: `/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.MODELINGDASHBOARD}`,
+        IMPLEMENTATION: `/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.IMPLEMENTATIONDASHBOARD}`,
+        TESTER: `/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.TESTERDASHBOARD}`,
+        VALIDATION: `/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.VALIDATIONDASHBOARD}`,
       };
 
       const targetRoute = roleRoutes[user.role] || `/${PrivateRoutes.DASHBOARD}`;
-
       navigate(targetRoute);
     }
   }, [user, loading, error, navigate]);
@@ -50,8 +53,8 @@ const LoginForm = () => {
       onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
-        <Form className='formContainer' >
-          {error && <p className='errorServer' >{error}</p>}
+        <Form className='formContainer'>
+          {error && <p className='errorServer'>{error}</p>}
           <fieldset>
             <label htmlFor="email"></label>
             <Field type="email" name="email" placeholder="Correo electrónico" disabled={loading} />
@@ -62,13 +65,11 @@ const LoginForm = () => {
             <label htmlFor="password"></label>
             <Field type="password" name="password" placeholder="Contraseña" disabled={loading} />
             <ErrorMessage name="password" component="p" className="errorForm" />
-
             <ForgotPasswordLink />
           </fieldset>
           <button type="submit" disabled={loading || isSubmitting}>
             {loading ? 'Cargando...' : 'Iniciar sesión'}
           </button>
-
         </Form>
       )}
     </Formik>

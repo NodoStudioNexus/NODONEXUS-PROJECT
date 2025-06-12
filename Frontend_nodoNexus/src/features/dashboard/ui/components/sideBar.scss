@@ -42,18 +42,18 @@
       border-radius: 3px;
 
       &:hover {
-        background: var(--color-bg-transparent);
+        background: var(--color-hover);
         color: var(--color-bg-primary);
 
         @include fadeIn();
       }
 
       &.active {
-        background-color: var(--color-bg-transparent);
+        background-color: var(--color-hover);
         color: var(--color-bg-primary);
 
         &:hover {
-          background-color: var(--color-bg-transparent);
+          background-color: var(--color-hover);
         }
       }
 

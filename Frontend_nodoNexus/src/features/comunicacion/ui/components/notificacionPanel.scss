@@ -7,8 +7,8 @@
 	padding: 0;
 	transition: width 0.3s ease, transform 0.3s ease;
 	overflow: hidden;
-	transform: translateX(100%);
 
+	transform: translateX(100%);
 
 	&.open {
 		width: 35%;
@@ -33,47 +33,207 @@
 	.menu {
 		display: flex;
 		justify-content: space-around;
-		padding: 10px 0;
-		border-bottom: 1px solid var(--color-line);
 
 		button {
 			background: none;
 			border: none;
+			width: 100%;
 			cursor: pointer;
 			color: var(--color-text);
-			padding: 5px 10px;
+			padding: 15px 20px;
 
 			&.active {
 				border-bottom: 2px solid var(--color-primary);
 				font-weight: bold;
+				background: var(--color-hover);
+				border-radius: 6px 6px 0px 0px;
 			}
 		}
 	}
 
-	.filter {
-		margin-bottom: 1rem;
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-
-		label {
-			font-weight: bold;
-		}
-
-		select {
-			padding: 0.5rem;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-			font-size: 1rem;
-		}
-	}
-
-	.error {
-		color: red;
-		margin-bottom: 1rem;
-	}
-
 	.content {
-		padding: 20px 0;
+		height: 96%;
+		display: flex;
+		flex-direction: column;
+
+		.containerNotificaciones {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			min-height: 0;
+
+			&-header {
+				border-radius: 0px 0px 6px 6px;
+				border: 1px solid var(--color-line);
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-end;
+				height: 12vh;
+				padding: 15px;
+				margin-bottom: 15px;
+
+				h3 {
+					margin: 0;
+					font-size: 1.2rem;
+					color: var(--color-text);
+				}
+			}
+
+			&-filter {
+				display: flex;
+				gap: 15px;
+
+				fieldset {
+					display: flex;
+					border: none;
+					align-items: baseline;
+					gap: 5px;
+
+					label {
+						color: var(--color-text);
+					}
+
+					select {
+						border: 1px solid var(--color-line);
+						padding: 5px;
+						border-radius: $radius-input;
+						background: none;
+						color: var(--color-text);
+						cursor: pointer;
+
+						option {
+							color: var(--color-text);
+							background: var(--color-primary);
+						}
+					}
+				}
+			}
+
+			&-list {
+				flex: 1 1 auto;
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+				overflow-y: auto;
+				padding-right: 10px;
+
+				/* Custom scrollbar */
+				&::-webkit-scrollbar {
+					width: 8px;
+				}
+
+				&::-webkit-scrollbar-track {
+					background: var(--color-bg-primary);
+					border-radius: 4px;
+				}
+
+				&::-webkit-scrollbar-thumb {
+					background: var(--color-primary);
+					border-radius: 4px;
+				}
+
+				li {
+					display: flex;
+					justify-content: space-between;
+					border: 1px solid var(--color-line);
+					padding: 15px;
+					border-radius: 6px;
+					position: relative;
+					transition: background-color 0.3s ease;
+					cursor: pointer;
+
+					&.unread {
+						background-color: var(--color-hover);
+						color: var(--color-bg-primary);
+					}
+
+					&.read {
+						background: var(--color-primary);
+					}
+
+					&:hover {
+						background-color: rgba(var(--color-primary-rgb), 0.1);
+					}
+
+					.notification-details {
+						margin-top: 10px;
+						padding: 10px;
+						border-top: 1px solid var(--color-line);
+						color: var(--color-text);
+						width: 100%;
+					}
+
+					span {
+						display: flex;
+						gap: 15px;
+						align-items: center;
+						position: relative;
+
+						a,
+						span {
+							cursor: pointer;
+							opacity: 0.5;
+							color: var(--color-bg-primary);
+							position: relative;
+
+							&:hover {
+								opacity: 1;
+							}
+
+							.unread-indicator {
+								position: absolute;
+								top: -5px;
+								right: -5px;
+								width: 10px;
+								height: 10px;
+								background-color: red;
+								border-radius: 50%;
+							}
+						}
+					}
+				}
+			}
+
+			.error {
+				color: red;
+				margin-bottom: 1rem;
+			}
+
+			.pagination {
+				position: sticky;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 15px 0;
+				margin-top: 15px;
+				border-top: 1px solid var(--color-line);
+				bottom: 0;
+				width: 98%;
+
+				button {
+					background: none;
+					border: 1px solid var(--color-line);
+					padding: 5px 10px;
+					border-radius: $radius-input;
+					color: var(--color-text);
+					cursor: pointer;
+					transition: background-color 0.3s ease;
+
+					&:hover {
+						background-color: rgba(var(--color-primary-rgb), 0.1);
+					}
+
+					&:disabled {
+						opacity: 0.5;
+						cursor: not-allowed;
+					}
+				}
+
+				span {
+					color: var(--color-text);
+					font-size: 0.9rem;
+				}
+			}
+		}
 	}
 }
