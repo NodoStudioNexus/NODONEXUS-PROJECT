@@ -34,22 +34,7 @@ Explora todos los detalles del proyecto en la carpeta [`Documentacion`](Document
 ### Diseño
 - [Enlaces a Prototipos Figma](Documentacion/Diseño/Enlaces%20Protptipos%20figma.docx)  
 
-## 🛠️ Estructura del Repositorio
 
-```
-NODONEXUS_PROJECT/
-├── Backend_nodoNexus/      # Código del backend de la plataforma
-├── database/               # Scripts y configuración de la base de datos
-├── Documentacion/          # Documentos clave del proyecto
-│   ├── Analisis/           # Análisis detallado y requisitos
-│   ├── DB/                 # Modelos y diagramas de la base de datos
-│   └── Diseño/             # Prototipos y recursos de diseño
-├── Frontend_nodoNexus/     # Interfaz de usuario de la plataforma
-├── LandingPage/            # Página de aterrizaje promocional
-└── docker-compose.yml      # Configuración para despliegue con Docker
-```
-
-## 🚀 Inicio Rápido
 
 Para desplegar el proyecto localmente:
 
