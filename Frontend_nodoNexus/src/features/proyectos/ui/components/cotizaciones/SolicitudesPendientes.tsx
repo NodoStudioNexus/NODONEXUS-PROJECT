@@ -6,6 +6,7 @@ import { addSolicitud, fetchSolicitudesPendientes } from '../../../infraestructu
 import { NuevoProyectoResumida } from '../../../domain/entities/NuevoProyecto';
 import { openModal } from '../../../../../shared/components/modals/infraestructure/redux/modalGlobalSlice';
 import './solicitudesPendientes.scss';
+import { BiFolder } from 'react-icons/bi';
 
 const SolicitudesPendientes = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -61,7 +62,6 @@ const SolicitudesPendientes = () => {
 
 	return (
 		<div className='containerSolicitudesPendientes'>
-			<h3>Solicitudes Pendientes</h3>
 			{loading && <p>Cargando...</p>}
 			{error && <p>{error}</p>}
 			<ul>
@@ -69,16 +69,25 @@ const SolicitudesPendientes = () => {
 					<li>No hay solicitudes pendientes.</li>
 				) : (
 					uniqueSolicitudes.map((solicitud) => (
-						<li key={solicitud.id}>
-							<p>Proyecto: {solicitud.nombreProyecto}</p>
-							<p>Descripción: {solicitud.descripcion}</p>
-							<p>Cliente: {solicitud.clienteNombre} {solicitud.clienteApellido}</p>
-							<p>Fecha: {new Date(solicitud.fechaSolicitud).toLocaleString()}</p>
-							{solicitud.estado !== 'EN_PROCESO' && (
-								<a className="buttonCotizacion" onClick={() => handleCotizarClick(solicitud.id)}>
-									COTIZAR
-								</a>
-							)}
+						<li className='content' key={solicitud.id}>
+							<div className='content-icon'>
+								<BiFolder />
+							</div>
+							<div className='content-info'>
+								<div>
+									<p><span>Proyecto: </span> {solicitud.nombreProyecto}</p>
+									<p><span>Descripción: </span> {solicitud.descripcion}</p>
+									<p><span>Cliente: </span>{solicitud.clienteNombre} {solicitud.clienteApellido}</p>
+									<p><span>Fecha:</span> {new Date(solicitud.fechaSolicitud).toLocaleString()}</p>
+								</div>
+								<span>
+									{solicitud.estado !== 'EN_PROCESO' && (
+										<a className="buttonCotizacion" onClick={() => handleCotizarClick(solicitud.id)}>
+											COTIZAR
+										</a>
+									)}
+								</span>
+							</div>
 						</li>
 					))
 				)}

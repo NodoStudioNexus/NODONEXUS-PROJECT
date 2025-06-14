@@ -47,7 +47,7 @@ public class AuthService {
     }
 
     user.setUltimoAcceso(Instant.now());
-    userService.save(user);
+    userService.save(user, false);
 
     String token = jwtUtils.generateToken(user.getId(), user.getEmail(), user.getRole().name());
     eventPublisher.publishEvent(new LoginEvent(user.getEmail(), user.getRole().name()));
@@ -120,6 +120,6 @@ public class AuthService {
     user.setActivo(true);
     user.setFechaRegistro(Instant.now());
 
-    userService.save(user);
+    userService.save(user, false);
   }
 }

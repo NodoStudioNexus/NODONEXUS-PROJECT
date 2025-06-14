@@ -11,11 +11,11 @@ const EstadoSolicitudes = () => {
 	return (
 		<>
 			<section className="ContainerSolicitudes">
-				<div>
+				<div className="ContainerSolicitudes-menu"  >
 					<button onClick={() => setActiveTab('solicitudesPendientes')} className={activeTab === 'solicitudesPendientes' ? 'active' : ' '}>Solicitudes Pendientes</button>
 					<button onClick={() => setActiveTab('solicitudesProceso')} className={activeTab === 'solicitudesProceso' ? 'active' : ' '}>Solicitudes En Progreso</button>
 				</div>
-				<div className="containerListsControlUsers-content" >
+				<div className="ContainerSolicitudes-content" >
 					{activeTab === 'solicitudesPendientes' && <SolicitudesPendientes />}
 					{activeTab === 'solicitudesProceso' && <SolicitudesEnProgreso />}
 				</div>

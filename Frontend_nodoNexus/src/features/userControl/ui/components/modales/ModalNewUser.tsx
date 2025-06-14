@@ -147,8 +147,8 @@ const ModalNewUser = () => {
 									type="password"
 									name="password"
 									value={values.numeroIdentidad}
-									readOnly // Hacer el campo de solo lectura
-									className="read-only-field" // Opcional: añadir clase para estilo
+									readOnly
+									className="read-only-field"
 								/>
 								<ErrorMessage name="password" component="p" className="errorForm" />
 							</div>
@@ -162,8 +162,8 @@ const ModalNewUser = () => {
 									type="password"
 									name="confirmPassword"
 									value={values.numeroIdentidad}
-									readOnly // Hacer el campo de solo lectura
-									className="read-only-field" // Opcional: añadir clase para estilo
+									readOnly
+									className="read-only-field"
 								/>
 								<ErrorMessage name="confirmPassword" component="p" className="errorForm" />
 							</div>

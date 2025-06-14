@@ -1,7 +1,33 @@
 @use '../../../../../styles/abstracts/index' as *;
 
 .ContainerSolicitudes {
-	width: 30%;
-	border: 1px solid var(--color-line);
+	width: 40%;
 	position: relative;
+
+	&-menu {
+		display: flex;
+		justify-content: space-around;
+
+		button {
+			background: none;
+			border: none;
+			width: 100%;
+			cursor: pointer;
+			color: var(--color-text);
+			padding: 15px 20px;
+
+			&.active {
+				border-bottom: 2px solid var(--color-primary);
+				font-weight: bold;
+				background: var(--color-hover);
+				border-radius: 6px 6px 0px 0px;
+			}
+		}
+	}
+
+	&-content {
+		overflow-x: hidden;
+		overflow-y: hidden;
+	}
+
 }

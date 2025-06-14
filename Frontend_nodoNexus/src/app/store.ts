@@ -8,6 +8,7 @@ import themeSliceReducer from '../shared/components/themeToggle/infraestructure/
 import resetSliceReducer from '../features/resetPassword/infraestructure/redux/resetSlice';
 import notificacionSlice from '../features/comunicacion/infraestructure/redux/notificacionSlice';
 import nuevoProyectoSlice from '../features/proyectos/infraestructure/redux/nuevoProyectoSlice';
+import userSlice from '../features/userControl/infraestructure/redux/userSlice';
 
 
 const authPersistConfig = {
@@ -46,6 +47,7 @@ export const store = configureStore({
     reset: resetSliceReducer,
     notificacion: persistedNotificacionReducer,
     proyectos: persistedProyectoReducer,
+    users: userSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

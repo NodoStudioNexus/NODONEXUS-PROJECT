@@ -17,7 +17,7 @@ export const useWebSocket = () => {
 	const token = useSelector((state: RootState) => state.auth.user?.token);
 
 	useEffect(() => {
-		if (token) {
+		if (token && !webSocketService.isConnected()) {
 			try {
 				const decodedToken: DecodedToken = jwtDecode(token);
 				const userId = decodedToken.id;
