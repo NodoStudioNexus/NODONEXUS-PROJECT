@@ -82,7 +82,7 @@ public class UserManagementService {
     // **** */
 
     public UserResponse UpdateUser(Long id, UpdateUserManagementRequest request) {
-        User user = userRepository.findById(id.toString())
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + id));
 
         // Actualizar solo los campos proporcionados
@@ -109,7 +109,7 @@ public class UserManagementService {
     /** ELIMINAR USUARIO */
 
     public void deleteUser(Long id) {
-        User user = userRepository.findById(id.toString())
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + id));
         user.setActivo(false);
         userRepository.save(user);

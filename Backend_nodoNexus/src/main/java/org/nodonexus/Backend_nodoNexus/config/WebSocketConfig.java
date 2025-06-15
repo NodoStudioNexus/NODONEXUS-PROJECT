@@ -25,7 +25,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/ws")
+		registry.addEndpoint("/ws", "/chat")
 				.setAllowedOrigins("*");// Ajustar en el producccion
 	}
 
@@ -33,4 +33,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	public void configureClientInboundChannel(ChannelRegistration registration) {
 		registration.interceptors(authInterceptor);
 	}
+
 }
