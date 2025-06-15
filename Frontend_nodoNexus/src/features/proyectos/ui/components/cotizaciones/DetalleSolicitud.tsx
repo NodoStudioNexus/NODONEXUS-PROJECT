@@ -68,17 +68,35 @@ const DetalleSolicitud: React.FC<DetalleSolicitudProps> = ({ solicitudId }) => {
 						)}
 					</div>
 					<section className="containerDetallesInfo-detallesModal">
-						<h2>Detalles de la solicitud</h2>
 						{detalles ? (
 							<div>
-								<p><strong>ID:</strong> {detalles.id}</p>
-								<p><strong>Proyecto:</strong> {detalles.nombreProyecto}</p>
-								<p><strong>Descripción:</strong> {detalles.descripcion}</p>
-								<p><strong>Tipo de Proyecto:</strong> {detalles.tipoProyecto}</p>
+								<div>
+									<p><strong>ID:</strong> {detalles.id}</p>
+									<h3>Detalles de la solicitud</h3>
+								</div>
+								<div>
+									<p><strong>Proyecto:</strong> {detalles.nombreProyecto}</p>
+									<span>
+										<p>
+											<strong>Cliente:</strong> {detalles.usuario.primerNombre}{' '}
+											{detalles.usuario.primerApellido}
+										</p>
+									</span>
+									<span>
+										<p>
+											<strong>Número Telefónico:</strong> {detalles.numeroTelefonico || 'N/A'}
+										</p>
+
+										<p><strong>Email del Cliente:</strong> {detalles.usuario.email}</p>
+
+										<p><strong>Tipo de Proyecto:</strong> {detalles.tipoProyecto}</p>
+									</span>
+								</div>
 								<p>
 									<strong>Presupuesto:</strong> {detalles.presupuestoMin || 'N/A'} -{' '}
 									{detalles.presupuestoMax || 'N/A'}
 								</p>
+								<p><strong>Descripción:</strong> {detalles.descripcion}</p>
 								<p>
 									<strong>Plazo Estimado:</strong> {detalles.plazoEstimado || 'N/A'} días
 								</p>
@@ -90,14 +108,7 @@ const DetalleSolicitud: React.FC<DetalleSolicitudProps> = ({ solicitudId }) => {
 									{new Date(detalles.fechaSolicitud).toLocaleString()}
 								</p>
 								<p><strong>Estado:</strong> {detalles.estado}</p>
-								<p>
-									<strong>Número Telefónico:</strong> {detalles.numeroTelefonico || 'N/A'}
-								</p>
-								<p>
-									<strong>Cliente:</strong> {detalles.usuario.primerNombre}{' '}
-									{detalles.usuario.primerApellido}
-								</p>
-								<p><strong>Email del Cliente:</strong> {detalles.usuario.email}</p>
+
 								<p><strong>Rol del Cliente:</strong> {detalles.usuario.role}</p>
 							</div>
 						) : (

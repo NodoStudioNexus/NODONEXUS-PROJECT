@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUser, fetchUsers } from '../../infraestructure/redux/userSlice';
+
+import { fetchUsers, addUser } from '../../infraestructure/redux/userSlice';
+
 import { TbTrash } from 'react-icons/tb';
 import { BsEye, BsViewList } from 'react-icons/bs';
-import './userControlLists.scss';
-import { AppDispatch, RootState } from '../../../../app/store';
 import { webSocketService } from '../../../../shared/services/websocketService';
+import { AppDispatch, RootState } from '../../../../app/store';
+
+import './userControlLists.scss';
 
 const UserControlLists = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -14,22 +17,20 @@ const UserControlLists = () => {
 	const error = useSelector((state: RootState) => state.users.error);
 	const token = useSelector((state: RootState) => state.auth.user?.token);
 	const [expandedUser, setExpandedUser] = useState<number | null>(null);
+	const [searchTerm, setSearchTerm] = useState('');
+	const [statusFilter, setStatusFilter] = useState('');
+	const [sortOrder, setSortOrder] = useState('desc');
 
 	useEffect(() => {
-		// Cargar usuarios iniciales
 		dispatch(fetchUsers());
-
-		// Conectar WebSocket y escuchar nuevos usuarios
 		if (token) {
 			webSocketService.initialize(dispatch, token, () => {
 				webSocketService.subscribe('/topic/users', (newUser) => {
 					console.log('Nuevo usuario recibido:', newUser);
-					dispatch(addUser(newUser)); // Agregar el nuevo usuario al estado
+					dispatch(addUser(newUser));
 				});
 			});
 		}
-
-		// Limpiar la conexión al desmontar el componente
 		return () => {
 			webSocketService.disconnect();
 		};
@@ -39,6 +40,30 @@ const UserControlLists = () => {
 		setExpandedUser(expandedUser === userId ? null : userId);
 	};
 
+	// Función para resaltar coincidencias en el texto
+	const highlightMatch = (text: string, query: string) => {
+		if (!query) return text;
+		const regex = new RegExp(`(${query})`, 'gi');
+		return text.replace(regex, '<span class="highlight">$1</span>');
+	};
+
+	// Filtrar usuarios por nombre y estado
+	const filteredUsers = users.filter((user) => {
+		const fullName = `${user.primerNombre} ${user.primerApellido}`.toLowerCase();
+		const matchesName = fullName.includes(searchTerm.toLowerCase());
+		const matchesStatus = statusFilter
+			? user.activo === (statusFilter === 'activo')
+			: true;
+		return matchesName && matchesStatus;
+	});
+
+	// Ordenar usuarios por fecha de registro
+	const sortedUsers = [...filteredUsers].sort((a, b) => {
+		const dateA = new Date(a.fechaRegistro).getTime();
+		const dateB = new Date(b.fechaRegistro).getTime();
+		return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+	});
+
 	if (loading) {
 		return <p>Cargando usuarios...</p>;
 	}
@@ -46,59 +71,99 @@ const UserControlLists = () => {
 	if (error) {
 		return <p>{error}</p>;
 	}
+
 	return (
 		<section className="containerUserControl">
 			<header className="containerUserControl-header">
 				<h3>Control de usuarios</h3>
 				<div className="filterUsers">
-					<div>Todos los filtros</div>
+					<input
+						type="text"
+						placeholder="Buscar por nombre..."
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)}
+					/>
+					<select
+						value={statusFilter}
+						onChange={(e) => setStatusFilter(e.target.value)}
+					>
+						<option value="">Todos los estados</option>
+						<option value="activo">Activo</option>
+						<option value="inactivo">Inactivo</option>
+					</select>
+					<select
+						value={sortOrder}
+						onChange={(e) => setSortOrder(e.target.value)}
+					>
+						<option value="desc">Más reciente primero</option>
+						<option value="asc">Más antiguo primero</option>
+					</select>
 				</div>
 			</header>
 			<div className="containerUserControl-content">
-				<ul>
-					{users.map((user) => (
-						<li key={user.id}>
-							<div className="infoLists">
-								<input type="checkbox" />
-								<figure>
-									<img src={user.image || 'https://via.placeholder.com/50'} alt={`imagen perfil ${user.primerNombre} ${user.primerApellido}`} />
-								</figure>
-								<div className="infoUser">
-									<span>
-										<p>Nombre</p>
-										<h4>{user.primerNombre} {user.primerApellido}</h4>
-									</span>
-									<span>
-										<p>Rol</p>
-										<h4>{user.role}</h4>
-									</span>
-									<span>
-										<p>Correo</p>
-										<h4>{user.email}</h4>
-									</span>
-									<span className="estadoUser">
-										<p>{user.activo ? 'Activo' : 'Inactivo'}</p>
-									</span>
+				{sortedUsers.length === 0 ? (
+					<p className="noResults">No se encontraron coincidencias</p>
+				) : (
+					<ul>
+						{sortedUsers.map((user) => (
+							<li key={user.id}>
+								<div className="infoLists">
+									<input type="checkbox" />
+									<figure className="userAvatar">
+										{user.image ? (
+											<img
+												src={user.image}
+												alt={`imagen perfil ${user.primerNombre} ${user.primerApellido}`}
+											/>
+										) : (
+											<div className="initialCircle">
+												{user.primerNombre.charAt(0).toUpperCase()}
+											</div>
+										)}
+									</figure>
+									<div className="infoUser">
+										<span>
+											<p>Nombre</p>
+											<h4
+												dangerouslySetInnerHTML={{
+													__html: highlightMatch(
+														`${user.primerNombre} ${user.primerApellido}`,
+														searchTerm
+													),
+												}}
+											/>
+										</span>
+										<span>
+											<p>Rol</p>
+											<h4>{user.role}</h4>
+										</span>
+										<span>
+											<p>Correo</p>
+											<h4>{user.email}</h4>
+										</span>
+										<span className="estadoUser">
+											<p>{user.activo ? 'Activo' : 'Inactivo'}</p>
+										</span>
+									</div>
+									<div className="iconsControl">
+										<TbTrash />
+										<BsViewList />
+										<BsEye onClick={() => handleEyeClick(user.id)} style={{ cursor: 'pointer' }} />
+									</div>
 								</div>
-								<div className="iconsControl">
-									<TbTrash />
-									<BsViewList />
-									<BsEye onClick={() => handleEyeClick(user.id)} style={{ cursor: 'pointer' }} />
-								</div>
-							</div>
-
-							{expandedUser === user.id && (
-								<div className="user-details-expanded">
-									<p>Información adicional del usuario</p>
-									<p>Fecha de registro: {new Date(user.fechaRegistro).toLocaleString()}</p>
-									<p>Tipo de Identidad: {user.tipoIdentidad}</p>
-									<p>Número de Identidad: {user.numeroIdentidad}</p>
-									<p>Teléfono: {user.telefono || 'N/A'}</p>
-								</div>
-							)}
-						</li>
-					))}
-				</ul>
+								{expandedUser === user.id && (
+									<div className="user-details-expanded">
+										<p>Información adicional del usuario</p>
+										<p>Fecha de registro: {new Date(user.fechaRegistro).toLocaleString()}</p>
+										<p>Tipo de Identidad: {user.tipoIdentidad}</p>
+										<p>Número de Identidad: {user.numeroIdentidad}</p>
+										<p>Teléfono: {user.telefono || 'N/A'}</p>
+									</div>
+								)}
+							</li>
+						))}
+					</ul>
+				)}
 			</div>
 		</section>
 	);

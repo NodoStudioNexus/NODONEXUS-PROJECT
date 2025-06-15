@@ -5,8 +5,11 @@ import { webSocketService } from '../../../../../shared/services/websocketServic
 import { addSolicitud, fetchSolicitudesPendientes } from '../../../infraestructure/redux/nuevoProyectoSlice';
 import { NuevoProyectoResumida } from '../../../domain/entities/NuevoProyecto';
 import { openModal } from '../../../../../shared/components/modals/infraestructure/redux/modalGlobalSlice';
+import { FaFile, FaUser } from "react-icons/fa6";
+import { MdArrowCircleRight } from "react-icons/md";
+
+
 import './solicitudesPendientes.scss';
-import { BiFolder } from 'react-icons/bi';
 
 const SolicitudesPendientes = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -71,19 +74,19 @@ const SolicitudesPendientes = () => {
 					uniqueSolicitudes.map((solicitud) => (
 						<li className='content' key={solicitud.id}>
 							<div className='content-icon'>
-								<BiFolder />
+								<FaFile />
+
 							</div>
 							<div className='content-info'>
 								<div>
-									<p><span>Proyecto: </span> {solicitud.nombreProyecto}</p>
-									<p><span>Descripción: </span> {solicitud.descripcion}</p>
-									<p><span>Cliente: </span>{solicitud.clienteNombre} {solicitud.clienteApellido}</p>
-									<p><span>Fecha:</span> {new Date(solicitud.fechaSolicitud).toLocaleString()}</p>
+									<h3><span><FaUser />{solicitud.clienteNombre} {solicitud.clienteApellido}</span> {solicitud.nombreProyecto}</h3>
+									<p className='date'>{new Date(solicitud.fechaSolicitud).toLocaleString()}</p>
 								</div>
 								<span>
 									{solicitud.estado !== 'EN_PROCESO' && (
 										<a className="buttonCotizacion" onClick={() => handleCotizarClick(solicitud.id)}>
 											COTIZAR
+											<span><MdArrowCircleRight /></span>
 										</a>
 									)}
 								</span>

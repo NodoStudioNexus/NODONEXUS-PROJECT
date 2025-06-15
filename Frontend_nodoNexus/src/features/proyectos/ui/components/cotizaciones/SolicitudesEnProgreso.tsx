@@ -4,6 +4,8 @@ import { openModal } from "../../../../../shared/components/modals/infraestructu
 import { useEffect } from "react";
 import { fetchSolicitudesEnProgreso } from '../../../infraestructure/redux/nuevoProyectoSlice';
 
+import './solicitudesPendientes.scss'
+
 const SolicitudesEnProgreso = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const solicitudesEnProgreso = useSelector((state: RootState) => state.proyectos.solicitudesEnProgreso);
@@ -37,7 +39,6 @@ const SolicitudesEnProgreso = () => {
 
 	return (
 		<div className='containerSolicitudesEnProgreso'>
-			<h3>Solicitudes en Progreso</h3>
 			{loading && <p>Cargando...</p>}
 			{error && <p>{error}</p>}
 			<ul>

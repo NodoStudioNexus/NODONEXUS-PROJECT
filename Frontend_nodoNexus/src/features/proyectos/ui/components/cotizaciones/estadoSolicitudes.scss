@@ -3,6 +3,8 @@
 .ContainerSolicitudes {
 	width: 40%;
 	position: relative;
+	padding: 15px;
+	height: 50vh;
 
 	&-menu {
 		display: flex;
@@ -17,10 +19,9 @@
 			padding: 15px 20px;
 
 			&.active {
-				border-bottom: 2px solid var(--color-primary);
 				font-weight: bold;
 				background: var(--color-hover);
-				border-radius: 6px 6px 0px 0px;
+				border-radius: 6px;
 			}
 		}
 	}
