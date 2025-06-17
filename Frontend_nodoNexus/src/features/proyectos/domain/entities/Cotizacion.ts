@@ -1,4 +1,5 @@
 export interface Cotizacion {
+	id: number;
 	solicitudId: number;
 	costoTotal: number;
 	desgloseCostos: string;
@@ -6,4 +7,5 @@ export interface Cotizacion {
 	alcance: string;
 	expiracion: string;
 	archivoUrl: string;
+	estado: string;
 }

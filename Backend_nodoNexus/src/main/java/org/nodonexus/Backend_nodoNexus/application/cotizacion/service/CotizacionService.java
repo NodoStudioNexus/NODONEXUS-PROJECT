@@ -65,7 +65,8 @@ public class CotizacionService {
 
 	public CotizacionResponse obtenerCotizacion(Long id) {
 		Cotizacion cotizacion = cotizacionRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Cotización no encontrada con ID: " + id));
+				.orElseGet(() -> cotizacionRepository.findBySolicitudId(id)
+						.orElseThrow(() -> new IllegalArgumentException("Cotización no encontrada con ID o SolicitudID: " + id)));
 
 		CotizacionResponse response = new CotizacionResponse();
 		response.setId(cotizacion.getId());
@@ -77,6 +78,7 @@ public class CotizacionService {
 		response.setFechaGeneracion(cotizacion.getFechaGeneracion());
 		response.setExpiracion(cotizacion.getExpiracion());
 		response.setArchivoUrl(cotizacion.getArchivoUrl());
+		response.setEstado(cotizacion.getEstado());
 
 		return response;
 	}
