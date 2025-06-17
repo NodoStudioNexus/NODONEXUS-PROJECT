@@ -28,4 +28,5 @@ public class SolicitudProyectoController {
 		SolicitudProyecto nuevaSolicitud = service.crearSolicitud(request);
 		return ResponseEntity.ok(nuevaSolicitud);
 	}
+
 }

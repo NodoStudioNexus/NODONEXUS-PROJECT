@@ -30,10 +30,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User save(User user) {
+	public User save(User user, boolean notify) {
 		User savedUser = userRepository.save(user);
-		// Emitir evento WebSocket tras guardar
-		eventPublisher.publishProfileUpdatedEvent(savedUser.getId().toString());
+		if (notify) {
+			eventPublisher.publishProfileUpdatedEvent(savedUser.getId().toString());
+		}
 		return savedUser;
 	}
 
@@ -43,5 +44,13 @@ public class UserServiceImpl implements UserService {
 				.orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
 		return user.getLastResetRequest() != null &&
 				user.getLastResetRequest().isAfter(Instant.now().minus(1, ChronoUnit.HOURS));
+	}
+
+	@Override
+	public User save(User user) {
+		// TODO Auto-generated method stub //// ESta se creo por ahora TENGO QUE
+		// INVESTIGAR UN PCOO MAS
+		// Sobre este metodo
+		throw new UnsupportedOperationException("Unimplemented method 'save'");
 	}
 }

@@ -6,4 +6,6 @@ export type modalType =
   | 'sending'
   | 'info'
   | 'FormNewUser'
-  | 'detallesProyecto';
+  | 'detallesProyecto'
+  | 'misSolicitudes'
+  | 'detallesSolicitudUser';

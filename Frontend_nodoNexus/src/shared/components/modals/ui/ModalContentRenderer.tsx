@@ -6,6 +6,7 @@ import GenericSuccessModal from './components/GenericSuccessModal';
 import GenericErrorModal from './components/GenericErrorModalProps';
 import ModalNewUser from '../../../../features/userControl/ui/components/modales/ModalNewUser';
 import DetalleSolicitud from '../../../../features/proyectos/ui/components/cotizaciones/DetalleSolicitud';
+import ListaSolicitudesUser from '../../../../features/proyectos/ui/components/cotizaciones/ListaSolicitudesUser';
 
 export const ModalContentRenderer = () => {
   const modal = useSelector((state: RootState) => state.modalGlobal.modal);
@@ -27,7 +28,9 @@ export const ModalContentRenderer = () => {
     case 'info':
       return <p>{modal.message}</p>;
     case 'detallesProyecto':
-      return <DetalleSolicitud solicitudId={modal.payload?.solicitudId} />
+      return <DetalleSolicitud solicitudId={modal.payload?.solicitudId} />;
+    case 'misSolicitudes':
+      return <ListaSolicitudesUser />;
     default:
       return null;
   }

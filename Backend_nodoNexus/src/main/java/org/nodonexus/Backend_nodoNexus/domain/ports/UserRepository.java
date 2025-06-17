@@ -9,12 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByEmail(String email);
 
   List<User> findByRoleIn(List<RoleEnum> roles);
 
-  @SuppressWarnings("unchecked") // Dudas !! Aun con didas
-  User save(User user);
+  Optional<User> findById(Long creadorId);
 
+  @SuppressWarnings("unchecked")
+  User save(User user);
 }

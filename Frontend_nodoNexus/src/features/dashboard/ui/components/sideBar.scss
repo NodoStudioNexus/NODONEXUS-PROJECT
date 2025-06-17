@@ -1,9 +1,9 @@
 @use '../../../../styles/abstracts/_index' as *;
 
 .sidebar {
-  width: 60px;
+  width: 72px;
   color: var(--color-bg-primary);
-  padding: 20px 10px;
+
   position: relative;
   transition: width 0.3s ease;
   overflow-y: hidden;
@@ -11,14 +11,14 @@
   flex-direction: column;
 
   &.expanded {
-    width: 250px;
+    width: auto;
   }
 
   .toggle-btn {
     background: none;
     border: none;
     color: var(--color-bg-primary);
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
     margin-bottom: 20px;
     display: flex;
@@ -28,39 +28,29 @@
 
   .menu-items {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 32px;
+    padding-right: 15px;
 
     .menu-item {
       display: flex;
       align-items: center;
-      padding: 10px;
+      padding: 15px 15px 15px 25px;
       cursor: pointer;
       border-radius: 3px;
 
-      &:hover {
-        background: var(--color-hover);
-        color: var(--color-bg-primary);
-
-        @include fadeIn();
-      }
+      &:hover {}
 
       &.active {
-        background-color: var(--color-hover);
+        border-left: 8px solid var(--color-secondary-logo);
         color: var(--color-bg-primary);
-
-        &:hover {
-          background-color: var(--color-hover);
-        }
       }
 
       .menu-icon {
-        font-size: 1rem;
+        font-size: 1.2rem;
         min-width: 20px;
-        margin-right: 10px;
+        margin-right: 20px;
 
         &-text {
           font-size: 1rem;

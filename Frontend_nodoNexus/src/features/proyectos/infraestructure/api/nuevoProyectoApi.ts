@@ -1,6 +1,6 @@
 import api from '../../../../app/api/axiosConfig';
 import { Cotizacion } from '../../domain/entities/Cotizacion';
-import { NuevoProyectoResumida, nuevoProyectoDetallada } from '../../domain/entities/NuevoProyecto';
+import { NuevoProyectoResumida, VistaSolicitudUsuario, nuevoProyectoDetallada } from '../../domain/entities/NuevoProyecto';
 
 export const getSolicitudesPendientes = async (): Promise<NuevoProyectoResumida[]> => {
 	try {
@@ -41,5 +41,15 @@ export const createCotizacion = async (cotizacion: Cotizacion, token: string): P
 	} catch (error) {
 		console.error('Error al crear cotización', error);
 		throw error;
+	}
+};
+
+export const getSolicitudesByUsuarioId = async (usuarioId: number): Promise<VistaSolicitudUsuario[]> => {
+	try {
+		const response = await api.get(`/solicitudes/usuario/${usuarioId}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error al obtener solicitudes del usuario', error);
+		throw new Error('Error al obtener solicitudes del usuario');
 	}
 };

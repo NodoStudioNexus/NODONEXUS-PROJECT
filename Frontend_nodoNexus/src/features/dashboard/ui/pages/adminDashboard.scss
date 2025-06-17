@@ -6,11 +6,11 @@
 	border-radius: 12px;
 	display: flex;
 	justify-content: space-between;
+	flex-direction: column;
 	gap: 25px;
 
 	&-left {
 		display: flex;
-		flex-direction: column;
 		width: 100%;
 		gap: 25px;
 

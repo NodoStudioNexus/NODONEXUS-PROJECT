@@ -114,7 +114,7 @@ public class SolicitudProyectoService {
 			// "Nueva solicitud: '" + request.getNombreProyecto() + "'.");
 		}
 
-		// Notificación WebSocket general (opcional)
+		// Notificación WebSocket general
 		// El frontend debe suscribirse a /topic/notifications para recibir
 		// actualizaciones en tiempo real
 		List<String> adminAndAnalystIds = adminsAndAnalysts.stream()
@@ -125,4 +125,5 @@ public class SolicitudProyectoService {
 
 		return savedSolicitud;
 	}
+
 }

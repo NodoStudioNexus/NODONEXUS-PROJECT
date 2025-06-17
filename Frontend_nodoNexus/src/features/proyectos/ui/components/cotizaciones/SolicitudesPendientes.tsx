@@ -5,6 +5,10 @@ import { webSocketService } from '../../../../../shared/services/websocketServic
 import { addSolicitud, fetchSolicitudesPendientes } from '../../../infraestructure/redux/nuevoProyectoSlice';
 import { NuevoProyectoResumida } from '../../../domain/entities/NuevoProyecto';
 import { openModal } from '../../../../../shared/components/modals/infraestructure/redux/modalGlobalSlice';
+import { FaFile, FaUser } from "react-icons/fa6";
+import { MdArrowCircleRight } from "react-icons/md";
+
+
 import './solicitudesPendientes.scss';
 
 const SolicitudesPendientes = () => {
@@ -61,7 +65,6 @@ const SolicitudesPendientes = () => {
 
 	return (
 		<div className='containerSolicitudesPendientes'>
-			<h3>Solicitudes Pendientes</h3>
 			{loading && <p>Cargando...</p>}
 			{error && <p>{error}</p>}
 			<ul>
@@ -69,16 +72,25 @@ const SolicitudesPendientes = () => {
 					<li>No hay solicitudes pendientes.</li>
 				) : (
 					uniqueSolicitudes.map((solicitud) => (
-						<li key={solicitud.id}>
-							<p>Proyecto: {solicitud.nombreProyecto}</p>
-							<p>Descripción: {solicitud.descripcion}</p>
-							<p>Cliente: {solicitud.clienteNombre} {solicitud.clienteApellido}</p>
-							<p>Fecha: {new Date(solicitud.fechaSolicitud).toLocaleString()}</p>
-							{solicitud.estado !== 'EN_PROCESO' && (
-								<a className="buttonCotizacion" onClick={() => handleCotizarClick(solicitud.id)}>
-									COTIZAR
-								</a>
-							)}
+						<li className='content' key={solicitud.id}>
+							<div className='content-icon'>
+								<FaFile />
+
+							</div>
+							<div className='content-info'>
+								<div>
+									<h3><span><FaUser />{solicitud.clienteNombre} {solicitud.clienteApellido}</span> {solicitud.nombreProyecto}</h3>
+									<p className='date'>{new Date(solicitud.fechaSolicitud).toLocaleString()}</p>
+								</div>
+								<span>
+									{solicitud.estado !== 'EN_PROCESO' && (
+										<a className="buttonCotizacion" onClick={() => handleCotizarClick(solicitud.id)}>
+											COTIZAR
+											<span><MdArrowCircleRight /></span>
+										</a>
+									)}
+								</span>
+							</div>
 						</li>
 					))
 				)}
