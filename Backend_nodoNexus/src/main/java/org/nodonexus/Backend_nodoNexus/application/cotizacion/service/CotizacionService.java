@@ -2,6 +2,7 @@ package org.nodonexus.Backend_nodoNexus.application.cotizacion.service;
 
 import java.time.Instant;
 
+import org.nodonexus.Backend_nodoNexus.application.cotizacion.dto.CotizacionResponse;
 import org.nodonexus.Backend_nodoNexus.application.cotizacion.dto.CrearCotizacionRequest;
 import org.nodonexus.Backend_nodoNexus.domain.model.Cotizacion;
 import org.nodonexus.Backend_nodoNexus.domain.model.SolicitudProyecto;
@@ -61,4 +62,38 @@ public class CotizacionService {
 
 		return savedCotizacion;
 	}
+
+	public CotizacionResponse obtenerCotizacion(Long id) {
+		Cotizacion cotizacion = cotizacionRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Cotización no encontrada con ID: " + id));
+
+		CotizacionResponse response = new CotizacionResponse();
+		response.setId(cotizacion.getId());
+		response.setSolicitudId(cotizacion.getSolicitud().getId());
+		response.setCostoTotal(cotizacion.getCostoTotal());
+		response.setDesgloseCostos(cotizacion.getDesgloseCostos());
+		response.setTiemposEstimados(cotizacion.getTiemposEstimados());
+		response.setAlcance(cotizacion.getAlcance());
+		response.setFechaGeneracion(cotizacion.getFechaGeneracion());
+		response.setExpiracion(cotizacion.getExpiracion());
+		response.setArchivoUrl(cotizacion.getArchivoUrl());
+
+		return response;
+	}
+
+	public void actualizarEstadoCotizacion(Long id, String nuevoEstado) {
+		Cotizacion cotizacion = cotizacionRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Cotización no encontrada con ID: " + id));
+
+		cotizacion.setEstado(nuevoEstado);
+		cotizacionRepository.save(cotizacion);
+
+		String email = cotizacion.getSolicitud().getUsuario().getEmail();
+		String mensaje = "Hola " + cotizacion.getSolicitud().getUsuario().getPrimerNombre() + ",\n\n" +
+				"El estado de tu cotización para la solicitud '" + cotizacion.getSolicitud().getNombreProyecto()
+				+ "' ha sido actualizado a " + nuevoEstado + ".\n\n" +
+				"Saludos,\nEquipo Nodo Studio";
+		emailService.sendEmail(email, "Actualización de Estado de Cotización - Nodo Studio", mensaje);
+	}
+
 }

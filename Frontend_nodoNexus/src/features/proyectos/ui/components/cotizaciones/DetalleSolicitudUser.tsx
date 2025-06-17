@@ -1,16 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../app/store';
+import { FaFilePrescription } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../../../../shared/components/modals/infraestructure/redux/modalGlobalSlice';
 import { nuevoProyectoDetallada } from '../../../domain/entities/NuevoProyecto';
-import FormularioCotizacion from './FormularioCotizacion';
-import './detallesSolicitud.scss';
-import { getSolicitudDetalles } from '../../../infraestructure/api/nuevoProyectoApi';
 
-interface DetalleSolicitudProps {
-	solicitudId: number;
-}
-
-const DetalleSolicitud: React.FC<DetalleSolicitudProps> = ({ solicitudId }) => {
+const DetalleSolicitudUser: React.FC<DetalleSolicitudProps> = ({ solicitudId }) => {
 	const [mostrarForm, setMostrarForm] = useState(false);
 	const [detalles, setDetalles] = useState<nuevoProyectoDetallada | null>(null);
 	const [loading, setLoading] = useState(true);
@@ -120,5 +113,4 @@ const DetalleSolicitud: React.FC<DetalleSolicitudProps> = ({ solicitudId }) => {
 		</>
 	);
 };
-
-export default DetalleSolicitud;
+export default DetalleSolicitudUser;

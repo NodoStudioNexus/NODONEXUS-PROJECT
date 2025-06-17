@@ -1,4 +1,4 @@
-package org.nodonexus.Backend_nodoNexus.domain.model;
+package org.nodonexus.Backend_nodoNexus.domain.model.vistas;
 
 import java.time.Instant;
 

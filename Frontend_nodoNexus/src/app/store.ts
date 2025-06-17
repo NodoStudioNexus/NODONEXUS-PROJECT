@@ -9,6 +9,7 @@ import resetSliceReducer from '../features/resetPassword/infraestructure/redux/r
 import notificacionSlice from '../features/comunicacion/infraestructure/redux/notificacionSlice';
 import nuevoProyectoSlice from '../features/proyectos/infraestructure/redux/nuevoProyectoSlice';
 import userSlice from '../features/userControl/infraestructure/redux/userSlice';
+import chatSlice from '../features/comunicacion/infraestructure/redux/chatSlice';
 
 
 const authPersistConfig = {
@@ -27,6 +28,11 @@ const notificacionPersistConfig = {
   storage,
   whitelist: ['notifications'],
 };
+const chatPersistConfig = {
+  key: 'chat',
+  storage,
+  whitelist: ['chat']
+}
 
 const proyectoPersistConfig = {
   key: 'proyectos',
@@ -38,6 +44,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
 const persistedThemeReducer = persistReducer(themePersistConfig, themeSliceReducer);
 const persistedNotificacionReducer = persistReducer(notificacionPersistConfig, notificacionSlice);
 const persistedProyectoReducer = persistReducer(proyectoPersistConfig, nuevoProyectoSlice);
+const persistedChatReducer = persistReducer(chatPersistConfig, chatSlice);
 
 export const store = configureStore({
   reducer: {
@@ -48,6 +55,7 @@ export const store = configureStore({
     notificacion: persistedNotificacionReducer,
     proyectos: persistedProyectoReducer,
     users: userSlice,
+    chat: persistedChatReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

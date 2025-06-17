@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.nodonexus.Backend_nodoNexus.application.proyectos.service.ProyectoService;
 import org.nodonexus.Backend_nodoNexus.domain.model.SolicitudProyecto;
-import org.nodonexus.Backend_nodoNexus.domain.model.VistaSolicitudesEnProgreso;
-import org.nodonexus.Backend_nodoNexus.domain.model.VistaSolicitudesPendientes;
+import org.nodonexus.Backend_nodoNexus.domain.model.vistas.VistaSolicitudUsuario;
+import org.nodonexus.Backend_nodoNexus.domain.model.vistas.VistaSolicitudesEnProgreso;
+import org.nodonexus.Backend_nodoNexus.domain.model.vistas.VistaSolicitudesPendientes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,15 @@ public class ProyectoController {
 	@GetMapping("/enProgreso")
 	public ResponseEntity<List<VistaSolicitudesEnProgreso>> getSolicitudesEnProgreso() {
 		List<VistaSolicitudesEnProgreso> solicitudes = proyectoService.getSolicitudesEnProgresos();
+		return ResponseEntity.ok(solicitudes);
+	}
+
+	@GetMapping("/usuario/{usuarioId}")
+	public ResponseEntity<List<VistaSolicitudUsuario>> getSolicitudesByUsuarioId(@PathVariable Long usuarioId) {
+		List<VistaSolicitudUsuario> solicitudes = proyectoService.getSolicitudesByUsuarioId(usuarioId);
+		if (solicitudes.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
 		return ResponseEntity.ok(solicitudes);
 	}
 

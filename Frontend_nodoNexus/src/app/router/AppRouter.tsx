@@ -13,6 +13,7 @@ import UserControl from "../../features/userControl/ui/pages/UserControlPage.tsx
 import AdminDashboard from "../../features/dashboard/ui/pages/AdminDashboard";
 import GestionProyectos from "../../features/proyectos/ui/pages/GestionProyectos.tsx";
 import Construction from "../../shared/components/menssageInfo/Construction.tsx";
+import ClientDashboard from "../../features/dashboard/ui/pages/ClientDashboard";
 
 // Componentes lazy-loaded
 const Login = lazy(() => import('../../features/auth/ui/pages/LoginPage'));
@@ -101,11 +102,11 @@ export const AppRouter = () => {
               {/* Rutas Client */}
               <Route
                 path={PrivateRoutes.CLIENTDASHBOARD}
-                element={<RoleGuard rol="CLIENT"><ClientHome /></RoleGuard>}
+                element={<RoleGuard rol="CLIENT"><ClientDashboard /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.CLIENT_SOLICITUDES}
-                element={<RoleGuard rol="CLIENT"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="CLIENT"> <ClientDashboard /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.CLIENT_PROFILE}

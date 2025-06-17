@@ -1,5 +1,8 @@
+// shared/services/webSocketService.ts
 import { AppDispatch } from "../../app/store";
 import { fetchProfile } from "../../features/auth/infraestructure/redux/authSlice";
+import { addMessage, setConnectedUsers } from "../../features/comunicacion/infraestructure/redux/chatSlice";
+
 
 interface Subscription {
 	topic: string;
@@ -30,7 +33,6 @@ class WebSocketService {
 			this.connected = true;
 			console.log("WebSocket conectado");
 
-
 			// Reenvía las suscripciones pendientes
 			this.pendingSubscriptions.forEach(({ topic }) => {
 				this.sendSubscribe(topic);
@@ -53,8 +55,14 @@ class WebSocketService {
 					const email = message.payload;
 					console.log("Recibido profile_updated para:", email);
 					this.storeDispatch?.(fetchProfile(email));
+				} else if (message.type === "NEW_MESSAGE") {
+					console.log("Mensaje de chat recibido:", message.data);
+					this.storeDispatch?.(addMessage(message.data));
+				} else if (message.type === "USERS_CONNECTED") {
+					console.log("Usuarios conectados actualizados:", message.data);
+					this.storeDispatch?.(setConnectedUsers(message.data));
 				} else {
-					// Buscar y ejecutar la callback correspondiente
+					// Ejecutar callbacks de suscripciones dinámicas
 					this.pendingSubscriptions.forEach(({ topic, callback }) => {
 						if (message.topic === topic) {
 							callback(message.payload);
@@ -90,10 +98,22 @@ class WebSocketService {
 	subscribe(topic: string, callback: (data: any) => void) {
 		if (this.connected && this.socket?.readyState === WebSocket.OPEN) {
 			this.sendSubscribe(topic);
-			this.pendingSubscriptions.push({ topic, callback }); // Para mantener el manejador
+			this.pendingSubscriptions.push({ topic, callback });
 		} else {
 			console.warn("WebSocket no conectado aún. Guardando suscripción a:", topic);
 			this.pendingSubscriptions.push({ topic, callback });
+		}
+	}
+
+	sendMessage(chatId: string, content: string) {
+		if (this.connected && this.socket?.readyState === WebSocket.OPEN) {
+			this.socket.send(
+				JSON.stringify({
+					type: "SEND_MESSAGE",
+					chatId,
+					content,
+				})
+			);
 		}
 	}
 
@@ -102,8 +122,6 @@ class WebSocketService {
 			this.socket.close();
 			this.connected = false;
 			console.log("WebSocket desconectado manualmente");
-		} else {
-			console.log("WebSocket no estaba abierto");
 		}
 	}
 

@@ -1,4 +1,4 @@
-package org.nodonexus.Backend_nodoNexus.config;
+package org.nodonexus.Backend_nodoNexus.config.webSocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;

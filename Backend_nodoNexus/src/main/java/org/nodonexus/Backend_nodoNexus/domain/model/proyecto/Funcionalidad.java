@@ -1,0 +1,34 @@
+package org.nodonexus.Backend_nodoNexus.domain.model.proyecto;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name = "funcionalidades")
+public class Funcionalidad {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name = "proyecto_id", nullable = false)
+	private Proyecto proyecto;
+
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
+
+	@Column(name = "descripcion")
+	private String descripcion;
+
+	@Column(name = "estado", nullable = false)
+	private String estado = "PENDIENTE";
+}
