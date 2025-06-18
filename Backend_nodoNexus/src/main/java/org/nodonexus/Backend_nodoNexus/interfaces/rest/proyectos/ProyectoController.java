@@ -2,8 +2,13 @@ package org.nodonexus.Backend_nodoNexus.interfaces.rest.proyectos;
 
 import java.util.List;
 
+import org.nodonexus.Backend_nodoNexus.application.proyectos.dto.ActualizarEstadoRequest;
+import org.nodonexus.Backend_nodoNexus.application.proyectos.dto.CrearFuncionalidadRequest;
+import org.nodonexus.Backend_nodoNexus.application.proyectos.dto.CrearRequisitoRequest;
 import org.nodonexus.Backend_nodoNexus.application.proyectos.service.ProyectoService;
 import org.nodonexus.Backend_nodoNexus.domain.model.SolicitudProyecto;
+import org.nodonexus.Backend_nodoNexus.domain.model.proyecto.Funcionalidad;
+import org.nodonexus.Backend_nodoNexus.domain.model.proyecto.Requisito;
 import org.nodonexus.Backend_nodoNexus.domain.model.vistas.VistaSolicitudUsuario;
 import org.nodonexus.Backend_nodoNexus.domain.model.vistas.VistaSolicitudesEnProgreso;
 import org.nodonexus.Backend_nodoNexus.domain.model.vistas.VistaSolicitudesPendientes;
@@ -11,7 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -56,5 +65,42 @@ public class ProyectoController {
 	public ResponseEntity<List<SolicitudProyecto>> getAllSolicitudes() {
 		List<SolicitudProyecto> solicitudes = proyectoService.getAllSolicitudes();
 		return ResponseEntity.ok(solicitudes);
+	}
+
+	@GetMapping("/proyectos/{proyectoId}/avance")
+	public ResponseEntity<Double> getPorcentajeAvance(@PathVariable Long proyectoId) {
+		Double porcentaje = proyectoService.calcularPorcentajeAvance(proyectoId);
+		return ResponseEntity.ok(porcentaje);
+	}
+
+	@PutMapping("/funcionalidad-fase/{id}/estado")
+	public ResponseEntity<Void> actualizarEstadoFuncionalidadFase(
+			@PathVariable Long id, @RequestBody ActualizarEstadoRequest request) {
+		proyectoService.actualizarEstadoFuncionalidadFase(id, request.getNuevoEstado());
+		return ResponseEntity.ok().build();
+	}
+
+	@PutMapping("/requisito-fase/{id}/estado")
+	public ResponseEntity<Void> actualizarEstadoRequisitoFase(
+			@PathVariable Long id, @RequestBody ActualizarEstadoRequest request) {
+		proyectoService.actualizarEstadoRequisitoFase(id, request.getNuevoEstado());
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/proyectos/{proyectoId}/funcionalidades")
+	public ResponseEntity<Funcionalidad> crearFuncionalidad(
+			@PathVariable Long proyectoId,
+			@RequestBody CrearFuncionalidadRequest request) {
+		Funcionalidad funcionalidad = proyectoService.crearFuncionalidad(proyectoId, request.getNombre(),
+				request.getDescripcion());
+		return ResponseEntity.ok(funcionalidad);
+	}
+
+	@PostMapping("/funcionalidades/{funcionalidadId}/requisitos")
+	public ResponseEntity<Requisito> crearRequisito(
+			@PathVariable Long funcionalidadId,
+			@RequestBody CrearRequisitoRequest request) {
+		Requisito requisito = proyectoService.crearRequisito(funcionalidadId, request.getDescripcion());
+		return ResponseEntity.ok(requisito);
 	}
 }
