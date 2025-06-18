@@ -41,7 +41,7 @@ public class CotizacionController {
 		return ResponseEntity.ok(cotizacion);
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN', 'ANALYST')")
+	@PreAuthorize("hasAnyRole('ADMIN', 'ANALYST', 'CLIENT')")
 	@PutMapping("/{id}/estado")
 	public ResponseEntity<String> actualizarEstadoCotizacion(
 			@PathVariable Long id,
