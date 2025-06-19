@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Cotizacion } from '../../../domain/entities/Cotizacion';
 import { aprobarCotizacion, getCotizacionUser } from '../../../infraestructure/api/nuevoProyectoApi';
 
+import './DetalleCotizacionUser.scss';
+
 interface Props {
 	solicitudId: number;
 }
@@ -43,22 +45,28 @@ const DetalleCotizacionUser = ({ solicitudId }: Props) => {
 	};
 
 	return (
-		<div>
+		<div className='containerDetalleUser'>
 			{loading ? (
 				<p>Cargando cotización...</p>
 			) : cotizacion ? (
 				<>
-					<h3>Detalles de la Cotización</h3>
-					<p><strong>ID:</strong> {cotizacion.id}</p>
-					<p><strong>Solicitud ID:</strong> {cotizacion.solicitudId}</p>
-					<p><strong>Costo Total:</strong> ${cotizacion.costoTotal}</p>
-					<p><strong>Estado:</strong> aqui {cotizacion.estado}</p>
+					<header>
 
-					{cotizacion.estado !== 'APROBADA' && (
-						<button onClick={handleAprobar} disabled={aprobando}>
-							{aprobando ? 'Aprobando...' : 'Aprobar Cotización'}
-						</button>
-					)}
+						<h3>Detalles de la Cotización</h3>
+					</header>
+					<div className='containerDetalleUser-info'>
+						<p><strong>ID:</strong> {cotizacion.id}</p>
+						<p><strong>Solicitud ID:</strong> {cotizacion.solicitudId}</p>
+						<p><strong>Costo Total:</strong> ${cotizacion.costoTotal}</p>
+						<p><strong>Estado:</strong> aqui {cotizacion.estado}</p>
+					</div>
+					<div className='containerDetalleUser-button'>
+						{cotizacion.estado !== 'APROBADA' && (
+							<button onClick={handleAprobar} disabled={aprobando}>
+								{aprobando ? 'Aprobando...' : 'Aprobar Cotización'}
+							</button>
+						)}
+					</div>
 				</>
 			) : (
 				<p>No se encontró la cotización.</p>

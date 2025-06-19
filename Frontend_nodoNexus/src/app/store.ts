@@ -10,6 +10,7 @@ import notificacionSlice from '../features/comunicacion/infraestructure/redux/no
 import nuevoProyectoSlice from '../features/proyectos/infraestructure/redux/nuevoProyectoSlice';
 import userSlice from '../features/userControl/infraestructure/redux/userSlice';
 import chatSlice from '../features/comunicacion/infraestructure/redux/chatSlice';
+import proyectoSlice from '../features/proyectos/infraestructure/redux/proyectoSlice';
 
 
 const authPersistConfig = {
@@ -56,6 +57,7 @@ export const store = configureStore({
     proyectos: persistedProyectoReducer,
     users: userSlice,
     chat: persistedChatReducer,
+    proyectosList: proyectoSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

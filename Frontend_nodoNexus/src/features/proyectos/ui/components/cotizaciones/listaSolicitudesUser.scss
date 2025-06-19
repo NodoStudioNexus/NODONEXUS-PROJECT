@@ -1,0 +1,67 @@
+@use '../../../../../styles/abstracts/index' as *;
+
+.containerListaUser {
+
+	h2 {
+		border-bottom: 1px solid var(--color-bg-transparent);
+		padding: 25px 0px;
+	}
+
+	ul {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		list-style-type: none;
+
+		li {
+			padding: 15px 0px;
+			border-bottom: 1px solid var(--color-bg-transparent);
+			position: relative;
+		}
+	}
+
+	.containerInfo {
+		display: flex;
+		gap: 10px;
+		flex-direction: column;
+
+		&-liTitle {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		&-button {
+			display: flex;
+			gap: 15px;
+			color: var(--color-text);
+
+			button {
+				display: flex;
+				align-items: center;
+				gap: 15px;
+				border: 1px solid var(--color-bg-transparent);
+				background: none;
+				padding: 12px 15px;
+				border-radius: 6px;
+				cursor: pointer;
+
+				&:hover {
+					background: var(--color-primary);
+					color: var(--color-text);
+				}
+			}
+		}
+	}
+
+	.containerDesplegable {
+		border: 1px solid var(--color-bg-transparent);
+		position: absolute;
+		top: 0;
+		right: -100%;
+		width: 95%;
+		border-radius: 6px;
+		padding: 15px;
+		background: var(--color-bg-primary);
+
+	}
+}
