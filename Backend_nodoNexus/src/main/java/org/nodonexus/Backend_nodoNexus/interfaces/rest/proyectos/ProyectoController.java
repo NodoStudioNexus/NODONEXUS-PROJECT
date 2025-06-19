@@ -1,10 +1,12 @@
 package org.nodonexus.Backend_nodoNexus.interfaces.rest.proyectos;
 
 import java.util.List;
+import java.util.Map;
 
 import org.nodonexus.Backend_nodoNexus.application.proyectos.dto.ActualizarEstadoRequest;
 import org.nodonexus.Backend_nodoNexus.application.proyectos.dto.CrearFuncionalidadRequest;
 import org.nodonexus.Backend_nodoNexus.application.proyectos.dto.CrearRequisitoRequest;
+import org.nodonexus.Backend_nodoNexus.application.proyectos.dto.VistaProyectoCompleto;
 import org.nodonexus.Backend_nodoNexus.application.proyectos.service.ProyectoService;
 import org.nodonexus.Backend_nodoNexus.domain.model.SolicitudProyecto;
 import org.nodonexus.Backend_nodoNexus.domain.model.proyecto.Funcionalidad;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -77,6 +78,8 @@ public class ProyectoController {
 	public ResponseEntity<Void> actualizarEstadoFuncionalidadFase(
 			@PathVariable Long id, @RequestBody ActualizarEstadoRequest request) {
 		proyectoService.actualizarEstadoFuncionalidadFase(id, request.getNuevoEstado());
+		Long proyectoId = proyectoService.getProyectoIdPorFuncionalidadFase(id); // Método ficticio, implementa según
+		proyectoService.calcularPorcentajeAvance(proyectoId); // Recalcula y actualiza
 		return ResponseEntity.ok().build();
 	}
 
@@ -84,6 +87,8 @@ public class ProyectoController {
 	public ResponseEntity<Void> actualizarEstadoRequisitoFase(
 			@PathVariable Long id, @RequestBody ActualizarEstadoRequest request) {
 		proyectoService.actualizarEstadoRequisitoFase(id, request.getNuevoEstado());
+		Long proyectoId = proyectoService.getProyectoIdPorRequisitoFase(id); // Método ficticio, implementa según tu modelo
+		proyectoService.calcularPorcentajeAvance(proyectoId); // Recalcula y actualiza
 		return ResponseEntity.ok().build();
 	}
 
@@ -103,4 +108,28 @@ public class ProyectoController {
 		Requisito requisito = proyectoService.crearRequisito(funcionalidadId, request.getDescripcion());
 		return ResponseEntity.ok(requisito);
 	}
+
+	@PostMapping("/proyectos")
+	public ResponseEntity<List<VistaProyectoCompleto>> crearProyectoDesdeSolicitud(
+			@RequestBody SolicitudProyecto solicitud) {
+		Long proyectoId = proyectoService.getProyectoIdPorSolicitud(solicitud.getId());
+		List<VistaProyectoCompleto> proyectoCompleto = proyectoService.getProyectoCompleto(proyectoId);
+		return ResponseEntity.ok(proyectoCompleto);
+	}
+
+	@GetMapping("/proyectos/{proyectoId}/completo")
+	public ResponseEntity<List<VistaProyectoCompleto>> getProyectoCompleto(@PathVariable Long proyectoId) {
+		List<VistaProyectoCompleto> proyectoCompleto = proyectoService.getProyectoCompleto(proyectoId);
+		if (proyectoCompleto.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(proyectoCompleto);
+	}
+
+	@GetMapping("/proyectos/vista")
+	public ResponseEntity<List<Map<String, Object>>> getProyectosVista() {
+		List<Map<String, Object>> proyectos = proyectoService.getProyectosVista();
+		return ResponseEntity.ok(proyectos);
+	}
+
 }

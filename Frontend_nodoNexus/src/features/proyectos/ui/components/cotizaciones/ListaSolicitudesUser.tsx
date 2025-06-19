@@ -6,7 +6,7 @@ import { getSolicitudDetalles, getSolicitudesByUsuarioId } from '../../../infrae
 import { FaEye, FaFilePrescription } from 'react-icons/fa';
 import DetalleCotizacionUser from './DetalleCotizacionUser';
 
-
+import './listaSolicitudesUser.scss';
 
 const ListaSolicitudesUser = () => {
 	const user = useSelector((state: RootState) => state.auth.user);
@@ -55,7 +55,7 @@ const ListaSolicitudesUser = () => {
 	};
 
 	return (
-		<div>
+		<div className='containerListaUser'>
 			<h2>Tu lista de solicitudes:</h2>
 			{loading ? (
 				<p>Cargando solicitudes...</p>
@@ -65,14 +65,17 @@ const ListaSolicitudesUser = () => {
 				<ul>
 					{solicitudes.map((solicitud) => (
 						<li key={solicitud.solicitudId} >
-							<div >
-								<div>
-									<strong>{solicitud.nombreProyecto}</strong> - {solicitud.estado}
-									<p>{solicitud.descripcion}</p>
+							<div className='containerInfo'>
+								<div className='containerInfo-liTitle' >
+									<span>
+										<strong>{solicitud.nombreProyecto}</strong> - {solicitud.estado}
+									</span>
 									<small>Fecha: {new Date(solicitud.fechaSolicitud).toLocaleDateString()}</small>
 								</div>
-
-								<div >
+								<div className='containerInfo-liInfo' >
+									<p>{solicitud.descripcion}</p>
+								</div>
+								<div className='containerInfo-button' >
 									<button onClick={() => toggleDetalles(solicitud.solicitudId)}>
 										<FaEye size={16} />
 										Ver más
@@ -92,7 +95,7 @@ const ListaSolicitudesUser = () => {
 
 							{/* Detalles desplegables */}
 							{expanded[solicitud.solicitudId] && detalles[solicitud.solicitudId] && (
-								<div >
+								<div className='containerDesplegable' >
 									<p><strong>ID:</strong> {detalles[solicitud.solicitudId]?.id}</p>
 									<p><strong>Nombre del proyecto:</strong> {detalles[solicitud.solicitudId]?.nombreProyecto}</p>
 									<p><strong>Descripción:</strong> {detalles[solicitud.solicitudId]?.descripcion}</p>

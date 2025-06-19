@@ -1,4 +1,5 @@
 import Construction from '../../../../shared/components/menssageInfo/Construction';
+import CardProyectoInfo from '../../../proyectos/ui/components/proyectosFases/cardProyectoInfo';
 import UserControlLists from '../../../userControl/ui/components/UserControlLists';
 import './adminDashboard.scss';
 const AdminDashboard = () => {
@@ -7,7 +8,7 @@ const AdminDashboard = () => {
       <section className="containerAdminDashboard">
         <div className='containerAdminDashboard-left'>
           <section className='containerDashboard-left-one'>
-            <Construction />
+            <CardProyectoInfo />
           </section>
           <section className='containerDashboard-left-two'>
             <Construction />
