@@ -124,11 +124,7 @@ const ProyectoControlLists = () => {
 										<div className="infoProyecto">
 											<span>
 												<p>Nombre</p>
-												<h4
-													dangerouslySetInnerHTML={{
-														__html: highlightMatch(proyecto.nombre_proyecto, searchTerm),
-													}}
-												/>
+												<h4>{proyecto.nombre_proyecto} </h4>
 											</span>
 											<span>
 												<p>Estado</p>

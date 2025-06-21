@@ -49,6 +49,17 @@
 			border-radius: 12px;
 			padding: 25px;
 		}
+
+		.detallesEstadisticas {
+			border: 1px solid red;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+
+			.circularProgressbar {
+				width: 15%;
+			}
+		}
 	}
 
 

@@ -1,5 +1,7 @@
 package org.nodonexus.Backend_nodoNexus.application.proyectos.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +27,7 @@ import org.nodonexus.Backend_nodoNexus.domain.ports.vistas.VistaSolicitudesEnPro
 import org.nodonexus.Backend_nodoNexus.domain.ports.vistas.VistaSolicitudesPendientesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,6 +43,7 @@ public class ProyectoService {
 	private final FuncionalidadRepository funcionalidadRepository;
 	private final RequisitoRepository requisitoRepository;
 	private final JdbcTemplate jdbcTemplate;
+	private final SimpMessagingTemplate messagingTemplate;
 
 	@Autowired
 	public ProyectoService(
@@ -52,7 +56,8 @@ public class ProyectoService {
 			RequisitoFaseRepository requisitoFaseRepository,
 			FuncionalidadRepository funcionalidadRepository,
 			RequisitoRepository requisitoRepository,
-			JdbcTemplate jdbcTemplate) {
+			JdbcTemplate jdbcTemplate,
+			SimpMessagingTemplate messagingTemplate) {
 		this.vistaSolicitudesPendientesRepository = vistaSolicitudesPendientesRepository;
 		this.vistaSolicitudesEnProgresoRepository = vistaSolicitudesEnProgresoRepository;
 		this.solicitudProyectoRepository = solicitudProyectoRepository;
@@ -63,57 +68,39 @@ public class ProyectoService {
 		this.funcionalidadRepository = funcionalidadRepository;
 		this.requisitoRepository = requisitoRepository;
 		this.jdbcTemplate = jdbcTemplate;
+		this.messagingTemplate = messagingTemplate;
 	}
 
-	/**
-	 * Obtiene todas las solicitudes pendientes.
-	 */
 	public List<VistaSolicitudesPendientes> getSolicitudesPendientes() {
 		return vistaSolicitudesPendientesRepository.findAll();
 	}
 
-	/**
-	 * Obtiene todas las solicitudes en progreso.
-	 */
 	public List<VistaSolicitudesEnProgreso> getSolicitudesEnProgresos() {
 		return vistaSolicitudesEnProgresoRepository.findAll();
 	}
 
-	/**
-	 * Obtiene los detalles de una solicitud por su ID.
-	 */
 	public SolicitudProyecto getSolicitudDetalles(Long id) {
 		return solicitudProyectoRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada con ID: " + id));
 	}
 
-	/**
-	 * Obtiene todas las solicitudes.
-	 */
 	public List<SolicitudProyecto> getAllSolicitudes() {
 		return solicitudProyectoRepository.findAll();
 	}
 
-	/**
-	 * Obtiene las solicitudes de un usuario específico.
-	 */
 	public List<VistaSolicitudUsuario> getSolicitudesByUsuarioId(Long usuarioId) {
 		return vistaSolicitudUsuarioRepository.findByUsuarioId(usuarioId);
 	}
 
-	/**
-	 * Calcula el porcentaje de avance de un proyecto.
-	 */
 	public Double calcularPorcentajeAvance(Long proyectoId) {
-		return jdbcTemplate.queryForObject(
+		Double porcentaje = jdbcTemplate.queryForObject(
 				"SELECT calcular_porcentaje_avance(?)",
 				new Object[] { proyectoId },
 				Double.class);
+		messagingTemplate.convertAndSend("/topic/proyectos/" + proyectoId + "/avance", porcentaje);
+		return porcentaje;
 	}
 
-	/**
-	 * Actualiza el estado de una FuncionalidadFase.
-	 */
 	public void actualizarEstadoFuncionalidadFase(Long id, String nuevoEstado) {
 		FuncionalidadFase ff = funcionalidadFaseRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("FuncionalidadFase no encontrada con ID: " + id));
@@ -121,11 +108,17 @@ public class ProyectoService {
 				ff.getFuncionalidad().getId(), ff.getFaseProyecto().getId(), nuevoEstado);
 		ff.setEstado(nuevoEstado);
 		funcionalidadFaseRepository.save(ff);
+		// Recalcular porcentajes y enviar actualizaciones
+		Double porcentajeFuncionalidad = calcularPorcentajeFuncionalidad(ff.getFuncionalidad().getId());
+		Double porcentajeFase = calcularPorcentajeFase(ff.getFaseProyecto().getId());
+		Long proyectoId = getProyectoIdPorFuncionalidadFase(id);
+		Double porcentajeProyecto = calcularPorcentajeAvance(proyectoId);
+		messagingTemplate.convertAndSend("/topic/funcionalidades/" + ff.getFuncionalidad().getId() + "/avance",
+				porcentajeFuncionalidad);
+		messagingTemplate.convertAndSend("/topic/fases/" + ff.getFaseProyecto().getId() + "/avance", porcentajeFase);
+		messagingTemplate.convertAndSend("/topic/proyectos/" + proyectoId + "/avance", porcentajeProyecto);
 	}
 
-	/**
-	 * Actualiza el estado de una RequisitoFase.
-	 */
 	public void actualizarEstadoRequisitoFase(Long id, String nuevoEstado) {
 		RequisitoFase rf = requisitoFaseRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("RequisitoFase no encontrada con ID: " + id));
@@ -136,14 +129,21 @@ public class ProyectoService {
 		if (validacionExitosa != null && validacionExitosa) {
 			rf.setEstado(nuevoEstado);
 			requisitoFaseRepository.save(rf);
+			// Recalcular porcentajes y enviar actualizaciones
+			Double porcentajeFuncionalidad = calcularPorcentajeFuncionalidad(rf.getRequisito().getFuncionalidad().getId());
+			Double porcentajeFase = calcularPorcentajeFase(rf.getFaseProyecto().getId());
+			Long proyectoId = getProyectoIdPorRequisitoFase(id);
+			Double porcentajeProyecto = calcularPorcentajeAvance(proyectoId);
+			messagingTemplate.convertAndSend(
+					"/topic/funcionalidades/" + rf.getRequisito().getFuncionalidad().getId() + "/avance",
+					porcentajeFuncionalidad);
+			messagingTemplate.convertAndSend("/topic/fases/" + rf.getFaseProyecto().getId() + "/avance", porcentajeFase);
+			messagingTemplate.convertAndSend("/topic/proyectos/" + proyectoId + "/avance", porcentajeProyecto);
 		} else {
 			throw new IllegalStateException("No se puede actualizar el estado debido a la validación de avance.");
 		}
 	}
 
-	/**
-	 * Crea un nuevo requisito para una funcionalidad.
-	 */
 	public Requisito crearRequisito(Long funcionalidadId, String descripcion) {
 		Funcionalidad funcionalidad = funcionalidadRepository.findById(funcionalidadId)
 				.orElseThrow(() -> new IllegalArgumentException("Funcionalidad no encontrada con ID: " + funcionalidadId));
@@ -154,9 +154,6 @@ public class ProyectoService {
 		return requisitoRepository.save(requisito);
 	}
 
-	/**
-	 * Crea una nueva funcionalidad para un proyecto.
-	 */
 	public Funcionalidad crearFuncionalidad(Long proyectoId, String nombre, String descripcion) {
 		Proyecto proyecto = proyectoRepository.findById(proyectoId)
 				.orElseThrow(() -> new IllegalArgumentException("Proyecto no encontrado con ID: " + proyectoId));
@@ -168,9 +165,6 @@ public class ProyectoService {
 		return funcionalidadRepository.save(funcionalidad);
 	}
 
-	/**
-	 * Obtiene la vista completa de un proyecto.
-	 */
 	public List<VistaProyectoCompleto> getProyectoCompleto(Long proyectoId) {
 		return jdbcTemplate.query(
 				"SELECT * FROM vista_proyecto_completo WHERE proyecto_id = ?",
@@ -194,9 +188,6 @@ public class ProyectoService {
 				});
 	}
 
-	/**
-	 * Obtiene el ID del proyecto asociado a un requisito_fase dado.
-	 */
 	public Long getProyectoIdPorRequisitoFase(Long requisitoFaseId) {
 		RequisitoFase rf = requisitoFaseRepository.findById(requisitoFaseId)
 				.orElseThrow(() -> new IllegalArgumentException("RequisitoFase no encontrado con ID: " + requisitoFaseId));
@@ -206,19 +197,13 @@ public class ProyectoService {
 		return proyecto.getId();
 	}
 
-	/**
-	 * Actualiza el estado de una solicitud_proyecto a "COMPLETADA".
-	 */
 	public SolicitudProyecto actualizarEstadoSolicitudACompletada(Long solicitudId) {
 		SolicitudProyecto solicitud = solicitudProyectoRepository.findById(solicitudId)
 				.orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada con ID: " + solicitudId));
-		solicitud.setEstado(EstadoSolicitud.COMPLETADA); // Usando el enum EstadoSolicitud
+		solicitud.setEstado(EstadoSolicitud.COMPLETADA);
 		return solicitudProyectoRepository.save(solicitud);
 	}
 
-	/**
-	 * Obtiene el ID del proyecto asociado a una solicitud_proyecto.
-	 */
 	public Long getProyectoIdPorSolicitud(Long solicitudId) {
 		Proyecto proyecto = proyectoRepository.findBySolicitudId(solicitudId)
 				.orElseThrow(
@@ -226,9 +211,6 @@ public class ProyectoService {
 		return proyecto.getId();
 	}
 
-	/**
-	 * Obtiene el ID del proyecto asociado a una funcionalidad_fase dada.
-	 */
 	public Long getProyectoIdPorFuncionalidadFase(Long funcionalidadFaseId) {
 		FuncionalidadFase ff = funcionalidadFaseRepository.findById(funcionalidadFaseId)
 				.orElseThrow(
@@ -240,5 +222,65 @@ public class ProyectoService {
 
 	public List<Map<String, Object>> getProyectosVista() {
 		return jdbcTemplate.queryForList("SELECT * FROM vista_proyectos");
+	}
+
+	public Double calcularPorcentajeFuncionalidad(Long funcionalidadId) {
+		Double porcentaje = jdbcTemplate.queryForObject(
+				"SELECT calcular_porcentaje_funcionalidad(?)",
+				new Object[] { funcionalidadId },
+				Double.class);
+		messagingTemplate.convertAndSend("/topic/funcionalidades/" + funcionalidadId + "/avance", porcentaje);
+		return porcentaje;
+	}
+
+	public Double calcularPorcentajeFase(Long faseId) {
+		Double porcentaje = jdbcTemplate.queryForObject(
+				"SELECT calcular_porcentaje_fase(?)",
+				new Object[] { faseId },
+				Double.class);
+		messagingTemplate.convertAndSend("/topic/fases/" + faseId + "/avance", porcentaje);
+		return porcentaje;
+	}
+
+	public Map<String, Object> getAvanceCompletoProyecto(Long proyectoId) {
+		Map<String, Object> avanceCompleto = new HashMap<>();
+
+		// Porcentaje total del proyecto
+		Double porcentajeProyecto = calcularPorcentajeAvance(proyectoId);
+		avanceCompleto.put("porcentajeProyecto", porcentajeProyecto);
+
+		// Funcionalidades con ID, nombre y porcentaje
+		List<Funcionalidad> funcionalidades = funcionalidadRepository.findAll().stream()
+				.filter(f -> f.getProyecto().getId().equals(proyectoId))
+				.toList();
+		List<Map<String, Object>> funcionalidadesConPorcentaje = new ArrayList<>();
+		for (Funcionalidad f : funcionalidades) {
+			Double porcentaje = calcularPorcentajeFuncionalidad(f.getId());
+			Map<String, Object> funcionalidadData = new HashMap<>();
+			funcionalidadData.put("id", f.getId());
+			funcionalidadData.put("nombre", f.getNombre());
+			funcionalidadData.put("porcentaje", porcentaje);
+			funcionalidadesConPorcentaje.add(funcionalidadData);
+		}
+		avanceCompleto.put("funcionalidades", funcionalidadesConPorcentaje);
+
+		// Fases con ID, nombre y porcentaje
+		List<VistaProyectoCompleto> proyectoCompleto = getProyectoCompleto(proyectoId);
+		Map<Long, Map<String, Object>> fasesConPorcentaje = new HashMap<>();
+		for (VistaProyectoCompleto vista : proyectoCompleto) {
+			if (!fasesConPorcentaje.containsKey(vista.getFaseId())) {
+				Double porcentaje = calcularPorcentajeFase(vista.getFaseId());
+				Map<String, Object> faseData = new HashMap<>();
+				faseData.put("id", vista.getFaseId());
+				faseData.put("nombre", vista.getNombreFase());
+				faseData.put("porcentaje", porcentaje);
+				fasesConPorcentaje.put(vista.getFaseId(), faseData);
+			}
+		}
+		avanceCompleto.put("fases", new ArrayList<>(fasesConPorcentaje.values()));
+
+		// Enviar actualización por WebSocket (si aplica)
+		messagingTemplate.convertAndSend("/topic/proyectos/" + proyectoId + "/avance-completo", avanceCompleto);
+		return avanceCompleto;
 	}
 }

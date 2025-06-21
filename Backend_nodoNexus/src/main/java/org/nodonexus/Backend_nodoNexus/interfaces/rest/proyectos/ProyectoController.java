@@ -78,8 +78,8 @@ public class ProyectoController {
 	public ResponseEntity<Void> actualizarEstadoFuncionalidadFase(
 			@PathVariable Long id, @RequestBody ActualizarEstadoRequest request) {
 		proyectoService.actualizarEstadoFuncionalidadFase(id, request.getNuevoEstado());
-		Long proyectoId = proyectoService.getProyectoIdPorFuncionalidadFase(id); // Método ficticio, implementa según
-		proyectoService.calcularPorcentajeAvance(proyectoId); // Recalcula y actualiza
+		Long proyectoId = proyectoService.getProyectoIdPorFuncionalidadFase(id);
+		proyectoService.calcularPorcentajeAvance(proyectoId);
 		return ResponseEntity.ok().build();
 	}
 
@@ -87,8 +87,8 @@ public class ProyectoController {
 	public ResponseEntity<Void> actualizarEstadoRequisitoFase(
 			@PathVariable Long id, @RequestBody ActualizarEstadoRequest request) {
 		proyectoService.actualizarEstadoRequisitoFase(id, request.getNuevoEstado());
-		Long proyectoId = proyectoService.getProyectoIdPorRequisitoFase(id); // Método ficticio, implementa según tu modelo
-		proyectoService.calcularPorcentajeAvance(proyectoId); // Recalcula y actualiza
+		Long proyectoId = proyectoService.getProyectoIdPorRequisitoFase(id);
+		proyectoService.calcularPorcentajeAvance(proyectoId);
 		return ResponseEntity.ok().build();
 	}
 
@@ -132,4 +132,21 @@ public class ProyectoController {
 		return ResponseEntity.ok(proyectos);
 	}
 
+	@GetMapping("/funcionalidades/{funcionalidadId}/avance")
+	public ResponseEntity<Double> getPorcentajeAvanceFuncionalidad(@PathVariable Long funcionalidadId) {
+		Double porcentaje = proyectoService.calcularPorcentajeFuncionalidad(funcionalidadId);
+		return ResponseEntity.ok(porcentaje);
+	}
+
+	@GetMapping("/fases/{faseId}/avance")
+	public ResponseEntity<Double> getPorcentajeAvanceFase(@PathVariable Long faseId) {
+		Double porcentaje = proyectoService.calcularPorcentajeFase(faseId);
+		return ResponseEntity.ok(porcentaje);
+	}
+
+	@GetMapping("/proyectos/{proyectoId}/avance-completo")
+	public ResponseEntity<Map<String, Object>> getAvanceCompletoProyecto(@PathVariable Long proyectoId) {
+		Map<String, Object> avanceCompleto = proyectoService.getAvanceCompletoProyecto(proyectoId);
+		return ResponseEntity.ok(avanceCompleto);
+	}
 }

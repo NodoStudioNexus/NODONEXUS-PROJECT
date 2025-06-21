@@ -1,19 +1,27 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CircularProgressbar } from 'react-circular-progressbar';
 
+import 'react-circular-progressbar/dist/styles.css';
 import './cardProyectoInfo.scss';
 
-import { fetchProyectosVista, seleccionarProyecto } from '../../../infraestructure/redux/proyectoSlice';
+import { fetchProyectosVista, fetchAvanceProyecto, seleccionarProyecto } from '../../../infraestructure/redux/proyectoSlice';
 import { ProyectoVista } from '../../../domain/entities/ProyectoVista';
 import { AppDispatch, RootState } from '../../../../../app/store';
 
 const CardProyectoInfo = () => {
 	const dispatch = useDispatch<AppDispatch>();
-	const { proyectosVista, proyectoSeleccionado, loading, error } = useSelector((state: RootState) => state.proyectosList);
+	const { proyectosVista, proyectoSeleccionado, avanceProyecto, loading, error } = useSelector((state: RootState) => state.proyectosList);
 
 	useEffect(() => {
 		dispatch(fetchProyectosVista());
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (proyectoSeleccionado) {
+			dispatch(fetchAvanceProyecto(proyectoSeleccionado.proyecto_id));
+		}
+	}, [proyectoSeleccionado, dispatch]);
 
 	if (loading) {
 		return (
@@ -70,13 +78,24 @@ const CardProyectoInfo = () => {
 									<p>Porcentaje de avance: {proyectoSeleccionado.porcentaje_avance}%</p>
 								</div>
 							</section>
-							<div className='contenedorCliente'>
-								<h4>Información del Cliente</h4>
-								<p>Nombre: {proyectoSeleccionado.cliente_nombre} {proyectoSeleccionado.cliente_apellido}</p>
-								<p>Email: {proyectoSeleccionado.cliente_email}</p>
-								<h2><p>{proyectoSeleccionado.porcentaje_avance}%</p></h2>
-							</div>
+							{avanceProyecto && (
+								<div className='detallesEstadisticas'>
+									<header>
+										<h4>Estadísticas del Proyecto</h4>
+									</header>
+									<ul>
+										<h5>Fases:</h5>
+										{avanceProyecto.fases.map(fase => (
+											<li key={fase.id}>
+												{fase.nombre}: <CircularProgressbar className='circularProgressbar' value={fase.porcentaje} text={`${fase.porcentaje.toFixed(2)}%`} />  %
+											</li>
+										))}
+									</ul>
+									<p>Porcentaje General: {avanceProyecto.porcentajeProyecto.toFixed(2)}%</p>
+								</div>
+							)}
 						</div>
+
 					)}
 				</div>
 			)}

@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { ProyectoVista } from '../../domain/entities/ProyectoVista';
-import { getProyectosVista } from '../api/proyectoApi';
+import { AvanceProyecto } from '../../domain/entities/AvanceProyecto';
+import { getProyectosVista, getAvanceProyecto } from '../api/proyectoApi';
 
-// Definir el estado del slice
+
 interface ProyectoState {
 	proyectosVista: ProyectoVista[];
 	proyectoSeleccionado: ProyectoVista | null;
+	avanceProyecto: AvanceProyecto | null;
 	loading: boolean;
 	error: string | null;
 }
@@ -13,6 +15,7 @@ interface ProyectoState {
 const initialState: ProyectoState = {
 	proyectosVista: [],
 	proyectoSeleccionado: null,
+	avanceProyecto: null,
 	loading: false,
 	error: null,
 };
@@ -26,6 +29,15 @@ export const fetchProyectosVista = createAsyncThunk(
 		return data.sort((a, b) =>
 			new Date(b.fecha_inicio).getTime() - new Date(a.fecha_inicio).getTime()
 		).slice(0, 3);
+	}
+);
+
+// Acción asíncrona para obtener el avance de un proyecto
+export const fetchAvanceProyecto = createAsyncThunk(
+	'proyectos/fetchAvanceProyecto',
+	async (proyectoId: number) => {
+		const data = await getAvanceProyecto(proyectoId);
+		return data;
 	}
 );
 
@@ -56,6 +68,18 @@ const proyectoSlice = createSlice({
 			.addCase(fetchProyectosVista.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.error.message || 'Error al cargar proyectos';
+			})
+			.addCase(fetchAvanceProyecto.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(fetchAvanceProyecto.fulfilled, (state, action) => {
+				state.loading = false;
+				state.avanceProyecto = action.payload;
+			})
+			.addCase(fetchAvanceProyecto.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.error.message || 'Error al cargar avance del proyecto';
 			});
 	},
 });

@@ -39,4 +39,7 @@ public class FaseProyecto {
 
 	@Column(name = "fecha_creacion", nullable = false)
 	private Instant fechaCreacion = Instant.now();
+
+	@Column(name = "porcentaje_avance")
+	private Double porcentajeAvance = 0.00;
 }

@@ -38,4 +38,8 @@ public class Funcionalidad {
 
 	@OneToMany(mappedBy = "funcionalidad", cascade = CascadeType.ALL)
 	private List<FuncionalidadFase> funcionalidadFases;
+
+	@Column(name = "porcentaje_avance")
+	private Double porcentajeAvance = 0.00;
+
 }
