@@ -1,5 +1,5 @@
 import Construction from '../../../../shared/components/menssageInfo/Construction';
-import CardProyectoInfo from '../../../proyectos/ui/components/proyectosFases/cardProyectoInfo';
+import CardProyectoInfo from '../../../proyectos/ui/components/proyectosControl/cardProyectoInfo';
 import UserControlLists from '../../../userControl/ui/components/UserControlLists';
 import './adminDashboard.scss';
 const AdminDashboard = () => {

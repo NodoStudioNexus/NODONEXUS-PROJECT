@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 
 import 'react-circular-progressbar/dist/styles.css';
 import './cardProyectoInfo.scss';
@@ -84,18 +84,29 @@ const CardProyectoInfo = () => {
 										<h4>Estadísticas del Proyecto</h4>
 									</header>
 									<ul>
-										<h5>Fases:</h5>
 										{avanceProyecto.fases.map(fase => (
-											<li key={fase.id}>
-												{fase.nombre}: <CircularProgressbar className='circularProgressbar' value={fase.porcentaje} text={`${fase.porcentaje.toFixed(2)}%`} />  %
+											<li key={fase.id} className='fase'>
+												<CircularProgressbarWithChildren
+													value={fase.porcentaje}
+													strokeWidth={4}
+													className='circularProgressbar'>
+													<div className="circularProgressbar-innerProgress">
+														<div className="porcentaje">{fase.porcentaje.toFixed(1)}%</div>
+														<div className="nombreFase">{fase.nombre}</div>
+													</div>
+												</CircularProgressbarWithChildren>
 											</li>
 										))}
+										<li className='porcentajeProyecto'>
+											<div className="innerProgressTotal">
+												<span>Avance Total</span>
+												<span className="porcentajeTotal">{avanceProyecto.porcentajeProyecto.toFixed(2)}%</span>
+											</div>
+										</li>
 									</ul>
-									<p>Porcentaje General: {avanceProyecto.porcentajeProyecto.toFixed(2)}%</p>
 								</div>
 							)}
 						</div>
-
 					)}
 				</div>
 			)}

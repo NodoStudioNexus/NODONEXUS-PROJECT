@@ -14,6 +14,7 @@ import AdminDashboard from "../../features/dashboard/ui/pages/AdminDashboard";
 import GestionProyectos from "../../features/proyectos/ui/pages/GestionProyectos.tsx";
 import Construction from "../../shared/components/menssageInfo/Construction.tsx";
 import ClientDashboard from "../../features/dashboard/ui/pages/ClientDashboard";
+import ProyectoDetalles from "../../features/proyectos/ui/components/proyectoDetalles/ProyectoDetalles.tsx";
 
 // Componentes lazy-loaded
 const Login = lazy(() => import('../../features/auth/ui/pages/LoginPage'));
@@ -62,8 +63,12 @@ export const AppRouter = () => {
               />
               <Route
                 path={PrivateRoutes.ADMIN_PROJECTS}
-                element={<RoleGuard rol="ADMIN"> <GestionProyectos /></RoleGuard>}
-              />
+                element={<RoleGuard rol="ADMIN"> <GestionProyectos /></RoleGuard>} >
+                <Route
+                  path="proyectoDetalles/:id"
+                  element={<RoleGuard rol="ADMIN"><ProyectoDetalles /></RoleGuard>}
+                />
+              </Route>
               <Route
                 path={PrivateRoutes.ADMIN_MONITORING}
                 element={<RoleGuard rol="ADMIN"> <Construction /></RoleGuard>}

@@ -9,18 +9,21 @@ import { ProyectoVista } from '../../../domain/entities/ProyectoVista';
 
 import './proyectoControlLists.scss';
 import { FaFolder } from 'react-icons/fa';
+import { useNavigate } from 'react-router';
+import { PrivateRoutes } from '../../../../../config/routes';
 
 const ProyectoControlLists = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const proyectos = useSelector((state: RootState) => state.proyectosList.proyectosVista);
-	const loading = useSelector((state: RootState) => state.proyectos.loading);
-	const error = useSelector((state: RootState) => state.proyectos.error);
 	const token = useSelector((state: RootState) => state.auth.user?.token);
 	const [expandedProyecto, setExpandedProyecto] = useState<number | null>(null);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [statusFilter, setStatusFilter] = useState('');
 	const [sortOrder, setSortOrder] = useState('desc');
-	const [viewMode, setViewMode] = useState('list'); // 'list' o 'card'
+	const [viewMode, setViewMode] = useState('list');
+
+	const navigate = useNavigate();
+
 
 	useEffect(() => {
 		dispatch(fetchProyectosVista());
@@ -41,11 +44,6 @@ const ProyectoControlLists = () => {
 		setExpandedProyecto(expandedProyecto === proyectoId ? null : proyectoId);
 	};
 
-	const highlightMatch = (text: string, query: string) => {
-		if (!query) return text;
-		const regex = new RegExp(`(${query})`, 'gi');
-		return text.replace(regex, '<span class="highlight">$1</span>');
-	};
 
 	const filteredProyectos = proyectos.filter((proyecto: ProyectoVista) => {
 		const nombre = proyecto.nombre_proyecto.toLowerCase();
@@ -63,22 +61,14 @@ const ProyectoControlLists = () => {
 	});
 
 	const handleViewProyecto = (proyectoId: number) => {
-		// Aquí puedes implementar la lógica para ver detalles del proyecto, como abrir un modal o redirigir
+		navigate(`/${PrivateRoutes.DASHBOARD}/${PrivateRoutes.ADMIN_PROJECTS}/proyectoDetalles/${proyectoId}`);
 		console.log(`Ver proyecto con ID: ${proyectoId}`);
 	};
-
-	if (loading) {
-		return <p>Cargando proyectos...</p>;
-	}
-
-	if (error) {
-		return <p>{error}</p>;
-	}
 
 	return (
 		<section className="containerProyectoControl">
 			<header className="containerProyectoControl-header">
-				<h3>Control de proyectos</h3>
+				<h2>Control de proyectos</h2>
 				<div className="filterProyectos">
 					<input
 						type="text"
@@ -93,7 +83,6 @@ const ProyectoControlLists = () => {
 						<option value="">Todos los estados</option>
 						<option value="EN_PROGRESO">En Progreso</option>
 						<option value="COMPLETADO">Completado</option>
-						{/* Ajusta según los estados posibles */}
 					</select>
 					<select
 						value={sortOrder}

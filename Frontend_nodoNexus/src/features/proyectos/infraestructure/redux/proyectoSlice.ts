@@ -51,6 +51,9 @@ const proyectoSlice = createSlice({
 		addProyecto: (state, action: PayloadAction<ProyectoVista>) => {
 			state.proyectosVista.push(action.payload);
 		},
+		limpiarAvanceProyecto: (state) => {
+			state.avanceProyecto = null;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -84,5 +87,5 @@ const proyectoSlice = createSlice({
 	},
 });
 
-export const { seleccionarProyecto, addProyecto } = proyectoSlice.actions;
+export const { seleccionarProyecto, addProyecto, limpiarAvanceProyecto } = proyectoSlice.actions;
 export default proyectoSlice.reducer;
