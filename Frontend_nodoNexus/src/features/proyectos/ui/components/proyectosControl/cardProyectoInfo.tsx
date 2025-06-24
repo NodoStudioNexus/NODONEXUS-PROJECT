@@ -8,6 +8,7 @@ import './cardProyectoInfo.scss';
 import { fetchProyectosVista, fetchAvanceProyecto, seleccionarProyecto } from '../../../infraestructure/redux/proyectoSlice';
 import { ProyectoVista } from '../../../domain/entities/ProyectoVista';
 import { AppDispatch, RootState } from '../../../../../app/store';
+import { FaProjectDiagram } from 'react-icons/fa';
 
 const CardProyectoInfo = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -40,10 +41,9 @@ const CardProyectoInfo = () => {
 			</section>
 		);
 	}
-
 	return (
 		<section className='containerCardProyecto'>
-			<h3>Últimos Proyectos</h3>
+			<h3><span></span>Últimos Proyectos</h3>
 			{proyectosVista.length === 0 ? (
 				<p>No hay proyectos disponibles</p>
 			) : (

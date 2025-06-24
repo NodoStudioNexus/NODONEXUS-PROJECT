@@ -21,9 +21,10 @@ export const createUser = async (userData: CreateUsersRequest, state: RootState)
 		const response = await api.post('/users/management/create', userData, {
 			headers: { Authorization: `Bearer ${state.auth.user?.token}` },
 		});
+		console.log('Respuesta del servidor al crear usuario:', response.data);
 		return response.data;
-	} catch (error) {
-		console.error('Error al crear usuario', error);
-		throw new Error('Error al crear usuario');
+	} catch (error: any) {
+		console.error('Error al crear usuario:', error.response?.data || error.message);
+		throw new Error(error.response?.data?.message || 'Error al crear usuario');
 	}
 };

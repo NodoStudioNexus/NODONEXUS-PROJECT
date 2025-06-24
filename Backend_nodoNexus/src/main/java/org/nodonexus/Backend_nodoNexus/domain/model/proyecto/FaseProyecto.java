@@ -2,6 +2,8 @@ package org.nodonexus.Backend_nodoNexus.domain.model.proyecto;
 
 import java.time.Instant;
 
+import org.nodonexus.Backend_nodoNexus.domain.model.User;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,4 +44,8 @@ public class FaseProyecto {
 
 	@Column(name = "porcentaje_avance")
 	private Double porcentajeAvance = 0.00;
+
+	@ManyToOne
+	@JoinColumn(name = "responsable_id")
+	private User responsable;
 }

@@ -75,7 +75,6 @@ const UserControlLists = () => {
 	return (
 		<section className="containerUserControl">
 			<header className="containerUserControl-header">
-				<h3>Control de usuarios</h3>
 				<div className="filterUsers">
 					<input
 						type="text"

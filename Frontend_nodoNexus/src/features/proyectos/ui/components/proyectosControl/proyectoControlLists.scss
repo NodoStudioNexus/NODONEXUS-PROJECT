@@ -9,14 +9,25 @@
 
 	.filterProyectos {
 		display: flex;
-		gap: 10px;
+		gap: 25px;
 
 		label {
 			display: none;
-
 		}
 
-		@include formStyles()
+		input,
+		select {
+			border: none;
+		}
+
+		@include formFilterStyles()
+	}
+
+	.filterIcon {
+		background: none;
+		border: none;
+		color: var(--color-bg-primary);
+		font-size: 1.2rem;
 	}
 
 	.containerProyectoControl-content {

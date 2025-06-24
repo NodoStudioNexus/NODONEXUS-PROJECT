@@ -92,6 +92,7 @@ const ProyectoControlLists = () => {
 						<option value="asc">Más antiguo primero</option>
 					</select>
 					<button
+						className='filterIcon'
 						onClick={() => setViewMode(viewMode === 'list' ? 'card' : 'list')}
 						title={viewMode === 'list' ? 'Vista de cards' : 'Vista de lista'}
 					>

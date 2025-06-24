@@ -8,6 +8,7 @@ import HeaderLayout from './HeaderLayout';
 import SideBarLayout from './SideBarLayout';
 import NotificacionPanel from '../../../comunicacion/ui/components/NotificacionPanel';
 import { useState } from 'react';
+import { PrivateRoutes } from '../../../../config/routes';
 
 export const DashboardLayout = () => {
   const location = useLocation();
@@ -15,6 +16,15 @@ export const DashboardLayout = () => {
   const role = user?.role || 'CLIENT';
   const currentPath = location.pathname;
   const menuItems = menuItemsByRole[role] || [];
+
+  // Lista de rutas que no deben mostrar el sidebar
+  const noSidebarRoutes = [
+    `/dashboard/${PrivateRoutes.ANALISTDASHBOARD}`,
+    `/dashboard/${PrivateRoutes.ANALYST_HOME}`,
+  ];
+
+  // Verificar si la ruta actual está en la lista de exclusión
+  const hideSidebar = noSidebarRoutes.includes(currentPath);
 
   const moduleName =
     menuItems.find((item) => item.path === currentPath)?.name ||
@@ -29,12 +39,11 @@ export const DashboardLayout = () => {
     <div className="dashboard-layout">
       <HeaderLayout moduleName={moduleName} onOpenPanel={togglePanel} />
       <div className="dashboard-content">
-        <SideBarLayout />
-        <main className={`main-content ${isPanelOpen ? 'panel-open' : ''}`}>
+        {!hideSidebar && <SideBarLayout />}
+        <main className={`main-content ${isPanelOpen ? 'panel-open' : ''} ${hideSidebar ? 'full-width' : ''}`}>
           <Outlet />
         </main>
         <NotificacionPanel isOpen={isPanelOpen} onClose={togglePanel} />
-        {/*<div className="chat-panel"></div>  Espacio para el chat */}
       </div>
     </div>
   );

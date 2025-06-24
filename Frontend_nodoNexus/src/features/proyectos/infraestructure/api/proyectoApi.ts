@@ -14,7 +14,7 @@ export const getProyectosVista = async (): Promise<ProyectoVista[]> => {
 
 export const getAvanceProyecto = async (proyectoId: number): Promise<AvanceProyecto> => {
 	try {
-		const response = await api.get(`/solicitudes/proyectos/${proyectoId}/avance-completo`);
+		const response = await api.get(`/porcentajes/proyectos/${proyectoId}/avance-completo`);
 		return response.data;
 	} catch (error) {
 		console.error(`Error al obtener avance del proyecto ${proyectoId}`, error);
