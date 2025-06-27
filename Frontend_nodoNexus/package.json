@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "format": "prettier --write \"src/**/*.{js,jsx,json,scss,css}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,json,scss,css}\"",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
@@ -33,13 +35,24 @@
     "@babel/core": "^7.27.1",
     "@babel/plugin-syntax-jsx": "^7.27.1",
     "@babel/preset-react": "^7.27.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^29.5.14",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/redux-mock-store": "^1.5.0",
     "@types/redux-persist": "^4.0.0",
     "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.5.3",
+    "redux-mock-store": "^1.5.5",
     "sass": "^1.86.0",
+    "text-encoding": "^0.7.0",
+    "ts-jest": "^29.4.0",
     "typescript": "~5.7.2",
     "vite": "^6.2.0"
   }
