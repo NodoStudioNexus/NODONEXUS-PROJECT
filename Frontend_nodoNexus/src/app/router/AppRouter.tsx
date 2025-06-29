@@ -16,6 +16,10 @@ import Construction from "../../shared/components/menssageInfo/Construction.tsx"
 import ClientDashboard from "../../features/dashboard/ui/pages/ClientDashboard";
 import ProyectoDetalles from "../../features/proyectos/ui/components/proyectoDetalles/ProyectoDetalles.tsx";
 import AnalystDashboard from "../../features/dashboard/ui/pages/AnalystDashboard";
+import MonitoreoDashboardAdmin from "../../features/Monitoreo/ui/pages/MonitoreoDashboardAdmin.tsx";
+import RespaldoModule from "../../features/respaldo/ui/page/RespaldoModule.tsx";
+import AnalistProyectos from "../../features/proyectos/ui/pages/AnalistProyectos.tsx";
+import ModeladoNegocioAnalist from "../../features/modeloDeNegocio/ui/pages/ModeladoNegocioAnalist.tsx";
 
 // Componentes lazy-loaded
 const Login = lazy(() => import('../../features/auth/ui/pages/LoginPage'));
@@ -73,11 +77,11 @@ export const AppRouter = () => {
               </Route>
               <Route
                 path={PrivateRoutes.ADMIN_MONITORING}
-                element={<RoleGuard rol="ADMIN"><Construction /></RoleGuard>}
+                element={<RoleGuard rol="ADMIN"><MonitoreoDashboardAdmin /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ADMIN_BACKUP}
-                element={<RoleGuard rol="ADMIN"><Construction /></RoleGuard>}
+                element={<RoleGuard rol="ADMIN"><RespaldoModule /></RoleGuard>}
               />
 
               {/* Rutas Analyst */}
@@ -91,11 +95,11 @@ export const AppRouter = () => {
               />
               <Route
                 path={PrivateRoutes.ANALYST_ANALYSIS_PHASE}
-                element={<RoleGuard rol="ANALYST"><Placeholder name="Gestión de la fase de análisis" /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><AnalistProyectos /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ANALYST_BUSINESS_MODELING}
-                element={<RoleGuard rol="ANALYST"><Construction /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><ModeladoNegocioAnalist /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ANALYST_REQUIREMENTS}

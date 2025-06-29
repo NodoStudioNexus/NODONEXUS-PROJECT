@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import EstadoSolicitudes from "../components/cotizaciones/EstadoSolicitudes";
-import ListaProyectos from "../components/proyectosControl/ListaProyectos";
-import CardProyectoInfo from "../components/proyectosControl/cardProyectoInfo";
+import ListaProyectos from "../components/proyectosControlAdmin/ListaProyectos";
+import CardProyectoInfo from "../components/proyectosControlAdmin/cardProyectoInfo";
 
 import './gestionProyectos.scss';
 

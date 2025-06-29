@@ -1,0 +1,205 @@
+@use '../../../../styles/abstracts/index' as *;
+
+.container-proyectosModelado {
+	display: flex;
+	justify-content: space-between;
+	gap: 25px;
+	height: 100%;
+
+	&.is-collapsed {
+		flex-direction: column;
+
+		height: auto;
+
+		.containerProyectosButtons {
+			display: flex;
+			flex-direction: row;
+			width: 100%;
+			position: relative;
+
+			&-header {
+				button {
+					position: absolute;
+					right: 0;
+				}
+			}
+
+			a {
+				width: auto;
+				display: flex;
+				cursor: pointer;
+				align-items: center;
+				gap: 15px;
+
+				.icon {
+					display: flex;
+					font-size: 2rem;
+					padding-left: 0px !important;
+				}
+
+				.info {
+					display: flex;
+					flex-direction: column;
+
+					h4 {
+						display: none;
+					}
+				}
+
+				&.active {
+					border-radius: 3px !important;
+					padding: 10px 15px !important;
+					@include buttonPrimary();
+				}
+			}
+
+		}
+	}
+
+	.containerProyectosButtons {
+		display: flex;
+		gap: 25px;
+		flex-direction: column;
+		width: 20%;
+
+		&-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			button {
+				border-radius: 3px !important;
+				padding: 5px !important;
+				font-size: 1rem;
+				display: flex;
+
+				@include buttonSecondary();
+			}
+
+		}
+
+		.is-collapsed & {
+			width: 100%;
+		}
+
+		a {
+			display: flex;
+			cursor: pointer;
+			align-items: center;
+			gap: 15px;
+
+			.icon {
+				display: flex;
+				padding-left: 15px;
+				font-size: 4rem;
+			}
+
+			.info {
+				display: flex;
+				flex-direction: column;
+			}
+
+			&.active {
+				padding: 0 !important;
+				@include buttonPrimary();
+			}
+		}
+	}
+
+
+	.containerProyectosContent {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+
+
+		.proyectoDetails {
+			border: 1px solid var(--color-line);
+			padding: 15px;
+			border-radius: 4px;
+
+			&-header {
+				cursor: pointer;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				h3 {
+					display: flex;
+					align-items: center;
+					gap: 15px;
+
+					span {
+						font-size: 1.5rem;
+					}
+				}
+
+				span {
+					transition: transform 0.3s ease;
+				}
+
+				&.is-open span {
+					transform: rotate(180deg);
+				}
+			}
+
+			&-info {
+				transition: opacity 0.3s ease, max-height 0.3s ease;
+				max-height: 500px;
+				opacity: 1;
+
+				.icon {
+					display: flex;
+				}
+
+				&.is-hidden {
+					max-height: 0;
+					opacity: 0;
+					overflow: hidden;
+				}
+			}
+
+			&-infoDetails {
+				display: flex;
+				gap: 25px;
+				padding-top: 15px;
+
+
+				p {
+					display: flex;
+					flex-direction: column;
+					gap: 3px;
+
+					strong {
+						font-size: 0.8rem;
+					}
+				}
+
+				.icon {
+					font-size: 6rem;
+				}
+
+				.info {
+					display: flex;
+					gap: 30px;
+				}
+			}
+
+			&-barProgress {
+				position: relative;
+				display: flex;
+
+				span {
+					position: absolute;
+					right: 0;
+					top: -25px;
+				}
+			}
+
+			progress {
+				width: 100%;
+			}
+		}
+	}
+}

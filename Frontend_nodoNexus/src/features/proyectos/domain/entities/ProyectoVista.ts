@@ -1,4 +1,5 @@
 export interface ProyectoVista {
+	estado: string;
 	proyecto_id: number;
 	solicitud_id: number;
 	cliente_id: number;

@@ -249,3 +249,30 @@
   }
 
 }
+
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    /* Fondo claro, coherente con tu diseño */
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #2563eb;
+    /* Color del thumb, igual que buttonSecondary */
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #1e40af;
+    /* Color más oscuro al pasar el ratón */
+  }
+
+  /* Para Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #2563eb #f1f5f9;
+}
