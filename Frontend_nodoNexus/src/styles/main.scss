@@ -5,7 +5,7 @@
 @use './base/index' as *;
 
 body {
-  height: 100vh;
+  height: 200vh;
   width: 100vw;
   font-family: $fontFamily;
   background-color: var(--color-bg-primary);
@@ -30,4 +30,47 @@ body.light {
 
 body.dark {
   @extend [data-theme='dark'];
+}
+
+/* Estilo global para el scroll de la ventana */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* Evita scroll horizontal */
+}
+
+/* Personalización del scroll */
+html::-webkit-scrollbar {
+  width: 5px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+  border-radius: 50%;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #eb2525;
+  border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: #af1e1e;
+}
+
+/* Soporte para Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-bg-primary);
+}
+
+/* Asegura que los contenedores no generen su propio scroll */
+.container {
+  height: auto;
+  /* Permite que crezca según el contenido */
+  overflow-y: visible;
+  /* Evita scroll interno */
 }

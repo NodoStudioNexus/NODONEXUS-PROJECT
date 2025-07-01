@@ -1,6 +1,7 @@
+import { Outlet } from "react-router";
 import EstadoSolicitudes from "../components/cotizaciones/EstadoSolicitudes";
-import ListaProyectos from "../components/proyectosFases/ListaProyectos";
-import CardProyectoInfo from "../components/proyectosFases/cardProyectoInfo";
+import ListaProyectos from "../components/proyectosControlAdmin/ListaProyectos";
+import CardProyectoInfo from "../components/proyectosControlAdmin/cardProyectoInfo";
 
 import './gestionProyectos.scss';
 
@@ -8,13 +9,14 @@ const GestionProyectos = () => {
 	return (
 		<>
 			<section className="containerGestionProyectos">
-				<div className="containerGestionProyectos-containerUno" >
-					<CardProyectoInfo />
-					<EstadoSolicitudes />
-				</div>
 				<div className="containerGestionProyectos-containerDos">
 					<ListaProyectos />
 				</div>
+				<div className="containerGestionProyectos-containerUno" >
+					<EstadoSolicitudes />
+					<CardProyectoInfo />
+				</div>
+				<Outlet />
 			</section>
 		</>
 	)

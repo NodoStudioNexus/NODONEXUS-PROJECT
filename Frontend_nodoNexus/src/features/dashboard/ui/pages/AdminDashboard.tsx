@@ -1,6 +1,6 @@
 import Construction from '../../../../shared/components/menssageInfo/Construction';
-import CardProyectoInfo from '../../../proyectos/ui/components/proyectosFases/cardProyectoInfo';
-import UserControlLists from '../../../userControl/ui/components/UserControlLists';
+import CardProyectoInfo from '../../../proyectos/ui/components/proyectosControlAdmin/cardProyectoInfo';
+import UserControlListsHome from '../../../userControl/ui/components/UsersControlListHome';
 import './adminDashboard.scss';
 const AdminDashboard = () => {
   return (
@@ -15,7 +15,7 @@ const AdminDashboard = () => {
           </section>
         </div>
         <div className='containerAdminDashboard-right'>
-          <UserControlLists />
+          <UserControlListsHome />
         </div>
       </section>
     </>

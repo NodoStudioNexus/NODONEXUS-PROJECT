@@ -1,0 +1,116 @@
+@use '../../../../../styles/abstracts/index' as *;
+
+.containerDetalleProyecto {
+	z-index: 50000;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 12px;
+	display: flex;
+	gap: 25px;
+	justify-content: space-between;
+
+	@include glassBlur();
+	@include slideAnimation();
+
+	&-left,
+	&-right {
+		border-radius: 12px;
+		background: var(--color-bg-primary);
+		color: var(--color-primary);
+	}
+
+	&-left {
+		width: 30%;
+
+		&-header {
+			padding: 25px 25px 0px 25px;
+			display: flex;
+			gap: 15px;
+			border-bottom: 1px solid var(--color-bg-transparent);
+
+			&-icon {
+				font-size: 6.5rem;
+				width: 30%;
+				color: var(--color-bg-transparent);
+			}
+
+			&-info {
+				width: 100%;
+			}
+		}
+
+		&-buttons {
+			height: auto;
+
+			h3 {
+				display: flex;
+				align-items: center;
+				gap: 15px;
+				padding: 25px;
+
+				span {
+					font-size: 1.5rem;
+					color: var(--color-bg-transparent);
+				}
+			}
+
+			ul {
+				padding: 25px 0px;
+				list-style-type: none;
+
+				li {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					padding: 25px;
+					cursor: pointer;
+					position: relative;
+
+
+
+					span {
+						font-size: 0.5rem;
+					}
+
+					.buttonFaseNombre {
+						width: 100%;
+						display: flex;
+						align-items: center;
+						gap: 15px;
+						padding-left: 10px;
+					}
+
+					.buttonFasePorciento {
+						font-size: 0.8rem;
+
+						span {
+							position: absolute;
+							font-size: 0.8rem;
+							right: 20px;
+							top: 10px;
+						}
+					}
+
+					&.active {
+
+						border-left: 5px solid var(--color-secondary-logo);
+
+						.selection-icon {
+							position: absolute;
+							right: 5px;
+							color: var(--color-primary);
+							font-size: 0.8rem;
+							color: var(--color-bg-transparent);
+
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&-right {
+		width: 100%;
+	}
+}

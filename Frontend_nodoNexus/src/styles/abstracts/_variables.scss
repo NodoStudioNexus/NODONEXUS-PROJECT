@@ -35,6 +35,10 @@ $radius-container: 12px;
   --color-alert-red: hsla(4, 86%, 46%, 0.855);
   --color-alert-yellow: hsl(45, 100%, 65%);
   --color-alert-green: hsl(160, 80%, 40%);
+
+  --color-green-alert-opacity: rgba(2, 112, 2, 0.166);
+  --color-red-alert-opacity: rgba(112, 2, 2, 0.166);
+  --color-yellow-alert-opacity: rgba(138, 145, 3, 0.166);
 }
 
 [data-theme='dark'] {

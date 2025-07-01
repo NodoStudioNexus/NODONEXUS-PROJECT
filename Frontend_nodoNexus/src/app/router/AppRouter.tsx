@@ -14,6 +14,12 @@ import AdminDashboard from "../../features/dashboard/ui/pages/AdminDashboard";
 import GestionProyectos from "../../features/proyectos/ui/pages/GestionProyectos.tsx";
 import Construction from "../../shared/components/menssageInfo/Construction.tsx";
 import ClientDashboard from "../../features/dashboard/ui/pages/ClientDashboard";
+import ProyectoDetalles from "../../features/proyectos/ui/components/proyectoDetalles/ProyectoDetalles.tsx";
+import AnalystDashboard from "../../features/dashboard/ui/pages/AnalystDashboard";
+import MonitoreoDashboardAdmin from "../../features/Monitoreo/ui/pages/MonitoreoDashboardAdmin.tsx";
+import RespaldoModule from "../../features/respaldo/ui/page/RespaldoModule.tsx";
+import AnalistProyectos from "../../features/proyectos/ui/pages/AnalistProyectos.tsx";
+import ModeladoNegocioAnalist from "../../features/modeloDeNegocio/ui/pages/ModeladoNegocioAnalist.tsx";
 
 // Componentes lazy-loaded
 const Login = lazy(() => import('../../features/auth/ui/pages/LoginPage'));
@@ -62,41 +68,46 @@ export const AppRouter = () => {
               />
               <Route
                 path={PrivateRoutes.ADMIN_PROJECTS}
-                element={<RoleGuard rol="ADMIN"> <GestionProyectos /></RoleGuard>}
-              />
+                element={<RoleGuard rol="ADMIN"><GestionProyectos /></RoleGuard>}
+              >
+                <Route
+                  path="proyectoDetalles/:id"
+                  element={<RoleGuard rol="ADMIN"><ProyectoDetalles /></RoleGuard>}
+                />
+              </Route>
               <Route
                 path={PrivateRoutes.ADMIN_MONITORING}
-                element={<RoleGuard rol="ADMIN"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="ADMIN"><MonitoreoDashboardAdmin /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ADMIN_BACKUP}
-                element={<RoleGuard rol="ADMIN"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="ADMIN"><RespaldoModule /></RoleGuard>}
               />
 
               {/* Rutas Analyst */}
               <Route
                 path={PrivateRoutes.ANALISTDASHBOARD}
-                element={<RoleGuard rol="ANALYST"><AnalystHome /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><AnalystDashboard /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ANALYST_HOME}
-                element={<RoleGuard rol="ANALYST"><Placeholder name="Inicio" /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><AnalystDashboard /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ANALYST_ANALYSIS_PHASE}
-                element={<RoleGuard rol="ANALYST"><Placeholder name="Gestión de la fase de análisis" /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><AnalistProyectos /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ANALYST_BUSINESS_MODELING}
-                element={<RoleGuard rol="ANALYST"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><ModeladoNegocioAnalist /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ANALYST_REQUIREMENTS}
-                element={<RoleGuard rol="ANALYST"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ANALYST_RISKS_REPORTS}
-                element={<RoleGuard rol="ANALYST"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><Construction /></RoleGuard>}
               />
 
               {/* Rutas Client */}
@@ -106,7 +117,7 @@ export const AppRouter = () => {
               />
               <Route
                 path={PrivateRoutes.CLIENT_SOLICITUDES}
-                element={<RoleGuard rol="CLIENT"> <ClientDashboard /></RoleGuard>}
+                element={<RoleGuard rol="CLIENT"><ClientDashboard /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.CLIENT_PROFILE}
@@ -116,71 +127,71 @@ export const AppRouter = () => {
               {/* Rutas Planner */}
               <Route
                 path={PrivateRoutes.PLANNERDASHBOARD}
-                element={<RoleGuard rol="PLANNER"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="PLANNER"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.PLANNER_PROJECTS}
-                element={<RoleGuard rol="PLANNER"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="PLANNER"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.PLANNER_CALENDAR}
-                element={<RoleGuard rol="PLANNER"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="PLANNER"><Construction /></RoleGuard>}
               />
 
               {/* Rutas Modeling */}
               <Route
                 path={PrivateRoutes.MODELINGDASHBOARD}
-                element={<RoleGuard rol="MODELING"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="MODELING"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.MODELING_PROJECTS}
-                element={<RoleGuard rol="MODELING"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="MODELING"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.MODELING_DIAGRAMS}
-                element={<RoleGuard rol="MODELING"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="MODELING"><Construction /></RoleGuard>}
               />
 
               {/* Rutas Implementation */}
               <Route
                 path={PrivateRoutes.IMPLEMENTATIONDASHBOARD}
-                element={<RoleGuard rol="IMPLEMENTATION"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="IMPLEMENTATION"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.IMPLEMENTATION_PROJECTS}
-                element={<RoleGuard rol="IMPLEMENTATION"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="IMPLEMENTATION"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.IMPLEMENTATION_TASKS}
-                element={<RoleGuard rol="IMPLEMENTATION"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="IMPLEMENTATION"><Construction /></RoleGuard>}
               />
 
               {/* Rutas Tester */}
               <Route
                 path={PrivateRoutes.TESTERDASHBOARD}
-                element={<RoleGuard rol="TESTER"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="TESTER"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.TESTER_PROJECTS}
-                element={<RoleGuard rol="TESTER"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="TESTER"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.TESTER_RESULTS}
-                element={<RoleGuard rol="TESTER"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="TESTER"><Construction /></RoleGuard>}
               />
 
               {/* Rutas Validation */}
               <Route
                 path={PrivateRoutes.VALIDATIONDASHBOARD}
-                element={<RoleGuard rol="VALIDATION"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="VALIDATION"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.VALIDATION_PROJECTS}
-                element={<RoleGuard rol="VALIDATION"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="VALIDATION"><Construction /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.VALIDATION_REPORTS}
-                element={<RoleGuard rol="VALIDATION"> <Construction /></RoleGuard>}
+                element={<RoleGuard rol="VALIDATION"><Construction /></RoleGuard>}
               />
             </Route>
           </Route>
