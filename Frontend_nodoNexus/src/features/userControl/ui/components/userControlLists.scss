@@ -11,23 +11,29 @@
 	justify-content: space-between;
 
 	&-header {
-		border: 1px solid var(--color-line);
-		border-radius: 0px 12px 12px 12px;
-		height: 15vh;
-		padding: 15px;
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
 
+		padding: 15px;
+
+		.filterUsers {
+			display: flex;
+			gap: 25px;
+
+			input,
+			select {
+				border: none;
+			}
+
+			@include formFilterStyles();
+		}
 	}
 
 	&-content {
 		height: 100%;
+		overflow-y: auto;
 
 		ul {
 			display: flex;
 			flex-direction: column;
-			gap: 25px;
 			list-style-type: none;
 
 			li {
@@ -35,8 +41,7 @@
 				padding: 15px;
 				display: flex;
 				flex-wrap: wrap;
-				border: 1px solid var(--color-line);
-				border-radius: 12px;
+				border-bottom: 1px solid var(--color-line);
 				align-items: center;
 				color: var(--text-color);
 
@@ -48,6 +53,14 @@
 					gap: 35px;
 					align-items: center;
 					color: var(--text-color);
+
+					.userAvatar {
+						background: var(--color-hover);
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+
 				}
 
 				input {
@@ -87,6 +100,16 @@
 
 						h4 {
 							font-weight: 500;
+
+							.highlight {
+								background-color: rgb(167, 88, 14);
+								position: relative;
+								padding: 1px 5px;
+								border-radius: 4px;
+								margin: 0;
+								font-weight: bold;
+							}
+
 						}
 					}
 

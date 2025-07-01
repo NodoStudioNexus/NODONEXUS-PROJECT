@@ -1,0 +1,46 @@
+@use '../../../../../styles/abstracts/index' as *;
+
+.containerActividadesAnalist {
+	display: flex;
+	height: 100%;
+
+	&-nav {
+		width: 25%;
+
+		nav {
+			display: flex;
+			flex-direction: column;
+
+
+			button {
+				cursor: pointer;
+				text-align: start;
+				width: 100%;
+				padding: 25px;
+				background: none;
+				border: none;
+				border-bottom: 1px solid var(--color-line);
+				color: var(--color-bg-primary);
+				position: relative;
+
+
+				&.active {
+					border-left: 5px solid var(--color-secondary-logo);
+					border-radius: 0 !important;
+					font-weight: 800;
+					@include cardShadow();
+				}
+
+			}
+
+		}
+	}
+
+	&-info {
+		padding-left: 25px;
+		padding-top: 25px;
+		width: 100%;
+		height: auto;
+		border-radius: 12px;
+	}
+}

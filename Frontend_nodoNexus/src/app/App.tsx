@@ -5,6 +5,7 @@ import { RootState } from './store';
 import { useSelector } from 'react-redux';
 import { useWebSocket } from '../shared/hooks/useWebSocket';
 
+
 const App = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
   useEffect(() => {

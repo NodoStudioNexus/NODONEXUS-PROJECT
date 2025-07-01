@@ -7,5 +7,7 @@ public interface UserService {
 
   User save(User user);
 
+  User save(User user, boolean notify);
+
   boolean hasRecentResetRequest(String email);
 }

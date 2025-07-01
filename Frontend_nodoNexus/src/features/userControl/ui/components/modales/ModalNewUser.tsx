@@ -1,46 +1,66 @@
-import { useDispatch } from "react-redux";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { closeModal, openModal } from "../../../../../shared/components/modals/infraestructure/redux/modalGlobalSlice";
-import { registerUserSchema } from "../../../domain/schema/registerUserSchema";
-import { tiposIdentidad } from "../../../../../shared/types/tiposIdentidad";
-import { roles } from "../../../../../shared/types/roles";
-
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { closeModal, openModal } from '../../../../../shared/components/modals/infraestructure/redux/modalGlobalSlice';
+import { registerUserSchema } from '../../../domain/schema/registerUserSchema';
+import { tiposIdentidad } from '../../../../../shared/types/tiposIdentidad';
+import { roles } from '../../../../../shared/types/roles';
+import { addUser } from '../../../infraestructure/redux/userSlice';
+import { AppDispatch } from '../../../../../app/store';
 import './modalUserNew.scss';
 
 const initialValues = {
 	email: '',
-	password: '',
-	confirmPassword: '',
 	role: '',
 	primerNombre: '',
 	primerApellido: '',
 	tipoIdentidad: '',
 	numeroIdentidad: '',
+	telefono: '',
 };
 
 const ModalNewUser = () => {
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
+	const [error, setError] = useState<string | null>(null);
 
 	const handleSubmit = async (values: typeof initialValues) => {
-
-		const valuesWithPassword = {
-			...values,
-			password: values.numeroIdentidad,
-			confirmPassword: values.numeroIdentidad
+		setError(null);
+		const userData = {
+			email: values.email,
+			primerNombre: values.primerNombre,
+			primerApellido: values.primerApellido,
+			tipoIdentidad: values.tipoIdentidad,
+			numeroIdentidad: values.numeroIdentidad,
+			telefono: values.telefono || null,
+			role: values.role,
 		};
 
-		console.log("Valores enviados:", valuesWithPassword);
-
-		dispatch(
-			openModal({
-				modalType: 'sending',
-				title: 'Creando usuario...',
-				message: 'Por favor espera mientras procesamos la información...',
-				variant: 'info',
-				autoClose: false,
-				extraClasses: 'modalConfirm',
-			})
-		);
+		try {
+			console.log("Valores enviados:", userData);
+			await dispatch(addUser(userData)).unwrap();
+			dispatch(
+				openModal({
+					modalType: 'success',
+					title: 'Usuario Creado',
+					message: 'El usuario ha sido creado exitosamente.',
+					variant: 'success',
+					autoClose: true,
+				})
+			);
+			dispatch(closeModal());
+		} catch (err: any) {
+			console.error('Error en handleSubmit:', err);
+			setError(err.message || 'Error al crear usuario');
+			dispatch(
+				openModal({
+					modalType: 'error',
+					title: 'Error',
+					message: err.message || 'No se pudo crear el usuario. Por favor, intenta nuevamente.',
+					variant: 'error',
+					autoClose: true,
+				})
+			);
+		}
 	};
 
 	return (
@@ -53,38 +73,25 @@ const ModalNewUser = () => {
 				validationSchema={registerUserSchema}
 				onSubmit={handleSubmit}
 			>
-				{({ isSubmitting, values }) => (
+				{({ isSubmitting }) => (
 					<Form className="formContainer">
-						{/* Información Personal */}
+						{error && <p className="errorServer">{error}</p>}
 						<fieldset>
 							<div>
-								<label htmlFor="primerNombre" className="required">
-									Primer Nombre
-								</label>
+								<label htmlFor="primerNombre" className="required">Primer Nombre</label>
 								<Field type="text" name="primerNombre" />
 								<ErrorMessage name="primerNombre" component="p" className="errorForm" />
 							</div>
-
-							{/* Primer Apellido */}
 							<div>
-								<label htmlFor="primerApellido" className="required">
-									Primer Apellido
-								</label>
-								<Field
-									type="text"
-									name="primerApellido"
-								/>
+								<label htmlFor="primerApellido" className="required">Primer Apellido</label>
+								<Field type="text" name="primerApellido" />
 								<ErrorMessage name="primerApellido" component="p" className="errorForm" />
 							</div>
-
-							{/* Tipo de Identidad */}
 							<div>
-								<label htmlFor="tipoIdentidad" className="required">
-									Tipo de Identidad
-								</label>
+								<label htmlFor="tipoIdentidad" className="required">Tipo de Identidad</label>
 								<Field as="select" name="tipoIdentidad">
 									<option value="">Seleccione tipo de identidad</option>
-									{tiposIdentidad.map(tipo => (
+									{tiposIdentidad.map((tipo) => (
 										<option key={tipo.value} value={tipo.value}>
 											{tipo.label}
 										</option>
@@ -92,44 +99,29 @@ const ModalNewUser = () => {
 								</Field>
 								<ErrorMessage name="tipoIdentidad" component="p" className="errorForm" />
 							</div>
-
-							{/* Número de Identidad */}
 							<div>
-								<label htmlFor="numeroIdentidad" className="required">
-									Número de Identidad
-								</label>
-								<Field
-									type="text"
-									name="numeroIdentidad"
-								/>
+								<label htmlFor="numeroIdentidad" className="required">Número de Identidad</label>
+								<Field type="text" name="numeroIdentidad" />
 								<ErrorMessage name="numeroIdentidad" component="p" className="errorForm" />
 							</div>
+							<div>
+								<label htmlFor="telefono" className='required'>Teléfono</label>
+								<Field type="text" name="telefono" />
+								<ErrorMessage name="telefono" component="p" className="errorForm" />
+							</div>
 						</fieldset>
-
 						<fieldset>
 							<legend>Información de Cuenta</legend>
-
-							{/* Email */}
 							<div>
-								<label htmlFor="email" className="required">
-									Correo Electrónico
-								</label>
-								<Field
-									type="email"
-									name="email"
-								/>
+								<label htmlFor="email" className="required">Correo Electrónico</label>
+								<Field type="email" name="email" />
 								<ErrorMessage name="email" component="p" className="errorForm" />
 							</div>
-
-							{/* Rol */}
 							<div>
-								<label htmlFor="role" className="required">
-									Rol del Usuario
-								</label>
-
+								<label htmlFor="role" className="required">Rol del Usuario</label>
 								<Field as="select" name="role">
 									<option value="">Seleccione un rol</option>
-									{roles.map(rol => (
+									{roles.map((rol) => (
 										<option key={rol.value} value={rol.value}>
 											{rol.label}
 										</option>
@@ -137,40 +129,8 @@ const ModalNewUser = () => {
 								</Field>
 								<ErrorMessage name="role" component="p" className="errorForm" />
 							</div>
-
-							{/* Password */}
-							<div>
-								<label htmlFor="password" className="required">
-									Contraseña
-								</label>
-								<Field
-									type="password"
-									name="password"
-									value={values.numeroIdentidad}
-									readOnly // Hacer el campo de solo lectura
-									className="read-only-field" // Opcional: añadir clase para estilo
-								/>
-								<ErrorMessage name="password" component="p" className="errorForm" />
-							</div>
-
-							{/* Confirm Password */}
-							<div>
-								<label htmlFor="confirmPassword" className="required">
-									Confirmar Contraseña
-								</label>
-								<Field
-									type="password"
-									name="confirmPassword"
-									value={values.numeroIdentidad}
-									readOnly // Hacer el campo de solo lectura
-									className="read-only-field" // Opcional: añadir clase para estilo
-								/>
-								<ErrorMessage name="confirmPassword" component="p" className="errorForm" />
-							</div>
 						</fieldset>
-
-						{/* Botones */}
-						<div className="formButton" >
+						<div className="formButton">
 							<button
 								type="button"
 								className="cancel-button"

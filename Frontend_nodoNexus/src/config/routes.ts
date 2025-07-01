@@ -23,6 +23,9 @@ export const PrivateRoutes = {
   ADMIN_MONITORING: "admin/monitoring",
   ADMIN_BACKUP: "admin/backup",
 
+  //Rutas administrador Control Usuuarios
+  ADMIN_PROYECTOCONTOL: "proyectoDetalles",
+
   // Rutas analista
   ANALYST_HOME: "analyst/home",
   ANALYST_ANALYSIS_PHASE: "analyst/analysis-phase",

@@ -1,0 +1,36 @@
+@use '../../../../../styles/abstracts/index' as *;
+
+
+.containerDetalleUser {
+	border: 1px solid red;
+	background: var(--color-bg-primary);
+	border: 1px solid var(--color-primary);
+	position: absolute;
+	width: 100%;
+	top: 0;
+	right: -105%;
+	color: var(--color-primary);
+	padding: 15px;
+	border-radius: 6px;
+
+	h3 {
+		font-size: 1.5rem;
+		border-bottom: 1px solid var(--color-bg-transparent);
+		padding: 20px 0px;
+	}
+
+	&-info {
+		padding: 20px 0px;
+	}
+
+	&-button {
+		position: absolute;
+		top: 25px;
+		right: 25px;
+
+		button {
+			background: var(--color-primary);
+		}
+	}
+
+}

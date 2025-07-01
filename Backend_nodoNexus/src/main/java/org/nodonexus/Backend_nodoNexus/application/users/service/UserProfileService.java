@@ -80,7 +80,7 @@ public class UserProfileService {
 		user.setNumeroIdentidad(request.getNumeroIdentidad());
 		user.setTelefono(request.getTelefono());
 
-		User updatedUser = userService.save(user);
+		User updatedUser = userService.save(user, true);
 
 		// Notificar a los clientes
 		logger.info("Notificando actualización de perfil para el usuario: {}", email);
@@ -102,7 +102,7 @@ public class UserProfileService {
 		String imagePath = imageService.saveAndCompressImage(image);
 		user.setProfileImage(imagePath);
 
-		User updatedUser = userService.save(user);
+		User updatedUser = userService.save(user, true);
 
 		// Notificar a los clientes
 		logger.info("Notificando actualización de imagen de perfil para el usuario: {}", email);
@@ -124,7 +124,7 @@ public class UserProfileService {
 		String imagePath = imageService.saveAndCompressImage(image);
 		user.setBannerProfileImage(imagePath);
 
-		User updatedUser = userService.save(user);
+		User updatedUser = userService.save(user, true);
 
 		// Notificar a los clientes
 		logger.info("Notificando actualización de imagen de banner para el usuario: {}", email);
@@ -135,11 +135,11 @@ public class UserProfileService {
 
 	// Método para buscar un usuario por email
 	public User findByEmail(String email) {
-		return userService.findByEmail(email); // Delega al UserService
+		return userService.findByEmail(email);
 	}
 
 	// Método para guardar un usuario
 	public User save(User user) {
-		return userService.save(user); // Delega al UserService
+		return userService.save(user, false);
 	}
 }

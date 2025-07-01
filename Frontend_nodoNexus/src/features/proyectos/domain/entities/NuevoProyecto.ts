@@ -35,3 +35,16 @@ export interface nuevoProyectoDetallada {
 	estado: string;
 	numeroTelefonico: string | null;
 }
+
+export interface VistaSolicitudUsuario {
+	solicitudId: number;
+	usuarioId: number;
+	nombreProyecto: string;
+	descripcion: string;
+	estado: string;
+	fechaSolicitud: string; // ISO date string
+	clienteEmail: string;
+	clienteNombre: string;
+	clienteApellido: string;
+	clienteNumeroIdentidad: string;
+}

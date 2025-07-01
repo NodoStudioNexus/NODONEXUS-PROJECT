@@ -6,7 +6,7 @@ export const registerUserSchema = Yup.object({
 		.required('Correo electrónico requerido'),
 
 	role: Yup.string()
-		.oneOf(['ADMIN', 'USER', 'MODERATOR'], 'Rol inválido')
+		.oneOf(['ADMIN', 'USER', 'CLIENT', 'ANALYST', '	PLANNER', 'MODELING', 'IMPLEMENTATION', 'TESTER', 'VALIDATION'], 'Rol inválido')
 		.required('Rol requerido'),
 
 	primerNombre: Yup.string()

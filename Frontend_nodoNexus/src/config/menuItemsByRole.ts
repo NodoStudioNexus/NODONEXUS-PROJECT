@@ -31,7 +31,7 @@ export const menuItemsByRole: Record<string, MenuItem[]> = {
     { name: 'Inicio', path: '/dashboard/admin/home', icon: FaHome },
     { name: 'Gestión de usuarios', path: '/dashboard/admin/usersControl', icon: FaUsers },
     { name: 'Gestión de proyectos', path: '/dashboard/admin/projects', icon: FaProjectDiagram },
-    { name: 'Auditoría del sistema', path: '/dashboard/admin/audit', icon: FaShieldAlt },
+    // { name: 'Auditoría del sistema', path: '/dashboard/admin/audit', icon: FaShieldAlt },
     { name: 'Monitoreo en tiempo real', path: '/dashboard/admin/monitoring', icon: FaChartLine },
     { name: 'Respaldo', path: '/dashboard/admin/backup', icon: FaDatabase },
   ],

@@ -1,0 +1,19 @@
+@use '../../../../../../styles/abstracts/index' as *;
+
+.containerPropuestaValor {
+
+	&-actividades {
+		display: flex;
+		flex-direction: column;
+
+		gap: 15px;
+	}
+
+	&-definicion {
+		border: 1px solid var(--color-line);
+		padding: 25px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+}

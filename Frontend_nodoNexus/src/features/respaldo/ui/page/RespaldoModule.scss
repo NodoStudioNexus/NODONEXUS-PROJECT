@@ -1,0 +1,102 @@
+@use "../../../../styles/abstracts/index" as *;
+
+.respaldo-module {
+	.respaldo-title {
+		font-size: 1.5rem;
+		font-weight: bold;
+		margin-bottom: 1rem;
+	}
+
+	.respaldo-actions {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.action-button {
+		@include buttonPrimary();
+		cursor: pointer;
+	}
+
+	.progress-bar {
+		width: 100%;
+		background-color: var(--color-bg-primary);
+		border-radius: 0.25rem;
+		margin-bottom: 1rem;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.progress {
+		height: 1.5rem;
+		background-color: var(--color-alert-green);
+		transition: width 0.5s ease;
+		position: relative;
+	}
+
+	.progress-text {
+		position: absolute;
+		right: 0.5rem;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--color-bg-primary);
+		font-weight: bold;
+	}
+
+	.success-message {
+		background-color: #10b981;
+		color: var(--color-bg-primary);
+		padding: 0.5rem 1rem;
+		border-radius: 0.25rem;
+		margin-bottom: 1rem;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	.respaldo-logs {
+		margin-top: 1.5rem;
+
+		@include formFilterStyles();
+
+		input {
+			border: none;
+		}
+	}
+
+	.section-title {
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin-bottom: 1rem;
+	}
+
+	.backup-list {
+		list-style-type: none;
+
+		li {
+			padding: 25px;
+			border-bottom: 1px solid var(--color-line);
+		}
+	}
+
+	.backup-item {
+		margin-bottom: 0.5rem;
+	}
+
+	.backup-details {
+		display: flex;
+		gap: 2rem;
+		align-items: center;
+		justify-content: space-between;
+
+		p {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+
+			strong {
+				font-size: 0.8rem;
+			}
+		}
+	}
+}

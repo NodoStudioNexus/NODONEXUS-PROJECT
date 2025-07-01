@@ -5,6 +5,9 @@ import { markAsRead, markAsUnread, deleteNotification, setNotifications } from '
 import { getNotificaciones, markNotificacionAsRead, markNotificacionAsUnread, deleteNotificacion } from '../../infraestructure/api/notificacionApi';
 import { FaFilter, FaTrashAlt, FaAngleUp, FaAngleDown, FaEnvelopeOpen, FaEnvelope } from "react-icons/fa";
 import './notificacionPanel.scss';
+import ChatWindow from './chat/ChatWindow';
+import ConnectedUsers from './chat/ConnectedUsers';
+
 
 const NotificacionPanel = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
 	const [activeTab, setActiveTab] = useState('notifications');
@@ -193,7 +196,7 @@ const NotificacionPanel = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
 				{ /*   
 {activeTab === 'mensajes' && <div>Lista de mensajes aquí</div>}
 				*/}
-				{activeTab === 'chats' && <div>Lista de chats aquí</div>}
+				{activeTab === 'chats' && <ConnectedUsers />}
 			</div>
 		</div>
 	);

@@ -15,8 +15,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Data
 @Table(name = "cotizacion")
 public class Cotizacion {
@@ -51,4 +55,7 @@ public class Cotizacion {
 
 	@Column(name = "archivo_url")
 	private String archivoUrl;
+
+	@Column(name = "estado", nullable = false, columnDefinition = "varchar(255) default 'PENDIENTE'")
+	private String estado = "PENDIENTE";
 }
