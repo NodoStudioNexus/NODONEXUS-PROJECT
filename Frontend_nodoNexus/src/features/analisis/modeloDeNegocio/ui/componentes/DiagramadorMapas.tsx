@@ -468,7 +468,6 @@ const DiagramadorMapas = () => {
 
 	return (
 		<div className="modelado-negocio">
-			<h1 className="modelado-title">Modelado de Negocio</h1>
 
 			{isPaletteVisible && (
 				<aside className="sidebar">
@@ -500,7 +499,7 @@ const DiagramadorMapas = () => {
 			<div
 				className="reactflow-wrapper"
 				ref={reactFlowWrapper}
-				style={{ height: 650, width: '100%' }}
+				style={{ height: 800, width: '100%' }}
 			>
 				<ReactFlowProvider>
 					<ReactFlow
