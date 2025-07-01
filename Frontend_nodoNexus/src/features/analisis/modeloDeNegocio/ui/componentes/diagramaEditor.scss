@@ -1,0 +1,38 @@
+@use '../../../../../styles/abstracts/index' as *;
+
+.diagram-editor {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+
+	@include glassBlur(2)
+}
+
+.modal-content {
+	background: var(--color-bg-primary);
+	padding: 20px;
+	border-radius: 8px;
+	width: 90%;
+	height: 90%;
+	overflow-y: auto;
+	color: var(--color-primary);
+	position: relative;
+
+	.buttonClose {
+		background: none;
+		border: none;
+		color: var(--color-primary);
+		position: absolute;
+		right: 25px;
+		font-weight: 100;
+		font-size: 1.5rem;
+		color: var(--color-primary);
+		cursor: pointer;
+	}
+}

@@ -1,0 +1,42 @@
+@use '../../../styles/abstracts/index' as *;
+
+.simple-editor {
+	width: 100%;
+	height: auto;
+	color: var(--color-bg-primary);
+}
+
+.toolbar {
+	display: flex;
+	background: var(--color-hover);
+	border-radius: 0.3rem;
+
+	&-group {
+		padding: 0.2rem 0.5rem;
+	}
+
+}
+
+.toolbar button {
+	padding: 5px;
+	color: var(--color-bg-primary);
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.toolbar-mobile,
+.toolbar-group {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.content-wrapper {
+	padding: 1rem 0rem;
+	min-height: 200px;
+}
+
+.ProseMirror {
+	outline: none;
+	border: none;
+}

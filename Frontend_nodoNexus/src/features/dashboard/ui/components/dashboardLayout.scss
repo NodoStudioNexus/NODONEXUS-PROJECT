@@ -3,8 +3,9 @@
 .dashboard-layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
 
   .dashboard-content {
     display: flex;

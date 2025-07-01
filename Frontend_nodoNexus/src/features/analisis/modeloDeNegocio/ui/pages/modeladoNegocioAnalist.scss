@@ -1,4 +1,4 @@
-@use '../../../../styles/abstracts/index' as *;
+@use '../../../../../styles/abstracts/index' as *;
 
 .container-proyectosModelado {
 	display: flex;
@@ -8,7 +8,6 @@
 
 	&.is-collapsed {
 		flex-direction: column;
-
 		height: auto;
 
 		.containerProyectosButtons {
@@ -18,15 +17,19 @@
 			position: relative;
 
 			&-header {
+				display: flex;
+				align-items: center;
+				gap: 25px;
+
 				button {
-					position: absolute;
+
 					right: 0;
 				}
 			}
 
 			a {
 				width: auto;
-				display: flex;
+				display: none;
 				cursor: pointer;
 				align-items: center;
 				gap: 15px;
@@ -49,6 +52,7 @@
 				&.active {
 					border-radius: 3px !important;
 					padding: 10px 15px !important;
+
 					@include buttonPrimary();
 				}
 			}
@@ -149,8 +153,10 @@
 				max-height: 500px;
 				opacity: 1;
 
+
 				.icon {
 					display: flex;
+
 				}
 
 				&.is-hidden {
@@ -163,7 +169,11 @@
 			&-infoDetails {
 				display: flex;
 				gap: 25px;
-				padding-top: 15px;
+				align-items: center;
+
+				>span {
+					height: auto;
+				}
 
 
 				p {
