@@ -19,7 +19,9 @@ import AnalystDashboard from "../../features/dashboard/ui/pages/AnalystDashboard
 import MonitoreoDashboardAdmin from "../../features/Monitoreo/ui/pages/MonitoreoDashboardAdmin.tsx";
 import RespaldoModule from "../../features/respaldo/ui/page/RespaldoModule.tsx";
 import AnalistProyectos from "../../features/proyectos/ui/pages/AnalistProyectos.tsx";
-import ModeladoNegocioAnalist from "../../features/modeloDeNegocio/ui/pages/ModeladoNegocioAnalist.tsx";
+import ModeladoNegocioAnalist from "../../features/analisis/modeloDeNegocio/ui/pages/ModeladoNegocioAnalist.tsx";
+import GestionRequerimientos from "../../features/analisis/funcionalidades/ui/pages/GestionRequerimientos.tsx";
+
 
 // Componentes lazy-loaded
 const Login = lazy(() => import('../../features/auth/ui/pages/LoginPage'));
@@ -40,7 +42,7 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Suspense fallback={<div>Cargando...</div>}>
         <GlobalModal />
-        <RoutesWithNotFound>
+        <RoutesWithNotFound >
           <Route path="/" element={<Navigate to={`/${PublicRoutes.LOGIN}`} replace />} />
           <Route path={PublicRoutes.SOLICITUD} element={<SolicitudProyectoPage />} />
           <Route path={PublicRoutes.LOGIN} element={<Login />} />
@@ -103,7 +105,7 @@ export const AppRouter = () => {
               />
               <Route
                 path={PrivateRoutes.ANALYST_REQUIREMENTS}
-                element={<RoleGuard rol="ANALYST"><Construction /></RoleGuard>}
+                element={<RoleGuard rol="ANALYST"><GestionRequerimientos /></RoleGuard>}
               />
               <Route
                 path={PrivateRoutes.ANALYST_RISKS_REPORTS}

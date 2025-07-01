@@ -5,7 +5,7 @@
 @use './base/index' as *;
 
 body {
-  height: 200vh;
+  height: 100%;
   width: 100vw;
   font-family: $fontFamily;
   background-color: var(--color-bg-primary);
@@ -13,6 +13,8 @@ body {
   transition:
     background-color 0.3s,
     color 0.3s;
+  overflow-x: hidden;
+
 
 
   @include gradientBg(to right bottom,
@@ -32,45 +34,31 @@ body.dark {
   @extend [data-theme='dark'];
 }
 
-/* Estilo global para el scroll de la ventana */
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  /* Evita scroll horizontal */
-}
-
-/* Personalización del scroll */
+/* Estilos para navegadores WebKit (Chrome, Safari) */
 html::-webkit-scrollbar {
-  width: 5px;
+  width: 3px;
+  /* Más delgado que los 5px actuales */
 }
 
 html::-webkit-scrollbar-track {
   background: var(--color-bg-primary);
-  border-radius: 50%;
+  border-radius: 10px;
+  /* Redondeo suave para la pista */
 }
 
 html::-webkit-scrollbar-thumb {
   background: #eb2525;
-  border-radius: 4px;
+  border-radius: 50%;
+  /* Bordes completamente redondeados para el thumb */
 }
 
 html::-webkit-scrollbar-thumb:hover {
   background: #af1e1e;
 }
 
-/* Soporte para Firefox */
+/* Estilos para Firefox */
 html {
   scrollbar-width: thin;
+  /* Mantiene el scrollbar delgado */
   scrollbar-color: var(--color-primary) var(--color-bg-primary);
-}
-
-/* Asegura que los contenedores no generen su propio scroll */
-.container {
-  height: auto;
-  /* Permite que crezca según el contenido */
-  overflow-y: visible;
-  /* Evita scroll interno */
 }

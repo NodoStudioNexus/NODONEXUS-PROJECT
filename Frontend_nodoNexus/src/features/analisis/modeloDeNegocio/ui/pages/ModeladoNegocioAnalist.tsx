@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import './modeladoNegocioAnalist.scss';
-import { AppDispatch, RootState } from "../../../../app/store";
-import { addProyecto, fetchProyectosVista } from "../../../proyectos/infraestructure/redux/proyectoSlice";
-import { webSocketService } from "../../../../shared/services/websocketService";
-import { ProyectoVista } from "../../../proyectos/domain/entities/ProyectoVista";
-import { FaAngleDown, FaBars, FaFolder, FaGripHorizontal } from "react-icons/fa";
+
+import { FaAngleDown, FaFolder, FaGripHorizontal } from "react-icons/fa";
 import { GoProject } from "react-icons/go";
 import DocumentacionModeladoAnalist from "../componentes/Analists/DocumentacionModeladoAnalist";
+import { AppDispatch, RootState } from "../../../../../app/store";
+import { addProyecto, fetchProyectosVista } from "../../../../proyectos/infraestructure/redux/proyectoSlice";
+import { webSocketService } from "../../../../../shared/services/websocketService";
+import { ProyectoVista } from "../../../../proyectos/domain/entities/ProyectoVista";
 
 
 const ModeladoNegocioAnalist = () => {
@@ -86,7 +87,7 @@ const ModeladoNegocioAnalist = () => {
 									className={`proyectoDetails-header ${isInfoVisible ? 'is-open' : ''}`}
 									onClick={() => setIsInfoVisible(!isInfoVisible)}
 								>
-									<h3><span> <GoProject />
+									<h3><span><GoProject />
 									</span>{selectedProyecto.nombre_proyecto}</h3>
 									<span><FaAngleDown /></span>
 								</div>
@@ -94,11 +95,13 @@ const ModeladoNegocioAnalist = () => {
 									<span className="proyectoDetails-infoDetails">
 										<span className="icon"><FaFolder /></span>
 										<span className="info" >
-											<p><strong>Estado:</strong> {selectedProyecto.proyecto_estado}
-												<p>
-													<strong>Cliente:</strong> {selectedProyecto.cliente_nombre}{' '}
-													{selectedProyecto.cliente_apellido}
-												</p></p>
+											<p>
+												<strong>Estado:</strong> {selectedProyecto.proyecto_estado}
+											</p>
+											<p>
+												<strong>Cliente:</strong> {selectedProyecto.cliente_nombre}{' '}
+												{selectedProyecto.cliente_apellido}
+											</p>
 
 											<p>
 												<strong>Fecha de inicio:</strong>{' '}

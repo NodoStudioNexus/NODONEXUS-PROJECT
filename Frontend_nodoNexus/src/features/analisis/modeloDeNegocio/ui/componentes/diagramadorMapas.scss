@@ -1,8 +1,9 @@
-@use '../../../../styles/abstracts/index' as *;
+@use '../../../../../styles/abstracts/index' as *;
 
 .modelado-negocio {
 	padding: 1.5rem;
 	position: relative;
+	width: 100%;
 
 	.modelado-title {
 		font-size: 1.5rem;
