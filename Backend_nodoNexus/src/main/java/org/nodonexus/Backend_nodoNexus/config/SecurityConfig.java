@@ -45,7 +45,7 @@ public class SecurityConfig {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin estado
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/api/auth/**", "/Uploads/**", "/ws/**", "/api/solicitudes/**", "/api/notificaciones/**",
-                "/chat**")
+                "/chat**", "/api/funcionalidades**")
             .permitAll()
             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Swagger público
             .anyRequest().authenticated()) // Todo lo demás requiere autenticación

@@ -2,6 +2,8 @@ package org.nodonexus.Backend_nodoNexus.domain.model.proyecto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,6 +39,7 @@ public class Funcionalidad {
 	private String estado = "PENDIENTE";
 
 	@OneToMany(mappedBy = "funcionalidad", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<FuncionalidadFase> funcionalidadFases;
 
 	@Column(name = "porcentaje_avance")

@@ -1,5 +1,7 @@
 package org.nodonexus.Backend_nodoNexus.domain.model.proyecto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ public class FuncionalidadFase {
 
 	@ManyToOne
 	@JoinColumn(name = "funcionalidad_id", nullable = false)
+	@JsonBackReference
 	private Funcionalidad funcionalidad;
 
 	@ManyToOne

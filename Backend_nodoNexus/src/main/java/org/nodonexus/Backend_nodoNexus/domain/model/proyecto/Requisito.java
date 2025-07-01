@@ -2,6 +2,8 @@ package org.nodonexus.Backend_nodoNexus.domain.model.proyecto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +29,9 @@ public class Requisito {
 	@JoinColumn(name = "funcionalidad_id", nullable = false)
 	private Funcionalidad funcionalidad;
 
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
+
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
@@ -34,5 +39,6 @@ public class Requisito {
 	private String estado = "PENDIENTE";
 
 	@OneToMany(mappedBy = "requisito", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<RequisitoFase> requisitoFases;
 }
