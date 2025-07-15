@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="Version">
   <img src="https://img.shields.io/badge/docker-ready-brightgreen.svg" alt="Docker Ready">
-  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
+  <img src="https://img.shields.io/badge/license-Proprietary-red.svg" alt="License">
   <img src="https://img.shields.io/badge/status-active-success.svg" alt="Status">
 </p>
 
@@ -311,19 +311,28 @@ Si encuentras un bug, por favor:
 
 ## 📄 Licencia
 
-Este proyecto está licenciado bajo la **Licencia de Código Fuente Disponible (Source-Available License)**. 
+Este proyecto está protegido bajo una **Licencia Propietaria de Código Fuente Disponible v1.0**.
 
-**Términos de la Licencia:**
-- ✅ **Permitido**: Ver, estudiar y hacer fork del código
-- ✅ **Permitido**: Usar para fines educativos y de investigación
-- ✅ **Permitido**: Contribuir con mejoras al proyecto original
-- ❌ **Prohibido**: Uso comercial sin autorización explícita
-- ❌ **Prohibido**: Redistribución del código modificado sin autorización
-- ❌ **Prohibido**: Crear productos derivados para uso comercial
+### Resumen de Permisos
 
-Para uso comercial o redistribución, contacta a: **info@nodostudio.com**
+| Permitido ✅ | Prohibido ❌ |
+|-------------|-------------|
+| Ver código fuente | Uso comercial sin autorización |
+| Uso educativo/investigación | Distribución a terceros |
+| Fork para aprendizaje | Crear productos derivados |
+| Contribuir al proyecto | Uso en producción sin licencia |
+| Copias de respaldo | Usar marca NodoNexus |
 
-Consulta el archivo [LICENSE](LICENSE) para más detalles completos.
+### Licencia Comercial
+
+Para uso comercial, empresarial o cualquier uso no permitido arriba:
+
+**📧 Contacto:** dev.nodostudio@gmail.com  
+**🌐 Website:** [nodostudio.com.co](https://nodostudio.com.co)
+
+**⚠️ ADVERTENCIA:** El uso no autorizado puede resultar en acciones legales.
+
+Consulta los términos completos en [LICENSE](LICENSE) y [LICENSE-SUMMARY.md](LICENSE-SUMMARY.md).
 
 ## 👥 Equipo
 
