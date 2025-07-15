@@ -1,0 +1,131 @@
+NODONEXUS PROJECT - PROPRIETARY SOURCE-AVAILABLE LICENSE
+
+Copyright (c) 2024-2025 José Daniel Anacona / NodoStudio. All rights reserved.
+
+=============================================================================
+NODONEXUS PROPRIETARY LICENSE v1.0
+=============================================================================
+
+This license governs the use of the NodoNexus software and its source code.
+
+1. DEFINITIONS
+
+   "Software" means the NodoNexus project, including all source code, 
+   documentation, assets, and related materials.
+   
+   "Licensor" means José Daniel Anacona and NodoStudio.
+   
+   "You" means the individual or legal entity exercising permissions 
+   granted by this License.
+   
+   "Commercial Use" means any use of the Software for commercial purposes,
+   including but not limited to: selling, licensing, distributing for profit,
+   or using in a commercial product or service.
+
+2. GRANT OF RIGHTS
+
+   Subject to the terms and conditions of this License, Licensor hereby 
+   grants You a worldwide, non-exclusive, non-transferable, revocable 
+   license to:
+
+   a) View and study the source code
+   b) Create personal copies for backup purposes
+   c) Fork the repository for educational purposes
+   d) Contribute improvements back to the original project
+   e) Use the Software for educational and research purposes only
+
+3. RESTRICTIONS
+
+   You may NOT:
+   
+   a) Use the Software for any commercial purposes without explicit 
+      written permission from the Licensor
+   b) Distribute, sublicense, or make available the Software or any 
+      derivative works to third parties
+   c) Remove or alter any copyright notices, trademarks, or license 
+      information
+   d) Create derivative works for commercial distribution
+   e) Use the Software in production environments without a commercial 
+      license
+   f) Reverse engineer, decompile, or disassemble the Software beyond 
+      what is necessary for interoperability
+   g) Use the NodoNexus name, logo, or trademarks without written 
+      permission
+
+4. COMMERCIAL LICENSING
+
+   For commercial use, enterprise licensing, or any use not explicitly 
+   permitted under Section 2, You must obtain a separate commercial 
+   license from the Licensor.
+   
+   Contact for commercial licensing:
+   Email: dev.nodostudio@gmail.com
+   Website: https://nodostudio.com.co
+
+5. CONTRIBUTIONS
+
+   By submitting contributions to this project, You agree that:
+   
+   a) Your contributions become subject to this License
+   b) You grant the Licensor perpetual, irrevocable rights to your 
+      contributions
+   c) You represent that you have the right to make such contributions
+   d) The Licensor may incorporate your contributions into commercial 
+      versions
+
+6. INTELLECTUAL PROPERTY
+
+   All intellectual property rights in the Software remain with the 
+   Licensor. This License does not grant any rights to patents, 
+   trademarks, or other intellectual property except as explicitly 
+   stated.
+
+7. TERMINATION
+
+   This License is effective until terminated. Your rights under this 
+   License will terminate automatically without notice if You fail to 
+   comply with any term(s) of this License.
+
+8. ENFORCEMENT
+
+   Any violation of this License may result in:
+   
+   a) Immediate termination of all rights granted
+   b) Legal action to enforce intellectual property rights
+   c) Claims for damages and injunctive relief
+   d) Removal of access to the Software and related services
+
+9. DISCLAIMER OF WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+10. LIMITATION OF LIABILITY
+
+    IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES OR 
+    OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+    OTHER DEALINGS IN THE SOFTWARE.
+
+11. GOVERNING LAW
+
+    This License shall be governed by and construed in accordance with 
+    the laws of Colombia, without regard to its conflict of law principles.
+
+12. ENTIRE AGREEMENT
+
+    This License constitutes the entire agreement between You and the 
+    Licensor relating to the Software and supersedes all prior agreements 
+    and understandings.
+
+=============================================================================
+
+For questions about this License, please contact:
+
+José Daniel Anacona
+NodoStudio
+Email: dev.nodostudio@gmail.com
+Website: https://nodostudio.com.co
+
+Last updated: January 2025
